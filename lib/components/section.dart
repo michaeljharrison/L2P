@@ -17,7 +17,7 @@ class SectionState extends State<Section> {
           Container(
               child: Expanded(
                   child: Container(
-            color: Colors.grey[100],
+            color: Colors.black,
             child: Text("B"),
           )))
         ],

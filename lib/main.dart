@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'theme/theme.dart';
-import 'components/section.dart';
+import 'screens/library.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,19 +13,46 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      theme: defaultTheme,
+        title: 'L2P',
+        theme: themeDefault,
+        home: new SplashScreen(
+            seconds: 2,
+            navigateAfterSeconds: new HomePage(),
+            title: new Text('L2P',
+                style: TextStyle(
+                  color: colorTealPrimary,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 74,
+                )),
+            // image: new Image.asset(''),
+            backgroundColor: colorBGDark,
+            // photoSize: 100.0,
+            loadingText: new Text('Unboxing...',
+                style: TextStyle(
+                  color: colorTealPrimary,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 26,
+                )),
+            loaderColor: colorTealPrimary));
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'L2P',
+      theme: themeDefault,
       home: Scaffold(
         appBar: AppBar(
-          centerTitle: false,
+          centerTitle: true,
           title: Text(
-            'Star Realms',
-            style: titleStyle,
+            'Learn to Play',
+            style: Theme.of(context).textTheme.title,
+            textAlign: TextAlign.center,
           ),
         ),
-        body: Center(
-          child: Padding(padding: EdgeInsets.all(10), child: Section()),
-        ),
+        body: new Library(),
       ),
     );
   }
