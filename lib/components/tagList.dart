@@ -18,9 +18,9 @@ class TagList extends StatelessWidget {
               spacing: 4,
               runSpacing: 4,
               children: <Widget>[
-                Tag(value: 'TAG A', color: colorTagBlue),
+                Tag(value: 'TAG A', color: colorTagTeal),
                 Tag(value: 'TAG B', color: colorTagTeal),
-                Tag(value: 'TAG C', color: colorTagBlue),
+                Tag(value: 'TAG C', color: colorTagTeal),
               ],
             ),
           )

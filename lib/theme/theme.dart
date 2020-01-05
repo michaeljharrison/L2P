@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-final colorBGLight = new Color.fromRGBO(42, 58, 72, 1);
-final colorBGDark = new Color.fromRGBO(26, 34, 42, 1);
-final colorTealPrimary = new Color.fromRGBO(101, 212, 186, 1);
-final colorTealDark = new Color.fromRGBO(96, 142, 172, 1);
-final colorTagBlue = new Color.fromRGBO(0, 168, 221, 1);
+final cardBG = new Color.fromRGBO(42, 58, 72, 1);
+final systemBG = new Color.fromRGBO(26, 34, 42, 1);
+final uiElement = new Color.fromRGBO(96, 142, 172, 1);
+final buttonPrimary = new Color.fromRGBO(0, 168, 221, 1);
+final buttonSecondary = new Color.fromRGBO(101, 212, 186, 1);
 final colorTagTeal = new Color.fromRGBO(101, 212, 186, 1);
 
 /// THEMES
@@ -12,17 +12,17 @@ final colorTagTeal = new Color.fromRGBO(101, 212, 186, 1);
 final ThemeData themeDefault = ThemeData(
     // Colors
     brightness: Brightness.dark,
-    primaryColor: colorBGLight,
-    accentColor: colorTealPrimary,
-    dividerColor: colorTealDark,
+    primaryColor: cardBG,
+    accentColor: buttonSecondary,
+    dividerColor: uiElement,
     textTheme: new TextTheme(
         title: TextStyle(
-          color: colorTealPrimary,
+          color: buttonSecondary,
           fontWeight: FontWeight.w300,
           fontSize: 34,
         ),
         subtitle: TextStyle(
-          color: colorTealPrimary,
+          color: buttonSecondary,
           fontWeight: FontWeight.w300,
           fontSize: 26,
         ),
@@ -50,7 +50,7 @@ final ThemeData themeDefault = ThemeData(
 /// TEXT STYLES
 /// Special Text Style for Splash Screen
 final TextStyle textStyleSplashTitle = TextStyle(
-  color: colorTealPrimary,
+  color: buttonSecondary,
   fontWeight: FontWeight.w300,
   fontSize: 48,
 );

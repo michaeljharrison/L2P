@@ -20,20 +20,20 @@ class MyApp extends StatelessWidget {
             navigateAfterSeconds: new HomePage(),
             title: new Text('L2P',
                 style: TextStyle(
-                  color: colorTealPrimary,
+                  color: buttonSecondary,
                   fontWeight: FontWeight.w300,
                   fontSize: 74,
                 )),
             // image: new Image.asset(''),
-            backgroundColor: colorBGDark,
+            backgroundColor: systemBG,
             // photoSize: 100.0,
             loadingText: new Text('Unboxing...',
                 style: TextStyle(
-                  color: colorTealPrimary,
+                  color: buttonSecondary,
                   fontWeight: FontWeight.w300,
                   fontSize: 26,
                 )),
-            loaderColor: colorTealPrimary));
+            loaderColor: buttonSecondary));
   }
 }
 
