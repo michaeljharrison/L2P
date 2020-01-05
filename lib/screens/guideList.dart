@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/components/guideSection.dart';
 import 'package:hello_world/theme/theme.dart';
 import 'package:search_widget/search_widget.dart';
 
@@ -31,24 +32,30 @@ class _GuideListState extends State<GuideList> {
               Text(
                   "7 Wonders Duel is a quick-fire, two-player variant of the hit game 7 Wonders. This guide will take you all the way from setup to playing through a full game, and contains a number of handy reference materials to keep your game going smoothly."),
               Container(child: Text("Search...")),
+              GuideSection(
+                title: 'Setup',
+                body: 'Before you play, let’s setup a few componenets.',
+                ordered: false,
+              )
             ],
           ),
-          Positioned(
+          Align(
+            alignment: Alignment.bottomCenter,
             child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  color: colorBGLight,
-                  child: Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text("Back"),
-                        )
-                      ]),
-                )),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 50,
+                color: cardBG,
+                child: Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Back"),
+                    ]),
+              ),
+            ),
           )
         ],
       ),

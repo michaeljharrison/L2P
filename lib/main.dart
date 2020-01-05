@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         title: 'L2P',
         theme: themeDefault,
         home: new SplashScreen(
-            seconds: 2,
+            seconds: 0,
             navigateAfterSeconds: new HomePage(),
             title: new Text('L2P',
                 style: TextStyle(
