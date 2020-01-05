@@ -13,4 +13,6 @@ final libraryData = [
       'Ready to jump into the most popular miniatures game this side of the galactic core? This advanced guide for Star Wars X-Wing will help you setup and play your first game, as well as provide a helpful rules reference.'),
   new GameData('Sushi_Go!',
       'In Sushi Go!, you are eating at a sushi restaurant and trying to grab the best combination of sushi dishes as they whiz by. Score points for collecting the most sushi rolls or making a full set of sashimi.'),
+  new GameData('Secret_Hitler!',
+      'Each player is randomly and secretly assigned to be a liberal or a fascist, and one player is Secret Hitler. The fascists coordinate to sow distrust and install their cold-blooded leader; the liberals must find and stop the Secret Hitler before it is too late.'),
 ];
