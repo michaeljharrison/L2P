@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:hello_world/components/gameCard.dart';
 import 'package:hello_world/models/dummyLibrary.dart';
+import 'package:hello_world/screens/guideList.dart';
 import '../theme/theme.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -15,10 +17,18 @@ class LibraryState extends State<Library> {
             crossAxisCount: 4,
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
-              return new GameCard(
-                  key: new Key('game_$index'),
-                  title: libraryData[index].title,
-                  description: libraryData[index].description);
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GuideList()),
+                  );
+                },
+                child: new GameCard(
+                    key: new Key('game_$index'),
+                    title: libraryData[index].title,
+                    description: libraryData[index].description),
+              );
             },
             staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
             mainAxisSpacing: 8.0,
