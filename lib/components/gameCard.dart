@@ -8,7 +8,7 @@ class GameCardState extends State<GameCard> {
     return Container(
         padding: EdgeInsets.all(6),
         decoration: new BoxDecoration(
-          color: colorBGLight,
+          color: cardBG,
           borderRadius: new BorderRadius.all(Radius.circular(6)),
         ),
         child: new Column(
