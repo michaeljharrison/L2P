@@ -27,6 +27,8 @@ class GuideSection extends StatefulWidget {
 class _GuideSectionState extends State<GuideSection> {
   @override
   Widget build(BuildContext context) {
+    if (widget.ordered) {
+    } else {}
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -35,7 +37,7 @@ class _GuideSectionState extends State<GuideSection> {
               borderRadius: BorderRadius.all(Radius.circular(4))),
           child: ExpandablePanel(
             header:
-                Text(widget.title, style: Theme.of(context).textTheme.headline),
+                Text(widget.title, style: Theme.of(context).textTheme.display1),
             collapsed: Text(
               widget.body,
               softWrap: true,

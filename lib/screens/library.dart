@@ -21,7 +21,9 @@ class LibraryState extends State<Library> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => GuideList()),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            GuideList(game: libraryData[index])),
                   );
                 },
                 child: new GameCard(

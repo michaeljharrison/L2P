@@ -1,10 +1,14 @@
+import 'package:L2P/models/gameData.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:L2P/theme/theme.dart';
 import 'package:search_widget/search_widget.dart';
 
 class GuideList extends StatefulWidget {
-  GuideList({Key key}) : super(key: key);
+  GameData game;
+  GuideList({Key key, GameData game})
+      : this.game = game,
+        super(key: key);
 
   @override
   _GuideListState createState() => _GuideListState();
@@ -27,30 +31,46 @@ class _GuideListState extends State<GuideList> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              Text("TITLE"),
+              Text(widget.game.title, style: Theme.of(context).textTheme.title),
               Image.asset('assets/images/covers/Fog_Of_Love.png'),
-              Text(
-                  "7 Wonders Duel is a quick-fire, two-player variant of the hit game 7 Wonders. This guide will take you all the way from setup to playing through a full game, and contains a number of handy reference materials to keep your game going smoothly."),
+              Text(widget.game.description,
+                  style: Theme.of(context).textTheme.body1),
               Container(child: Text("Search...")),
+              GuideSection(
+                title: 'Beginner Tutorial',
+                body: 'Before you play, let’s setup a few componenets.',
+                ordered: false,
+                links: List<FlatButton>.from([
+                  FlatButton(
+                    child: Text("Play Tutorial"),
+                  ),
+                ]),
+              ),
               GuideSection(
                 title: 'Setup',
                 body: 'Before you play, let’s setup a few componenets.',
-                ordered: false,
-                links: List<FlatButton>.filled(
-                    1,
-                    FlatButton(
-                      child: Text("Button"),
-                    )),
+                ordered: true,
+                links: List<FlatButton>.from([
+                  FlatButton(
+                    child: Text("Setting up the board"),
+                  ),
+                  FlatButton(
+                    child: Text("Do another thing"),
+                  )
+                ]),
               ),
               GuideSection(
                 title: 'Construction',
                 body: 'Before you play, let’s setup a few componenets.',
-                ordered: false,
-                links: List<FlatButton>.filled(
-                    1,
-                    FlatButton(
-                      child: Text("Button"),
-                    )),
+                ordered: true,
+                links: List<FlatButton>.from([
+                  FlatButton(
+                    child: Text("Setting up the board"),
+                  ),
+                  FlatButton(
+                    child: Text("Do another thing"),
+                  )
+                ]),
               ),
               GuideSection(
                 title: 'Winning the Game',
