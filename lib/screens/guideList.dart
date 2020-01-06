@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/components/guideSection.dart';
-import 'package:hello_world/theme/theme.dart';
+import 'package:L2P/components/guideSection.dart';
+import 'package:L2P/theme/theme.dart';
 import 'package:search_widget/search_widget.dart';
 
 class GuideList extends StatefulWidget {

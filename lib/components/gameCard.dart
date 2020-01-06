@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/components/tagList.dart';
+import 'package:L2P/components/tagList.dart';
 import '../theme/theme.dart';
 
 class GameCardState extends State<GameCard> {
