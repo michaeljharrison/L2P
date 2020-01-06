@@ -27,28 +27,37 @@ class GuideSection extends StatefulWidget {
 class _GuideSectionState extends State<GuideSection> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: ExpandablePanel(
-      header: Text(widget.title),
-      collapsed: Text(
-        widget.body,
-        softWrap: true,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-      expanded: Column(
-        children: <Widget>[
-          Text(
-            widget.body,
-            softWrap: true,
-          ),
-          Column(
-            children: widget.links,
-          )
-        ],
-      ),
-      tapHeaderToExpand: true,
-      hasIcon: true,
-    ));
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          decoration: BoxDecoration(
+              color: cardBG,
+              borderRadius: BorderRadius.all(Radius.circular(4))),
+          child: ExpandablePanel(
+            header:
+                Text(widget.title, style: Theme.of(context).textTheme.headline),
+            collapsed: Text(
+              widget.body,
+              softWrap: true,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.body1,
+            ),
+            expanded: Column(
+              children: <Widget>[
+                Text(
+                  widget.body,
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.body1,
+                ),
+                Column(
+                  children: widget.links,
+                )
+              ],
+            ),
+            tapHeaderToExpand: true,
+            hasIcon: true,
+          )),
+    );
   }
 }

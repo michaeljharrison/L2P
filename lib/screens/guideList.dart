@@ -36,6 +36,31 @@ class _GuideListState extends State<GuideList> {
                 title: 'Setup',
                 body: 'Before you play, let’s setup a few componenets.',
                 ordered: false,
+                links: List<FlatButton>.filled(
+                    1,
+                    FlatButton(
+                      child: Text("Button"),
+                    )),
+              ),
+              GuideSection(
+                title: 'Construction',
+                body: 'Before you play, let’s setup a few componenets.',
+                ordered: false,
+                links: List<FlatButton>.filled(
+                    1,
+                    FlatButton(
+                      child: Text("Button"),
+                    )),
+              ),
+              GuideSection(
+                title: 'Winning the Game',
+                body: 'Before you play, let’s setup a few componenets.',
+                ordered: false,
+                links: List<FlatButton>.filled(
+                    1,
+                    FlatButton(
+                      child: Text("Button"),
+                    )),
               )
             ],
           ),

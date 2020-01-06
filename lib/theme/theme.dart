@@ -17,21 +17,29 @@ final ThemeData themeDefault = ThemeData(
     dividerColor: uiElement,
     textTheme: new TextTheme(
         title: TextStyle(
+          // H1
           color: buttonSecondary,
           fontWeight: FontWeight.w300,
           fontSize: 34,
         ),
         subtitle: TextStyle(
+          // H2
           color: buttonSecondary,
           fontWeight: FontWeight.w300,
           fontSize: 26,
         ),
         headline: TextStyle(
+          // H3
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
-        //subhead: ,
+        subhead: TextStyle(
+          // H4
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
         body1: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.normal,
