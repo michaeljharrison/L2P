@@ -34,6 +34,7 @@ class _GuideSectionState extends State<GuideSection> {
         decoration: BoxDecoration(
             color: cardBG, borderRadius: BorderRadius.all(Radius.circular(4))),
         child: ExpandablePanel(
+          theme: expandableThemeDefault,
           header:
               Text(widget.title, style: Theme.of(context).textTheme.display1),
           collapsed: Text(

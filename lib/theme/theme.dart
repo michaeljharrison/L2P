@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 final cardBG = new Color.fromRGBO(42, 58, 72, 1);
@@ -52,6 +53,9 @@ final ThemeData themeDefault = ThemeData(
         )),
     // Fonts
     fontFamily: 'Montserrat');
+
+final ExpandableThemeData expandableThemeDefault =
+    ExpandableThemeData(iconColor: uiElement);
 
 /// TEXT STYLES
 /// Special Text Style for Splash Screen

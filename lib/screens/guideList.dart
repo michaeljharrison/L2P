@@ -117,10 +117,21 @@ class _GuideListState extends State<GuideList> {
                 height: 50,
                 color: cardBG,
                 child: Flex(
-                    direction: Axis.horizontal,
+                    direction: Axis.vertical,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Back"),
+                      Text(
+                        'Back to Library',
+                        style: TextStyle(color: buttonPrimary, fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: buttonPrimary,
+                        size: 14,
+                        semanticLabel: 'Back to Library',
+                      )
                     ]),
               ),
             ),
