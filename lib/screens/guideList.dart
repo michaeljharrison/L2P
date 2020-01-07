@@ -29,60 +29,83 @@ class _GuideListState extends State<GuideList> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Text(widget.game.title, style: Theme.of(context).textTheme.title),
-              Image.asset('assets/images/covers/Fog_Of_Love.png'),
-              Text(widget.game.description,
-                  style: Theme.of(context).textTheme.body1),
-              Container(child: Text("Search...")),
-              GuideSection(
-                title: 'Beginner Tutorial',
-                body: 'Before you play, let’s setup a few componenets.',
-                ordered: false,
-                links: List<FlatButton>.from([
-                  FlatButton(
-                    child: Text("Play Tutorial"),
+          Container(
+            padding: EdgeInsets.all(12),
+            child: Column(
+              children: <Widget>[
+                Text(widget.game.title,
+                    style: Theme.of(context).textTheme.title),
+                Padding(
+                  padding: const EdgeInsets.only(top: 24.0, bottom: 24.0),
+                  child: Image.asset('assets/images/covers/Fog_Of_Love.png'),
+                ),
+                Text(widget.game.description,
+                    style: Theme.of(context).textTheme.body1),
+                Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(99))),
+                    child: Text("Search...")),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: GuideSection(
+                    title: 'Beginner Tutorial',
+                    body: 'Before you play, let’s setup a few componenets.',
+                    ordered: false,
+                    links: List<FlatButton>.from([
+                      FlatButton(
+                        child: Text("Play Tutorial"),
+                      ),
+                    ]),
                   ),
-                ]),
-              ),
-              GuideSection(
-                title: 'Setup',
-                body: 'Before you play, let’s setup a few componenets.',
-                ordered: true,
-                links: List<FlatButton>.from([
-                  FlatButton(
-                    child: Text("Setting up the board"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: GuideSection(
+                    title: 'Setup',
+                    body: 'Before you play, let’s setup a few componenets.',
+                    ordered: true,
+                    links: List<FlatButton>.from([
+                      FlatButton(
+                        child: Text("Setting up the board"),
+                      ),
+                      FlatButton(
+                        child: Text("Do another thing"),
+                      )
+                    ]),
                   ),
-                  FlatButton(
-                    child: Text("Do another thing"),
-                  )
-                ]),
-              ),
-              GuideSection(
-                title: 'Construction',
-                body: 'Before you play, let’s setup a few componenets.',
-                ordered: true,
-                links: List<FlatButton>.from([
-                  FlatButton(
-                    child: Text("Setting up the board"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: GuideSection(
+                    title: 'Construction',
+                    body: 'Before you play, let’s setup a few componenets.',
+                    ordered: true,
+                    links: List<FlatButton>.from([
+                      FlatButton(
+                        child: Text("Setting up the board"),
+                      ),
+                      FlatButton(
+                        child: Text("Do another thing"),
+                      )
+                    ]),
                   ),
-                  FlatButton(
-                    child: Text("Do another thing"),
-                  )
-                ]),
-              ),
-              GuideSection(
-                title: 'Winning the Game',
-                body: 'Before you play, let’s setup a few componenets.',
-                ordered: false,
-                links: List<FlatButton>.filled(
-                    1,
-                    FlatButton(
-                      child: Text("Button"),
-                    )),
-              )
-            ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: GuideSection(
+                    title: 'Winning the Game',
+                    body: 'Before you play, let’s setup a few componenets.',
+                    ordered: false,
+                    links: List<FlatButton>.filled(
+                        1,
+                        FlatButton(
+                          child: Text("Button"),
+                        )),
+                  ),
+                )
+              ],
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,

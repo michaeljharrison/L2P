@@ -29,37 +29,34 @@ class _GuideSectionState extends State<GuideSection> {
   Widget build(BuildContext context) {
     if (widget.ordered) {
     } else {}
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-          decoration: BoxDecoration(
-              color: cardBG,
-              borderRadius: BorderRadius.all(Radius.circular(4))),
-          child: ExpandablePanel(
-            header:
-                Text(widget.title, style: Theme.of(context).textTheme.display1),
-            collapsed: Text(
-              widget.body,
-              softWrap: true,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.body1,
-            ),
-            expanded: Column(
-              children: <Widget>[
-                Text(
-                  widget.body,
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.body1,
-                ),
-                Column(
-                  children: widget.links,
-                )
-              ],
-            ),
-            tapHeaderToExpand: true,
-            hasIcon: true,
-          )),
-    );
+    return Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            color: cardBG, borderRadius: BorderRadius.all(Radius.circular(4))),
+        child: ExpandablePanel(
+          header:
+              Text(widget.title, style: Theme.of(context).textTheme.display1),
+          collapsed: Text(
+            widget.body,
+            softWrap: true,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.body1,
+          ),
+          expanded: Column(
+            children: <Widget>[
+              Text(
+                widget.body,
+                softWrap: true,
+                style: Theme.of(context).textTheme.body1,
+              ),
+              Column(
+                children: widget.links,
+              )
+            ],
+          ),
+          tapHeaderToExpand: true,
+          hasIcon: true,
+        ));
   }
 }
