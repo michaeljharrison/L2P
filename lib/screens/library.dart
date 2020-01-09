@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:L2P/components/gameCard.dart';
 import 'package:L2P/models/dummyLibrary.dart';
 import 'package:L2P/screens/guideList.dart';
-import '../theme/theme.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class LibraryState extends State<Library> {

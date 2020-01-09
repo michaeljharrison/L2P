@@ -49,7 +49,7 @@ final ThemeData themeDefault = ThemeData(
         button: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w900,
-          fontSize: 10,
+          fontSize: 14,
         )),
     // Fonts
     fontFamily: 'Montserrat');
