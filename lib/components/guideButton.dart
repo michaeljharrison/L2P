@@ -37,10 +37,18 @@ class GuideButton extends StatelessWidget {
             ),
           ]));
     } else {
-      return FlatButton(
-        onPressed: () {},
-        child: Text(this.title, style: Theme.of(context).textTheme.button),
-        color: buttonSecondary,
+      return Flex(
+        direction: Axis.horizontal,
+        children: List<Widget>.from([
+          Expanded(
+            child: FlatButton(
+              onPressed: () {},
+              child:
+                  Text(this.title, style: Theme.of(context).textTheme.button),
+              color: buttonSecondary,
+            ),
+          )
+        ]),
       );
     }
   }

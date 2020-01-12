@@ -71,7 +71,7 @@ class _GuideSectionState extends State<GuideSection> {
     for (var i = 0; i < widget.buttonTitles.length; i++) {
       buttonList.add(GuideButton(
         key: Key(i.toString()),
-        index: i,
+        index: i + 1,
         title: widget.buttonTitles[i],
         numbered: widget.ordered,
       ));
