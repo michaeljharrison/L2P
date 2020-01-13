@@ -15,6 +15,8 @@ class GuideList extends StatefulWidget {
 class _GuideListState extends State<GuideList> {
   @override
   Widget build(BuildContext context) {
+    String gameTitle = widget.game.title;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -28,14 +30,25 @@ class _GuideListState extends State<GuideList> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 55),
+            padding: EdgeInsets.only(top: 20, left: 12, right: 12, bottom: 55),
             child: ListView(
               children: <Widget>[
-                Text(widget.game.title.replaceAll('_', ' '),
-                    style: Theme.of(context).textTheme.title),
+                Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(widget.game.title.replaceAll('_', ' '),
+                        style: Theme.of(context).textTheme.display1)
+                  ],
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                  child: Image.asset('assets/images/covers/Fog_Of_Love.png'),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: Image.asset(
+                    'assets/images/covers/$gameTitle.png',
+                    height: 200,
+                    width: 200,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
