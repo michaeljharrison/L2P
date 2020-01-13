@@ -31,7 +31,7 @@ class _GuideListState extends State<GuideList> {
             padding: EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 55),
             child: ListView(
               children: <Widget>[
-                Text(widget.game.title,
+                Text(widget.game.title.replaceAll('_', ' '),
                     style: Theme.of(context).textTheme.title),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
