@@ -72,7 +72,7 @@ final libraryData = [
       guideSections),
   new GameData(
       'X-Wing_Miniatures',
-      'Ready to jump into the most popular miniatures game this side of the galactic core? This advanced guide for Star Wars X-Wing will help you setup and play your first game, as well as provide a helpful rules reference.',
+      'Ready to jump into the least popular miniatures game this side of the galactic core? This advanced guide for Star Wars X-Wing will help you setup and play your first game, as well as provide a helpful rules reference.',
       Color.fromRGBO(101, 212, 186, 1),
       List<String>.from(["Tag A", "Tag B"]),
       guideSections),
