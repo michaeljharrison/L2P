@@ -37,13 +37,34 @@ class _GuideListState extends State<GuideList> {
                   padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                   child: Image.asset('assets/images/covers/Fog_Of_Love.png'),
                 ),
-                Text(widget.game.description,
-                    style: Theme.of(context).textTheme.body1),
-                Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.all(Radius.circular(99))),
-                    child: Text("Search...")),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Text(widget.game.description,
+                      style: Theme.of(context).textTheme.body1),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Container(
+                      height: 38,
+                      decoration: BoxDecoration(
+                          color: Colors.black45,
+                          borderRadius: BorderRadius.all(Radius.circular(99))),
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Text(
+                              "Search...",
+                              style:
+                                  TextStyle(color: buttonPrimary, fontSize: 18),
+                            ),
+                          )
+                        ],
+                      )),
+                ),
                 Column(
                   children: widget.game.guideSections,
                 )
