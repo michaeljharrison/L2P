@@ -4,10 +4,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
+// import 'package:firebase/firebase.dart';
 import 'theme/theme.dart';
 import 'screens/library.dart';
 
-void main() => runApp(MyApp());
+void main() {
+// ? Possibly needed for Web version of firebase.
+/*
+  initializeApp(
+      apiKey: "YourApiKey",
+      authDomain: "YourAuthDomain",
+      databaseURL: "YourDatabaseUrl",
+      projectId: "YourProjectId",
+      storageBucket: "YourStorageBucket"); */
+  return runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

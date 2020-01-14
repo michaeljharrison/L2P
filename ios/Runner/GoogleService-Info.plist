@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>223295580147-stev6p2d4f5g12qrv8on8ja22u0p9ses.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.223295580147-stev6p2d4f5g12qrv8on8ja22u0p9ses</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAXyjB7TEo6iAGxJCK5lJASJYOQDaiPR8s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>223295580147</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.busybees.l2p</string>
+	<key>PROJECT_ID</key>
+	<string>learn2play</string>
+	<key>STORAGE_BUCKET</key>
+	<string>learn2play.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:223295580147:ios:d22add19cb764af1471486</string>
+	<key>DATABASE_URL</key>
+	<string>https://learn2play.firebaseio.com</string>
+</dict>
+</plist>
