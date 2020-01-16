@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:L2P/components/guideButton.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -5,18 +7,18 @@ import '../theme/theme.dart';
 
 class GuideSection extends StatefulWidget {
   final String title;
-  final String body;
+  final String description;
   final bool ordered;
   final List<String> buttonTitles;
 
   GuideSection({
     Key key,
     String title,
-    String body,
+    String description,
     List<String> buttonTitles,
     bool ordered = false,
   })  : this.title = title,
-        this.body = body,
+        this.description = description,
         this.ordered = ordered,
         this.buttonTitles = buttonTitles,
         super(key: key);
@@ -28,8 +30,8 @@ class GuideSection extends StatefulWidget {
 class _GuideSectionState extends State<GuideSection> {
   @override
   Widget build(BuildContext context) {
-    if (widget.ordered) {
-    } else {}
+    log(widget.title);
+    log(widget.description);
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: Container(
@@ -42,7 +44,7 @@ class _GuideSectionState extends State<GuideSection> {
             header:
                 Text(widget.title, style: Theme.of(context).textTheme.display1),
             collapsed: Text(
-              widget.body,
+              widget.description,
               softWrap: true,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -51,7 +53,7 @@ class _GuideSectionState extends State<GuideSection> {
             expanded: Column(
               children: <Widget>[
                 Text(
-                  widget.body,
+                  widget.description,
                   softWrap: true,
                   style: Theme.of(context).textTheme.body1,
                 ),

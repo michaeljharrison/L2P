@@ -42,7 +42,7 @@ class GameCardState extends State<GameCard> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 6.0),
-              child: TagList(),
+              child: TagList(tags: widget.tags),
             )
           ],
         ));
@@ -50,17 +50,19 @@ class GameCardState extends State<GameCard> {
 }
 
 class GameCard extends StatefulWidget {
-  final String title;
+  String title;
   String coverLocation;
   // final String imgPath;
-  final String description;
-  // final List<String> tags;
+  String description;
+  List<String> tags;
 
-  GameCard({Key key, String title, String description})
-      : this.title = title.replaceAll('_', ' '),
-        this.description = description,
-        this.coverLocation = 'assets/images/covers/$title.png',
-        super(key: key);
+  GameCard({Key key, String title, String description, List<String> tags}) {
+    this.title = title;
+    this.description = description;
+    String titlePath = title.replaceAll(' ', '_');
+    this.coverLocation = 'assets/images/covers/$titlePath.png';
+    this.tags = tags;
+  }
 
   @override
   GameCardState createState() => GameCardState();

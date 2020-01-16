@@ -4,19 +4,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-// import 'package:firebase/firebase.dart';
+// import 'package:firebase/firebase.dart' as Firebase;
 import 'theme/theme.dart';
-import 'screens/library.dart';
+import 'screens/libraryScreen.dart';
 
 void main() {
-// ? Possibly needed for Web version of firebase.
-/*
-  initializeApp(
-      apiKey: "YourApiKey",
-      authDomain: "YourAuthDomain",
-      databaseURL: "YourDatabaseUrl",
-      projectId: "YourProjectId",
-      storageBucket: "YourStorageBucket"); */
+/*   if (Firebase.apps.isEmpty) {
+    Firebase.initializeApp(
+      apiKey: 'AIzaSyBJbFtUL95rKri_xd-_EZtKEf7xlNc0-Jk',
+      authDomain: 'learn2play.firebaseapp.com',
+      databaseURL: 'https://learn2play.firebaseio.com',
+      projectId: 'learn2play',
+      storageBucket: 'learn2play.appspot.com',
+      appId: '1:223295580147:web:9c92f61ac05e2acf471486',
+    );
+  } */
   return runApp(MyApp());
 }
 
@@ -63,7 +65,7 @@ class HomePage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        body: new Library(),
+        body: new LibraryScreen(),
       ),
     );
   }

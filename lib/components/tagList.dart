@@ -2,27 +2,30 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 
 class TagList extends StatelessWidget {
+  final List<String> tags;
+
   const TagList({
     Key key,
-  }) : super(key: key);
+    List<String> tags,
+  })  : this.tags = tags,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> tagWidgets = List<Widget>();
+    this.tags.forEach((tag) {
+      tagWidgets.add(Tag(value: tag, color: colorTagTeal));
+    });
     return new Flex(
         // Game Tags
         direction: Axis.horizontal,
         children: <Widget>[
           Expanded(
             child: new Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 4,
-              runSpacing: 4,
-              children: <Widget>[
-                Tag(value: 'TAG A', color: colorTagTeal),
-                Tag(value: 'TAG B', color: colorTagTeal),
-                Tag(value: 'TAG C', color: colorTagTeal),
-              ],
-            ),
+                alignment: WrapAlignment.start,
+                spacing: 4,
+                runSpacing: 4,
+                children: tagWidgets),
           )
         ]);
   }

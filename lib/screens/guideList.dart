@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:L2P/models/gameData.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
@@ -15,8 +17,6 @@ class GuideList extends StatefulWidget {
 class _GuideListState extends State<GuideList> {
   @override
   Widget build(BuildContext context) {
-    String gameTitle = widget.game.title;
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -45,7 +45,7 @@ class _GuideListState extends State<GuideList> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Image.asset(
-                    'assets/images/covers/$gameTitle.png',
+                    widget.game.coverLocation,
                     height: 200,
                     width: 200,
                   ),
@@ -79,8 +79,9 @@ class _GuideListState extends State<GuideList> {
                       )),
                 ),
                 Column(
-                  children: widget.game.guideSections,
-                )
+                    children: widget.game.guideSections != null
+                        ? widget.game.guideSections
+                        : <Widget>[])
               ],
             ),
           ),
