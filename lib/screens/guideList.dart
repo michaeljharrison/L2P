@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:L2P/models/gameData.dart';
+import 'package:L2P/components/game.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
 
 class GuideList extends StatefulWidget {
-  GameData game;
-  GuideList({Key key, GameData game})
+  Game game;
+  GuideList({Key key, Game game})
       : this.game = game,
         super(key: key);
 

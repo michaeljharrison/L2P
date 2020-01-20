@@ -4,7 +4,7 @@ import 'package:L2P/components/guideSection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class GameData {
+class Game {
   // Fields
   String title;
   String description;
@@ -14,7 +14,7 @@ class GameData {
   List<GuideSection> guideSections;
   CollectionReference guidesRef;
 
-  GameData({
+  Game({
     String title,
     String description,
     String coverLocation,
@@ -32,30 +32,43 @@ class GameData {
     this.guideSections = sections;
   }
 
-  static GameData fromSnapshot(DocumentSnapshot snapshot) {
+  static Game fromSnapshot(DocumentSnapshot snapshot) {
     String titlePath = snapshot.data['title'].replaceAll(' ', '_');
-    List<GuideSection> guideList = new List<GuideSection>();
-    snapshot.reference.collection('guides').getDocuments().then((guides) {
-      guides.documents.forEach((guideDoc) {
-        guideDoc.data.forEach((key, value) {
-          log('$key = $value');
+    List<GuideSection> guideSectionList = new List<GuideSection>();
+    snapshot.reference
+        .collection('sections')
+        .getDocuments()
+        .then((guideSections) {
+      guideSections.documents.forEach((guideSection) {
+        List<String> guideList = new List<String>();
+        guideSection.reference
+            .collection('guides')
+            .getDocuments()
+            .then((guides) {
+          guides.documents.forEach((guide) {
+            guideList.add(guide["title"]);
+          });
         });
-        guideList.add(new GuideSection(
-            title: guideDoc['title'],
-            description: guideDoc['description'],
-            ordered: guideDoc['ordered'],
-            buttonTitles: <String>[]));
+
+        guideSectionList.add(new GuideSection(
+            title: guideSection['title'],
+            description: guideSection['description'],
+            ordered: guideSection['ordered'],
+            order: guideSection['order'],
+            buttonTitles: guideList));
       });
     });
 
-    return new GameData(
+    guideSectionList.sort(GuideSection.sortByOrder);
+
+    return new Game(
       title: snapshot.data['title'],
       description: snapshot.data['description'],
       accent: Color.fromRGBO(snapshot.data['accent'][0],
           snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
       tags: List<String>.from(snapshot.data['tags']),
       coverLocation: 'assets/images/covers/$titlePath.png',
-      guideSections: guideList,
+      guideSections: guideSectionList,
     );
   }
 }

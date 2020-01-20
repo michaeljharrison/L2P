@@ -1,7 +1,4 @@
-import 'dart:developer';
-
-import 'package:L2P/models/gameData.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:L2P/components/game.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/components/gameCard.dart';
 import 'package:L2P/screens/guideList.dart';
@@ -20,8 +17,7 @@ class Library {
           crossAxisCount: 4,
           itemCount: snapshot.data.documents.length,
           itemBuilder: (BuildContext context, int index) {
-            GameData game =
-                GameData.fromSnapshot(snapshot.data.documents[index]);
+            Game game = Game.fromSnapshot(snapshot.data.documents[index]);
             return GestureDetector(
               onTap: () {
                 Navigator.push(

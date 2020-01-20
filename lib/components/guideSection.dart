@@ -9,6 +9,7 @@ class GuideSection extends StatefulWidget {
   final String title;
   final String description;
   final bool ordered;
+  final int order;
   final List<String> buttonTitles;
 
   GuideSection({
@@ -16,15 +17,25 @@ class GuideSection extends StatefulWidget {
     String title,
     String description,
     List<String> buttonTitles,
+    int order,
     bool ordered = false,
   })  : this.title = title,
         this.description = description,
         this.ordered = ordered,
+        this.order = order,
         this.buttonTitles = buttonTitles,
         super(key: key);
 
   @override
   _GuideSectionState createState() => _GuideSectionState();
+
+  static int sortByOrder(GuideSection a, GuideSection b) {
+    if (a.order < b.order) return -1;
+    if (a.order == b.order)
+      return 0;
+    else
+      return 1;
+  }
 }
 
 class _GuideSectionState extends State<GuideSection> {
