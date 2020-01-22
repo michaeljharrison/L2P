@@ -1,23 +1,54 @@
+import 'dart:developer';
+
 import 'package:L2P/components/game.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/components/gameCard.dart';
 import 'package:L2P/screens/guideList.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class Library {
-  static Widget buildLibraryCards(
-      BuildContext context, AsyncSnapshot snapshot) {
-    int libraryLength = snapshot.data.documents.length;
-    if (libraryLength == 0) {
-      return Text("No Games in Collection.");
+class Library extends StatefulWidget {
+  AsyncSnapshot snapshot;
+
+  Library({AsyncSnapshot snapshot}) {
+    this.snapshot = snapshot;
+  }
+  @override
+  _LibraryState createState() => _LibraryState();
+}
+
+class _LibraryState extends State<Library> {
+  List<Game> _gameList = <Game>[];
+
+  @override
+  void initState() {
+    log('Init Library State...');
+    buildLibrary(widget.snapshot);
+    super.initState();
+  }
+
+  void _appendToGameList(Game newGame) {
+    log('Appending game to game list...');
+    List<Game> newList = _gameList;
+    newList.add(newGame);
+    setState(() {
+      _gameList = newList;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    log('Building Library widget...');
+    if (_gameList == null || _gameList.length == 0) {
+      log('game list is empty...');
+      return new Text("LOADING");
     }
     return CustomScrollView(
       slivers: <Widget>[
         SliverStaggeredGrid.countBuilder(
           crossAxisCount: 4,
-          itemCount: snapshot.data.documents.length,
+          itemCount: _gameList.length,
           itemBuilder: (BuildContext context, int index) {
-            Game game = Game.fromSnapshot(snapshot.data.documents[index]);
+            Game game = _gameList[index];
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -39,5 +70,13 @@ class Library {
         )
       ],
     );
+  }
+
+  void buildLibrary(AsyncSnapshot snapshot) async {
+    log('Building Library State...');
+    snapshot.data.documents.forEach((document) async {
+      Game newGame = await Game.fromSnapshot(document);
+      _appendToGameList(newGame);
+    });
   }
 }

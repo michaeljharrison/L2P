@@ -1,4 +1,5 @@
 import 'package:L2P/components/game.dart';
+import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
 
@@ -15,6 +16,9 @@ class GuideList extends StatefulWidget {
 class _GuideListState extends State<GuideList> {
   @override
   Widget build(BuildContext context) {
+    if (widget.game.guideSections != null) {
+      widget.game.guideSections.sort(GuideSection.sortByOrder);
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

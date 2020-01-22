@@ -41,8 +41,6 @@ class GuideSection extends StatefulWidget {
 class _GuideSectionState extends State<GuideSection> {
   @override
   Widget build(BuildContext context) {
-    log(widget.title);
-    log(widget.description);
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: Container(

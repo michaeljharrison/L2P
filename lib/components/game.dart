@@ -32,16 +32,23 @@ class Game {
     this.guideSections = sections;
   }
 
-  static Game fromSnapshot(DocumentSnapshot snapshot) {
+  @override
+  String toString() {
+    String shortDesc = description.substring(0, 32);
+    return '{\nTitle - $title\nDescription - $shortDesc\nCoverLocation - $coverLocation\nAccent - $accent\nTags - $tags\nGuideSections - $guideSections\n}';
+  }
+
+  static Future<Game> fromSnapshot(DocumentSnapshot snapshot) async {
+    Game newGame;
     String titlePath = snapshot.data['title'].replaceAll(' ', '_');
     List<GuideSection> guideSectionList = new List<GuideSection>();
-    snapshot.reference
+    await snapshot.reference
         .collection('sections')
         .getDocuments()
-        .then((guideSections) {
-      guideSections.documents.forEach((guideSection) {
+        .then((guideSections) async {
+      guideSections.documents.forEach((guideSection) async {
         List<String> guideList = new List<String>();
-        guideSection.reference
+        await guideSection.reference
             .collection('guides')
             .getDocuments()
             .then((guides) {
@@ -57,18 +64,18 @@ class Game {
             order: guideSection['order'],
             buttonTitles: guideList));
       });
+
+      newGame = new Game(
+        title: snapshot.data['title'],
+        description: snapshot.data['description'],
+        accent: Color.fromRGBO(snapshot.data['accent'][0],
+            snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
+        tags: List<String>.from(snapshot.data['tags']),
+        coverLocation: 'assets/images/covers/$titlePath.png',
+        guideSections: guideSectionList,
+      );
     });
 
-    guideSectionList.sort(GuideSection.sortByOrder);
-
-    return new Game(
-      title: snapshot.data['title'],
-      description: snapshot.data['description'],
-      accent: Color.fromRGBO(snapshot.data['accent'][0],
-          snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
-      tags: List<String>.from(snapshot.data['tags']),
-      coverLocation: 'assets/images/covers/$titlePath.png',
-      guideSections: guideSectionList,
-    );
+    return newGame;
   }
 }

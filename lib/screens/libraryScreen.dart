@@ -16,7 +16,9 @@ class LibraryScreenState extends State<LibraryScreen> {
         } else {
           return new Padding(
               padding: const EdgeInsets.all(11.0),
-              child: Library.buildLibraryCards(context, snapshot));
+              child: Library(
+                snapshot: snapshot,
+              ));
         }
       },
     );
