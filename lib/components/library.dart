@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:L2P/components/game.dart';
+import 'package:L2P/models/game.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/components/gameCard.dart';
 import 'package:L2P/screens/guideList.dart';

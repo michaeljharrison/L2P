@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SectionState extends State<Section> {
-  final _visited = bool;
-
   @override
   Widget build(BuildContext context) {
     return Container(

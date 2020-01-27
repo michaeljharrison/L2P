@@ -5,10 +5,14 @@ class GuideButton extends StatelessWidget {
   final bool numbered;
   final String title;
   final int index;
-  const GuideButton({Key key, bool numbered, String title, int index})
+  final Function link;
+
+  const GuideButton(
+      {Key key, bool numbered, String title, int index, Function link})
       : this.numbered = numbered,
         this.title = title,
         this.index = index,
+        this.link = link,
         super(key: key);
 
   @override
@@ -21,7 +25,7 @@ class GuideButton extends StatelessWidget {
               padding: const EdgeInsets.only(right: 12.0),
               child: FlatButton(
                 padding: EdgeInsets.all(4),
-                onPressed: () {},
+                onPressed: link,
                 child: Text(this.index.toString(),
                     style: Theme.of(context).textTheme.button),
                 color: buttonPrimary,
@@ -29,7 +33,7 @@ class GuideButton extends StatelessWidget {
             ),
             Expanded(
               child: FlatButton(
-                onPressed: () {},
+                onPressed: link,
                 child:
                     Text(this.title, style: Theme.of(context).textTheme.button),
                 color: buttonPrimary,
@@ -42,7 +46,7 @@ class GuideButton extends StatelessWidget {
         children: List<Widget>.from([
           Expanded(
             child: FlatButton(
-              onPressed: () {},
+              onPressed: link,
               child:
                   Text(this.title, style: Theme.of(context).textTheme.button),
               color: buttonSecondary,

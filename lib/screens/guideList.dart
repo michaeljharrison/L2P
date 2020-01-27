@@ -1,4 +1,4 @@
-import 'package:L2P/components/game.dart';
+import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';

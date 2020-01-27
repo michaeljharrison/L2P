@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideButton.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +9,20 @@ class GuideSection extends StatefulWidget {
   final String description;
   final bool ordered;
   final int order;
-  final List<String> buttonTitles;
+  final List<Guide> guides;
 
   GuideSection({
     Key key,
     String title,
     String description,
-    List<String> buttonTitles,
+    List<Guide> guides,
     int order,
     bool ordered = false,
   })  : this.title = title,
         this.description = description,
         this.ordered = ordered,
         this.order = order,
-        this.buttonTitles = buttonTitles,
+        this.guides = guides,
         super(key: key);
 
   @override
@@ -79,13 +78,18 @@ class _GuideSectionState extends State<GuideSection> {
 
   List<Widget> buildButtonList() {
     List<Widget> buttonList = new List<Widget>();
-    for (var i = 0; i < widget.buttonTitles.length; i++) {
+    for (var i = 0; i < widget.guides.length; i++) {
       buttonList.add(GuideButton(
-        key: Key(i.toString()),
-        index: i + 1,
-        title: widget.buttonTitles[i],
-        numbered: widget.ordered,
-      ));
+          key: Key(i.toString()),
+          index: i + 1,
+          title: widget.guides[i].title,
+          numbered: widget.ordered,
+          link: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => widget.guides[i]),
+            );
+          }));
     }
     return buttonList;
   }

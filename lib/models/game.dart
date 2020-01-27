@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -47,13 +46,16 @@ class Game {
         .getDocuments()
         .then((guideSections) async {
       guideSections.documents.forEach((guideSection) async {
-        List<String> guideList = new List<String>();
+        List<Guide> guideList = new List<Guide>();
         await guideSection.reference
             .collection('guides')
             .getDocuments()
             .then((guides) {
           guides.documents.forEach((guide) {
-            guideList.add(guide["title"]);
+            guideList.add(new Guide(
+              title: guide["title"],
+              snapshot: guide,
+            ));
           });
         });
 
@@ -62,7 +64,7 @@ class Game {
             description: guideSection['description'],
             ordered: guideSection['ordered'],
             order: guideSection['order'],
-            buttonTitles: guideList));
+            guides: guideList));
       });
 
       newGame = new Game(
