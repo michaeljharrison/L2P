@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
 
 class GuideList extends StatefulWidget {
-  Game game;
+  final Game game;
   GuideList({Key key, Game game})
       : this.game = game,
         super(key: key);

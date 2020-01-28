@@ -53,7 +53,10 @@ class Game {
             .then((guides) {
           guides.documents.forEach((guide) {
             guideList.add(new Guide(
+              gameTitle: snapshot.data['title'],
               title: guide["title"],
+              accent: Color.fromRGBO(snapshot.data['accent'][0],
+                  snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
               snapshot: guide,
             ));
           });

@@ -7,11 +7,10 @@ import 'package:L2P/screens/guideList.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Library extends StatefulWidget {
-  AsyncSnapshot snapshot;
+  final AsyncSnapshot snapshot;
 
-  Library({AsyncSnapshot snapshot}) {
-    this.snapshot = snapshot;
-  }
+  Library({AsyncSnapshot snapshot}) : this.snapshot = snapshot;
+
   @override
   _LibraryState createState() => _LibraryState();
 }

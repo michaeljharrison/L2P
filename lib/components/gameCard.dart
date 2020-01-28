@@ -50,19 +50,17 @@ class GameCardState extends State<GameCard> {
 }
 
 class GameCard extends StatefulWidget {
-  String title;
-  String coverLocation;
-  // final String imgPath;
-  String description;
-  List<String> tags;
+  final String title;
+  final String coverLocation;
+  final String description;
+  final List<String> tags;
 
-  GameCard({Key key, String title, String description, List<String> tags}) {
-    this.title = title;
-    this.description = description;
-    String titlePath = title.replaceAll(' ', '_');
-    this.coverLocation = 'assets/images/covers/$titlePath.png';
-    this.tags = tags;
-  }
+  GameCard({Key key, String title, String description, List<String> tags})
+      : this.title = title,
+        this.description = description,
+        this.coverLocation =
+            'assets/images/covers/${title.replaceAll(' ', '_')}.png',
+        this.tags = tags;
 
   @override
   GameCardState createState() => GameCardState();

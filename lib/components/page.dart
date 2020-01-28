@@ -19,9 +19,26 @@ class Page extends StatefulWidget {
 class _PageState extends State<Page> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-          "${widget.title} - ${widget.description} - ${widget.imageLocation}"),
+    return Padding(
+      padding: const EdgeInsets.only(right: 12.0),
+      child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: cardBG,
+          ),
+          child: Flex(
+            direction: Axis.vertical,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                child: Text(widget.imageLocation,
+                    style: Theme.of(context).textTheme.body1),
+              ),
+              Text(widget.title, style: Theme.of(context).textTheme.subhead),
+              Text(widget.description,
+                  style: Theme.of(context).textTheme.body2),
+            ],
+          )),
     );
   }
 }

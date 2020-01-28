@@ -26,8 +26,6 @@ class LibraryScreenState extends State<LibraryScreen> {
 }
 
 class LibraryScreen extends StatefulWidget {
-  Library libraryData;
-
   @override
   LibraryScreenState createState() => LibraryScreenState();
 }
