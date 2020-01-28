@@ -71,6 +71,8 @@ class _GuideListState extends State<GuideList> {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(left: 20),
+
+                            /// TODO: Replace with a real search function.
                             child: Text(
                               "Search...",
                               style:

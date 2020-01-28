@@ -46,14 +46,15 @@ class Guide extends StatefulWidget {
 /// State class for the Guide Object.
 class _GuideState extends State<Guide> {
   /// List of pages in a guide.
-  List<Page> pages = <Page>[];
+  List<Page> _pages = <Page>[];
 
   void buildPageList() {
     log('Building Guide Page List...');
     widget.snapshot["pages"].forEach((page) {
       log('Adding page ${page["title"]}');
       setState(() {
-        pages.add(new Page(
+        /// TODO: Create a function to build page from model instead of passing in fields.
+        _pages.add(new Page(
             title: page["title"],
             description: page["description"],
             imageLocation: page["imageLocation"]));
@@ -81,6 +82,8 @@ class _GuideState extends State<Guide> {
                 Text(widget.gameTitle,
                     style: Theme.of(context).textTheme.headline),
                 Text(widget.title, style: Theme.of(context).textTheme.subhead),
+
+                /// TODO: Replace with a real progress bar..
                 Text("PROGRESS BAR GOES HERE",
                     style: Theme.of(context).textTheme.subhead),
               ],
@@ -127,7 +130,7 @@ class _GuideState extends State<Guide> {
     return PageView.builder(
         controller: PageController(),
         itemBuilder: (BuildContext context, int itemIndex) {
-          return pages[itemIndex];
+          return _pages[itemIndex];
         });
   }
 }

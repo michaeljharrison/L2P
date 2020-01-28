@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
+/// TODO: Make sure these colors match with the figma design.
 final cardBG = new Color.fromRGBO(42, 58, 72, 1);
 final systemBG = new Color.fromRGBO(26, 34, 42, 1);
 final uiElement = new Color.fromRGBO(96, 142, 172, 1);
@@ -16,6 +17,8 @@ final ThemeData themeDefault = ThemeData(
     primaryColor: cardBG,
     accentColor: buttonSecondary,
     dividerColor: uiElement,
+
+    /// TODO: Make sure these match exactly with the figma design.
     textTheme: new TextTheme(
         display1: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),

@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
         home: new SplashScreen(
             seconds: 0,
             navigateAfterSeconds: new HomePage(),
+
+            /// TODO: Replace with a text style from theme.
             title: new Text('L2P',
                 style: TextStyle(
                   color: buttonSecondary,
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
             // image: new Image.asset(''),
             backgroundColor: systemBG,
             // photoSize: 100.0,
+            /// TODO: Replace with a text style from theme.
             loadingText: new Text('Unboxing...',
                 style: TextStyle(
                   color: buttonSecondary,

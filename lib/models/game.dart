@@ -37,6 +37,7 @@ class Game {
     return '{\nTitle - $title\nDescription - $shortDesc\nCoverLocation - $coverLocation\nAccent - $accent\nTags - $tags\nGuideSections - $guideSections\n}';
   }
 
+  /// TODO: Replace this with individual models. E.G: Game, Guide, Page etc...
   static Future<Game> fromSnapshot(DocumentSnapshot snapshot) async {
     Game newGame;
     String titlePath = snapshot.data['title'].replaceAll(' ', '_');
