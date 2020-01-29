@@ -75,22 +75,33 @@ class _GuideState extends State<Guide> {
           ),
         ),
         body: Stack(fit: StackFit.expand, children: <Widget>[
-          Container(
-            decoration: BoxDecoration(color: cardBG),
-            child: Column(
-              children: <Widget>[
-                Text(widget.gameTitle,
-                    style: Theme.of(context).textTheme.headline),
-                Text(widget.title, style: Theme.of(context).textTheme.subhead),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              height: 134,
+              decoration: BoxDecoration(color: widget.accent),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 10.0),
+                child: Flex(
+                  direction: Axis.vertical,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(widget.gameTitle,
+                        style: Theme.of(context).textTheme.headline),
+                    Text(widget.title,
+                        style: Theme.of(context).textTheme.subhead),
 
-                /// TODO: Replace with a real progress bar..
-                Text("PROGRESS BAR GOES HERE",
-                    style: Theme.of(context).textTheme.subhead),
-              ],
+                    /// TODO: Replace with a real progress bar..
+                    Text("PROGRESS BAR GOES HERE",
+                        style: Theme.of(context).textTheme.subhead),
+                  ],
+                ),
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 22.0, bottom: 22.0, left: 24.0),
+            padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
             child: renderGuide(),
           ),
           Align(

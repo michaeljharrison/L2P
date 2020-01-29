@@ -20,24 +20,28 @@ class _PageState extends State<Page> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 12.0),
+      padding:
+          const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
       child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
             color: cardBG,
           ),
-          child: Flex(
-            direction: Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: Text(widget.imageLocation,
-                    style: Theme.of(context).textTheme.body1),
-              ),
-              Text(widget.title, style: Theme.of(context).textTheme.subhead),
-              Text(widget.description,
-                  style: Theme.of(context).textTheme.body2),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Flex(
+              direction: Axis.vertical,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  child: Text(widget.imageLocation,
+                      style: Theme.of(context).textTheme.body1),
+                ),
+                Text(widget.title, style: Theme.of(context).textTheme.subhead),
+                Text(widget.description,
+                    style: Theme.of(context).textTheme.body2),
+              ],
+            ),
           )),
     );
   }
