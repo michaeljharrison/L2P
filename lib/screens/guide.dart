@@ -47,17 +47,23 @@ class Guide extends StatefulWidget {
 class _GuideState extends State<Guide> {
   /// List of pages in a guide.
   List<Page> _pages = <Page>[];
+  int _currentPage = 0;
 
   void buildPageList() {
     log('Building Guide Page List...');
-    widget.snapshot["pages"].forEach((page) {
-      log('Adding page ${page["title"]}');
-      setState(() {
-        /// TODO: Create a function to build page from model instead of passing in fields.
-        _pages.add(new Page(
-            title: page["title"],
-            description: page["description"],
-            imageLocation: page["imageLocation"]));
+    widget.snapshot.reference
+        .collection('pages')
+        .getDocuments()
+        .then((documents) {
+      documents.documents.forEach((page) {
+        log('Adding page ${page["title"]}');
+        setState(() {
+          /// TODO: Create a function to build page from model instead of passing in fields.
+          _pages.add(new Page(
+              title: page["title"],
+              description: page["description"],
+              imageLocation: page["imageLocation"]));
+        });
       });
     });
   }
@@ -93,8 +99,12 @@ class _GuideState extends State<Guide> {
                         style: Theme.of(context).textTheme.subhead),
 
                     /// TODO: Replace with a real progress bar..
-                    Text("PROGRESS BAR GOES HERE",
-                        style: Theme.of(context).textTheme.subhead),
+                    Container(
+                      width: 1000,
+                      child: LinearProgressIndicator(
+                          backgroundColor: Colors.black,
+                          value: (_currentPage + 1 / _pages.length)),
+                    ),
                   ],
                 ),
               ),
@@ -137,9 +147,17 @@ class _GuideState extends State<Guide> {
   }
 
   Widget renderGuide() {
-    buildPageList();
+    if (_pages.length < 1) {
+      buildPageList();
+    }
     return PageView.builder(
         controller: PageController(),
+        itemCount: _pages.length,
+        onPageChanged: (pageIndex) {
+          setState(() {
+            _currentPage = pageIndex;
+          });
+        },
         itemBuilder: (BuildContext context, int itemIndex) {
           return _pages[itemIndex];
         });
