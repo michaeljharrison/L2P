@@ -4,15 +4,19 @@ import '../theme/theme.dart';
 
 class GameCard extends StatelessWidget {
   final String title;
-  final String coverLocation;
+  final Image coverImage;
   final String description;
   final List<String> tags;
 
-  GameCard({Key key, String title, String description, List<String> tags})
+  GameCard(
+      {Key key,
+      String title,
+      String description,
+      List<String> tags,
+      Image coverImage})
       : this.title = title,
         this.description = description,
-        this.coverLocation =
-            'assets/images/covers/${title.replaceAll(' ', '_')}.png',
+        this.coverImage = coverImage,
         this.tags = tags;
 
   @override
@@ -42,7 +46,7 @@ class GameCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20, bottom: 20),
               child: new Container(
                 // Game Image
-                child: new Image.asset(coverLocation),
+                child: coverImage,
               ),
             ),
             new Container(

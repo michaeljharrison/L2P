@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:L2P/components/page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:L2P/theme/theme.dart';
 
 /// Guide Class
@@ -99,11 +100,16 @@ class _GuideState extends State<Guide> {
                         style: Theme.of(context).textTheme.subhead),
 
                     /// TODO: Replace with a real progress bar..
-                    Container(
-                      width: 1000,
-                      child: LinearProgressIndicator(
-                          backgroundColor: Colors.black,
-                          value: (_currentPage + 1 / _pages.length)),
+                    LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width - 50,
+                      animation: true,
+                      lineHeight: 20.0,
+                      animationDuration: 1000,
+                      animateFromLastPercent: true,
+                      percent: _currentPage / _pages.length,
+                      center: Text('${_currentPage + 1} / ${_pages.length}'),
+                      linearStrokeCap: LinearStrokeCap.roundAll,
+                      progressColor: Colors.green,
                     ),
                   ],
                 ),

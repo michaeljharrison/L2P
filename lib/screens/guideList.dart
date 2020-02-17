@@ -45,13 +45,8 @@ class _GuideListState extends State<GuideList> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: Image.asset(
-                    widget.game.coverLocation,
-                    height: 200,
-                    width: 200,
-                  ),
-                ),
+                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: widget.game.coverImage),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Text(widget.game.description,

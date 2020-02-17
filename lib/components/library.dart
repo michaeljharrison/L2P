@@ -37,6 +37,11 @@ class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
     log('Building Library widget...');
+    log(widget.snapshot.connectionState.toString());
+    if (widget.snapshot.connectionState == ConnectionState.done &&
+        (_gameList == null || _gameList.length == 0)) {
+      return new Text("Failed to fetch any documents.");
+    }
     if (_gameList == null || _gameList.length == 0) {
       log('game list is empty...');
       return new Text("LOADING");
@@ -60,7 +65,8 @@ class _LibraryState extends State<Library> {
                   key: new Key('game_$index'),
                   title: game.title,
                   description: game.description,
-                  tags: game.tags),
+                  tags: game.tags,
+                  coverImage: game.coverImage),
             );
           },
           staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
