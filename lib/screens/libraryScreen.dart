@@ -11,6 +11,9 @@ class LibraryScreenState extends State<LibraryScreen> {
       stream: Firestore.instance.collection('Games').snapshots(),
       builder: (context, snapshot) {
         log('Connection: $snapshot');
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Text('Complete.')
+        }
         if (!snapshot.hasData) {
           return const Text('Loading');
         } else {
