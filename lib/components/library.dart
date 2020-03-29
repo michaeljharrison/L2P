@@ -44,7 +44,7 @@ class _LibraryState extends State<Library> {
     }
     if (_gameList == null || _gameList.length == 0) {
       log('game list is empty...');
-      return new Text("LOADING");
+      return new Text("Game list empty.");
     }
     return CustomScrollView(
       slivers: <Widget>[
@@ -80,8 +80,12 @@ class _LibraryState extends State<Library> {
   void buildLibrary(AsyncSnapshot snapshot) async {
     log('Building Library State...');
     snapshot.data.documents.forEach((document) async {
-      Game newGame = await Game.fromSnapshot(document);
-      _appendToGameList(newGame);
+      if (document.data["prod"] is bool && document.data["prod"] == true) {
+        Game newGame = await Game.fromSnapshot(document);
+        if (newGame != null) {
+          _appendToGameList(newGame);
+        }
+      }
     });
   }
 }

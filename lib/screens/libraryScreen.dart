@@ -8,20 +8,22 @@ class LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection('Games').snapshots(),
+      stream: Firestore.instance.collection('games').snapshots(),
       builder: (context, snapshot) {
         log('Connection: $snapshot');
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Text('Complete.')
+        if (snapshot.connectionState == ConnectionState.active &&
+            !snapshot.hasData) {
+          return Text('No Data found.');
         }
-        if (!snapshot.hasData) {
-          return const Text('Loading');
-        } else {
+        if (snapshot.connectionState == ConnectionState.active) {
           return new Padding(
               padding: const EdgeInsets.all(11.0),
               child: Library(
                 snapshot: snapshot,
               ));
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text('Loading');
         }
       },
     );
