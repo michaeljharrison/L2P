@@ -89,7 +89,8 @@ class Game {
               await guides.documents.forEach((guide) {
                 guideList.add(new Guide(
                   gameTitle: snapshot.data['title'],
-                  title: guide["title"],
+                  title: guide["Name"],
+                  // order: guide.data["Order"]
                   // accent: Color.fromRGBO(snapshot.data['accent'][0],
                   //    snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
                   snapshot: guide,
@@ -99,10 +100,12 @@ class Game {
           });
 
           guideSectionList.add(new GuideSection(
-              title: guideSection['title'],
-              description: guideSection['description'],
-              ordered: guideSection['ordered'],
-              order: guideSection['order'],
+              title: guideSection['Section Name'],
+              description: (guideSection['description'] != null)
+                  ? guideSection['description']
+                  : "No Description.",
+              ordered: (guideSection['Order'] != null) ? true : false,
+              order: int.parse(guideSection['Order']),
               guides: guideList));
         });
       }

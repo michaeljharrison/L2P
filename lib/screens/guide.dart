@@ -50,20 +50,27 @@ class _GuideState extends State<Guide> {
   List<Page> _pages = <Page>[];
   int _currentPage = 0;
 
-  void buildPageList() {
+  void buildPageList() async {
     log('Building Guide Page List...');
     widget.snapshot.reference
         .collection('pages')
         .getDocuments()
         .then((documents) {
-      documents.documents.forEach((page) {
-        log('Adding page ${page["title"]}');
+      documents.documents.forEach((page) async {
+        log('Adding page ${page["Page Code"]}');
+        Page newPage = await Page.fromSnapshot(page);
         setState(() {
           /// TODO: Create a function to build page from model instead of passing in fields.
-          _pages.add(new Page(
-              title: page["title"],
-              description: page["description"],
-              imageLocation: page["imageLocation"]));
+          _pages.add(newPage
+/*             new Page(
+              title: (page["Title"] != null) ? page["Title"] : "No Title",
+              description: (page["Instructions"] != null)
+                  ? page["Instructions"]
+                  : "No Instructions.",
+              imageLocation: (page["imageLocation"] != null)
+                  ? page["imageLocation"]
+                  : "No Image.") */
+              );
         });
       });
     });

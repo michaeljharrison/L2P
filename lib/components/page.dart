@@ -1,19 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
 
 class Page extends StatefulWidget {
   final String title;
   final String description;
-  final String imageLocation;
+  final Image image;
 
-  Page({Key key, String title, String description, String imageLocation})
+  Page({Key key, String title, String description, Image image})
       : this.title = title,
         this.description = description,
-        this.imageLocation = imageLocation,
+        this.image = image,
         super(key: key);
 
   @override
   _PageState createState() => _PageState();
+
+  static Future<Page> fromSnapshot(DocumentSnapshot snapshot) async {
+    // First, get the box image for the title:
+    String imgPath = 'guides/${snapshot.data['Page Code']}.png';
+    Image img;
+    try {
+      var downloadURL =
+          await FirebaseStorage.instance.ref().child(imgPath).getDownloadURL();
+      if (downloadURL != null) {
+        img = Image.network(
+          downloadURL.toString(),
+          fit: BoxFit.scaleDown,
+        );
+      }
+    } catch (error) {
+      img = Image.asset("Catan.png");
+      print(error.toString());
+    }
+
+    return Page(
+        title: (snapshot.data["Title"] != null)
+            ? snapshot.data["Title"]
+            : "No Title",
+        description: (snapshot.data["Instructions"] != null)
+            ? snapshot.data["Instructions"]
+            : "No Instructions.",
+        image: img);
+  }
 }
 
 class _PageState extends State<Page> {
@@ -34,8 +64,7 @@ class _PageState extends State<Page> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Expanded(
-                  child: Text(widget.imageLocation,
-                      style: Theme.of(context).textTheme.body1),
+                  child: widget.image,
                 ),
                 Text(widget.title, style: Theme.of(context).textTheme.subhead),
                 Text(widget.description,
