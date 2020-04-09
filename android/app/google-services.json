@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "223295580147",
+    "firebase_url": "https://learn2play.firebaseio.com",
+    "project_id": "learn2play",
+    "storage_bucket": "learn2play.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223295580147:android:d1b2ca2df78ed51e471486",
+        "android_client_info": {
+          "package_name": "com.busybees.l2p"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223295580147-ghflvk7255up4di0uji15tjajbf80t4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsrT1O3lrb6W1PmB8Mo3kiz5KNbfF1Ijo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223295580147-ghflvk7255up4di0uji15tjajbf80t4g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "223295580147-stev6p2d4f5g12qrv8on8ja22u0p9ses.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.busybees.l2p"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
