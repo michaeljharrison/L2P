@@ -6,73 +6,56 @@ class BottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 11, left: 55, right: 55),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-              color: colorBottomNav, borderRadius: BorderRadius.circular(50)),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 6.0),
-            child: Flex(
-                direction: Axis.horizontal,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  GestureDetector(
-                    child: Flex(
-                      direction: Axis.vertical,
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 10,
-                        ),
-                        Text(
+    return Stack(
+      children: [
+        Container(
+            height: 110,
+            padding:
+                const EdgeInsets.only(top: 15, bottom: 25, left: 55, right: 55),
+            child: Container(
+              decoration: BoxDecoration(
+                color: colorBottomNav,
+                borderRadius: BorderRadius.circular(50),
+              ),
+            )),
+        Container(
+            height: 110,
+            padding: const EdgeInsets.only(left: 55, right: 55),
+            child: Container(
+                padding: EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: BottomNavigationBar(
+                    elevation: 0,
+                    backgroundColor: colorTransparent,
+                    items: [
+                      new BottomNavigationBarItem(
+                        icon: const Icon(Icons.home),
+                        title: new Text(
                           'LIBRARY',
                           style: TextStyle(color: Colors.white, fontSize: 10),
                           textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Flex(
-                      direction: Axis.vertical,
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 10,
-                        ),
-                        Text(
+                      ),
+                      new BottomNavigationBarItem(
+                        icon: const Icon(Icons.home),
+                        title: new Text(
                           'STORE',
                           style: TextStyle(color: Colors.white, fontSize: 10),
                           textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Flex(
-                      direction: Axis.vertical,
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 10,
-                        ),
-                        Text(
+                      ),
+                      new BottomNavigationBarItem(
+                        icon: const Icon(Icons.home),
+                        title: new Text(
                           'SETTINGS',
                           style: TextStyle(color: Colors.white, fontSize: 10),
                           textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
-                  )
-                ]),
-          ),
-        ),
-      ),
+                      ),
+                    ])))
+      ],
     );
   }
 }

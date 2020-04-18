@@ -1,4 +1,3 @@
-import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +84,6 @@ class _GuideListState extends State<GuideList> {
               ],
             ),
           ),
-          BottomNav()
         ],
       ),
     );

@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:L2P/components/bottomNav.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 // import 'package:firebase/firebase.dart' as Firebase;
@@ -60,16 +61,16 @@ class HomePage extends StatelessWidget {
       title: 'L2P',
       theme: themeDefault,
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Learn to Play',
-            style: Theme.of(context).textTheme.title,
-            textAlign: TextAlign.center,
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Learn to Play',
+              style: Theme.of(context).textTheme.title,
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
-        body: new LibraryScreen(),
-      ),
+          body: new LibraryScreen(),
+          bottomNavigationBar: BottomNav()),
     );
   }
 }

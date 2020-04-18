@@ -27,7 +27,6 @@ class LibraryScreenState extends State<LibraryScreen> {
                     child: Library(
                       snapshot: snapshot,
                     )),
-                BottomNav(),
               ],
             ),
           );
