@@ -9,6 +9,8 @@ final buttonPrimary = new Color.fromRGBO(0, 168, 221, 1);
 final buttonSecondary = new Color.fromRGBO(101, 212, 186, 1);
 final progressIndicator = new Color.fromRGBO(02, 142, 172, 1);
 final colorTagTeal = new Color.fromRGBO(101, 212, 186, 1);
+final colorTabBar = new Color.fromRGBO(12, 17, 21, 1);
+final colorBottomNav = new Color.fromRGBO(12, 17, 21, 0.8);
 
 /// THEMES
 /// Default Theme for the application.

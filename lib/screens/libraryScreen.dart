@@ -1,3 +1,4 @@
+import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/components/library.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,20 @@ class LibraryScreenState extends State<LibraryScreen> {
           return Text('No Data found.');
         }
         if (snapshot.connectionState == ConnectionState.active) {
-          return new Padding(
-              padding: const EdgeInsets.all(11.0),
-              child: Library(
-                snapshot: snapshot,
-              ));
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: Stack(
+              children: [
+                new Padding(
+                    padding: const EdgeInsets.only(
+                        top: 11.0, left: 11.0, right: 11.0, bottom: 80.0),
+                    child: Library(
+                      snapshot: snapshot,
+                    )),
+                BottomNav(),
+              ],
+            ),
+          );
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('Loading');

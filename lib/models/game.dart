@@ -100,9 +100,9 @@ class Game {
           });
 
           guideSectionList.add(new GuideSection(
-              title: guideSection['Section Name'],
+              title: guideSection['Label'],
               description: (guideSection['description'] != null)
-                  ? guideSection['description']
+                  ? guideSection['Section Description']
                   : "No Description.",
               ordered: (guideSection['Order'] != null) ? true : false,
               order: int.parse(guideSection['Order']),

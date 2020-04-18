@@ -1,3 +1,4 @@
+import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
@@ -84,35 +85,7 @@ class _GuideListState extends State<GuideList> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 50,
-                color: cardBG,
-                child: Flex(
-                    direction: Axis.vertical,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Back to Library',
-                        style: TextStyle(color: buttonPrimary, fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: buttonPrimary,
-                        size: 14,
-                        semanticLabel: 'Back to Library',
-                      )
-                    ]),
-              ),
-            ),
-          )
+          BottomNav()
         ],
       ),
     );
