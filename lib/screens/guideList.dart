@@ -1,3 +1,4 @@
+import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +29,12 @@ class _GuideListState extends State<GuideList> {
           textAlign: TextAlign.center,
         ),
       ),
+      bottomNavigationBar: BottomNav(),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 20, left: 12, right: 12, bottom: 55),
+            padding: EdgeInsets.only(top: 20, left: 12, right: 12, bottom: 0),
             child: ListView(
               children: <Widget>[
                 Flex(
