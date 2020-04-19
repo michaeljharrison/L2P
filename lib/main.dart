@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:L2P/components/bottomNav.dart';
+import 'package:L2P/screens/settingsScreen.dart';
+import 'package:L2P/screens/storeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 // import 'package:firebase/firebase.dart' as Firebase;
@@ -73,28 +75,8 @@ class HomePage extends StatelessWidget {
             ),
             body: new LibraryScreen(),
             bottomNavigationBar: BottomNav()),
-        '/settings': (context) => Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                'Settings',
-                style: Theme.of(context).textTheme.title,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            body: new LibraryScreen(),
-            bottomNavigationBar: BottomNav()),
-        '/store': (context) => Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                'Store',
-                style: Theme.of(context).textTheme.title,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            body: new LibraryScreen(),
-            bottomNavigationBar: BottomNav())
+        '/settings': (context) => SettingsScreen(),
+        '/store': (context) => StoreScreen(),
       },
     );
   }

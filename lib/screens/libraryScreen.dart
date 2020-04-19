@@ -23,7 +23,7 @@ class LibraryScreenState extends State<LibraryScreen> {
               children: [
                 new Padding(
                     padding: const EdgeInsets.only(
-                        top: 11.0, left: 11.0, right: 11.0, bottom: 80.0),
+                        top: 11.0, left: 11.0, right: 11.0, bottom: 0.0),
                     child: Library(
                       snapshot: snapshot,
                     )),
