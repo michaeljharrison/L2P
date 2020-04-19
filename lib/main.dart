@@ -60,17 +60,42 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       title: 'L2P',
       theme: themeDefault,
-      home: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'Learn to Play',
-              style: Theme.of(context).textTheme.title,
-              textAlign: TextAlign.center,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                'Library',
+                style: Theme.of(context).textTheme.title,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          body: new LibraryScreen(),
-          bottomNavigationBar: BottomNav()),
+            body: new LibraryScreen(),
+            bottomNavigationBar: BottomNav()),
+        '/settings': (context) => Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                'Settings',
+                style: Theme.of(context).textTheme.title,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            body: new LibraryScreen(),
+            bottomNavigationBar: BottomNav()),
+        '/store': (context) => Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                'Store',
+                style: Theme.of(context).textTheme.title,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            body: new LibraryScreen(),
+            bottomNavigationBar: BottomNav())
+      },
     );
   }
 }
