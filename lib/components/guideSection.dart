@@ -50,7 +50,7 @@ class _GuideSectionState extends State<GuideSection> {
           child: ExpandablePanel(
             theme: expandableThemeDefault,
             header:
-                Text(widget.title, style: Theme.of(context).textTheme.display1),
+                Text(widget.title, style: Theme.of(context).textTheme.headline),
             collapsed: Text(
               widget.description,
               softWrap: true,
