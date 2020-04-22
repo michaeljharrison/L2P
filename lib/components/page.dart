@@ -7,15 +7,25 @@ class Page extends StatefulWidget {
   final String title;
   final String description;
   final Image image;
+  final int order;
 
-  Page({Key key, String title, String description, Image image})
+  Page({Key key, String title, String description, Image image, int order})
       : this.title = title,
         this.description = description,
         this.image = image,
+        this.order = order,
         super(key: key);
 
   @override
   _PageState createState() => _PageState();
+
+  static int sortByOrder(Page a, Page b) {
+    if (a.order < b.order) return -1;
+    if (a.order == b.order)
+      return 0;
+    else
+      return 1;
+  }
 
   static Future<Page> fromSnapshot(DocumentSnapshot snapshot) async {
     // First, get the box image for the title:
@@ -42,7 +52,10 @@ class Page extends StatefulWidget {
         description: (snapshot.data["Instructions"] != null)
             ? snapshot.data["Instructions"]
             : "No Instructions.",
-        image: img);
+        image: img,
+        order: (snapshot.data["Order"] != null)
+            ? int.parse(snapshot.data["Order"])
+            : 0);
   }
 }
 
@@ -67,6 +80,8 @@ class _PageState extends State<Page> {
                   child: widget.image,
                 ),
                 Text(widget.title, style: Theme.of(context).textTheme.subhead),
+                Text(widget.order.toString(),
+                    style: Theme.of(context).textTheme.subhead),
                 Text(widget.description,
                     style: Theme.of(context).textTheme.body2),
               ],

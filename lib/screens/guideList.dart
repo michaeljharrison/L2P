@@ -21,6 +21,7 @@ class _GuideListState extends State<GuideList> {
       widget.game.guideSections.sort(GuideSection.sortByOrder);
     }
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text(

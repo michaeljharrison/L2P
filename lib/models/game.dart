@@ -83,7 +83,6 @@ class Game {
           List<Guide> guideList = new List<Guide>();
           // Then get a list of GUIDES
           await guidesCollection.getDocuments().then((guides) async {
-            log(guides.toString());
             if (guides.documents.length > 0) {
               // FOR EACH GUIDE
               await guides.documents.forEach((guide) {

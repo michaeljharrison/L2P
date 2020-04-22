@@ -11,7 +11,6 @@ class LibraryScreenState extends State<LibraryScreen> {
     return StreamBuilder(
       stream: Firestore.instance.collection('games').snapshots(),
       builder: (context, snapshot) {
-        log('Connection: $snapshot');
         if (snapshot.connectionState == ConnectionState.active &&
             !snapshot.hasData) {
           return Text('No Data found.');

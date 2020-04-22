@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         title: 'L2P',
         theme: themeDefault,
         home: new SplashScreen(
-            seconds: 0,
+            seconds: 5,
             navigateAfterSeconds: new HomePage(),
 
             /// TODO: Replace with a text style from theme.
@@ -65,6 +65,7 @@ class HomePage extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Scaffold(
+            backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
               centerTitle: true,
               title: Text(

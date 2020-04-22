@@ -12,6 +12,7 @@ class _StoreScreenState extends State<StoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           centerTitle: true,
           title: Text(

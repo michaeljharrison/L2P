@@ -19,6 +19,7 @@ final ThemeData themeDefault = ThemeData(
     // Colors
     brightness: Brightness.dark,
     primaryColor: cardBG,
+    backgroundColor: systemBG,
     accentColor: buttonSecondary,
     dividerColor: uiElement,
 

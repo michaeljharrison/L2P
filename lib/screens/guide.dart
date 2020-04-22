@@ -61,16 +61,7 @@ class _GuideState extends State<Guide> {
         Page newPage = await Page.fromSnapshot(page);
         setState(() {
           /// TODO: Create a function to build page from model instead of passing in fields.
-          _pages.add(newPage
-/*             new Page(
-              title: (page["Title"] != null) ? page["Title"] : "No Title",
-              description: (page["Instructions"] != null)
-                  ? page["Instructions"]
-                  : "No Instructions.",
-              imageLocation: (page["imageLocation"] != null)
-                  ? page["imageLocation"]
-                  : "No Image.") */
-              );
+          _pages.add(newPage);
         });
       });
     });
@@ -78,8 +69,11 @@ class _GuideState extends State<Guide> {
 
   @override
   Widget build(BuildContext context) {
-    log('Rendering Guide: ');
+    if (_pages != null) {
+      _pages.sort(Page.sortByOrder);
+    }
     return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -92,33 +86,35 @@ class _GuideState extends State<Guide> {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              height: 134,
-              decoration: BoxDecoration(color: widget.accent),
+              height: 94,
+              decoration: BoxDecoration(color: cardBG),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0, top: 10.0),
-                child: Flex(
-                  direction: Axis.vertical,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(widget.gameTitle,
-                        style: Theme.of(context).textTheme.headline),
-                    Text(widget.title,
-                        style: Theme.of(context).textTheme.subhead),
+                child: Container(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(widget.gameTitle,
+                          style: Theme.of(context).textTheme.headline),
+                      Text(widget.title,
+                          style: Theme.of(context).textTheme.subhead),
 
-                    /// TODO: Replace with a real progress bar..
-                    LinearPercentIndicator(
-                      width: MediaQuery.of(context).size.width - 50,
-                      animation: true,
-                      lineHeight: 20.0,
-                      animationDuration: 1000,
-                      animateFromLastPercent: true,
-                      percent: _currentPage / _pages.length,
-                      center: Text('${_currentPage + 1} / ${_pages.length}'),
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      progressColor: Colors.green,
-                    ),
-                  ],
+                      /// TODO: Replace with a real progress bar..
+                      LinearPercentIndicator(
+                        width: MediaQuery.of(context).size.width - 50,
+                        animation: true,
+                        lineHeight: 20.0,
+                        animationDuration: 1000,
+                        animateFromLastPercent: true,
+                        percent: _currentPage / _pages.length,
+                        center: Text('${_currentPage + 1} / ${_pages.length}'),
+                        linearStrokeCap: LinearStrokeCap.roundAll,
+                        progressColor: Colors.green,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
