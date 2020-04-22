@@ -63,7 +63,7 @@ class _GuideListState extends State<GuideList> {
                     children: <Widget>[
                       TabBar(
                         tabs: [
-                          Tab(text: "Library", icon: Icon(Icons.local_library)),
+                          Tab(text: "Guides", icon: Icon(Icons.local_library)),
                           Tab(
                               text: "References",
                               icon: Icon(Icons.library_books)),
@@ -73,7 +73,7 @@ class _GuideListState extends State<GuideList> {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
+                        padding: const EdgeInsets.only(top: 12, bottom: 12.0),
                         child: Container(
                             height: 38,
                             decoration: BoxDecoration(
@@ -102,13 +102,17 @@ class _GuideListState extends State<GuideList> {
                         height: MediaQuery.of(context).size.height - 340,
                         child: TabBarView(
                           children: <Widget>[
-                            ListView(
-                              children: <Widget>[
-                                Column(
-                                    children: widget.game.guideSections != null
-                                        ? widget.game.guideSections
-                                        : <Widget>[])
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: ListView(
+                                children: <Widget>[
+                                  Column(
+                                      children:
+                                          widget.game.guideSections != null
+                                              ? widget.game.guideSections
+                                              : <Widget>[])
+                                ],
+                              ),
                             ),
                             Column(
                               children: <Widget>[

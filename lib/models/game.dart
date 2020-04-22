@@ -65,7 +65,7 @@ class Game {
         );
       }
     } catch (error) {
-      img = Image.asset("Catan.png");
+      img = Image.asset("assets/images/covers/Catan.png");
       print(error.toString());
     }
 

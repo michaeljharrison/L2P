@@ -32,27 +32,27 @@ class MyApp extends StatelessWidget {
         title: 'L2P',
         theme: themeDefault,
         home: new SplashScreen(
-            seconds: 5,
+            seconds: 3,
             navigateAfterSeconds: new HomePage(),
 
             /// TODO: Replace with a text style from theme.
-            title: new Text('L2P',
-                style: TextStyle(
-                  color: buttonSecondary,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 74,
-                )),
-            // image: new Image.asset(''),
+            photoSize: 120,
+            image: new Image.asset(
+              'icons/Logo.png',
+              height: 60,
+              width: 120,
+              fit: BoxFit.contain,
+            ),
             backgroundColor: systemBG,
             // photoSize: 100.0,
             /// TODO: Replace with a text style from theme.
             loadingText: new Text('Unboxing...',
                 style: TextStyle(
-                  color: buttonSecondary,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 26,
+                  color: buttonPrimary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 )),
-            loaderColor: buttonSecondary));
+            loaderColor: buttonPrimary));
   }
 }
 
