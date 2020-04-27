@@ -78,10 +78,11 @@ class _GuideSectionState extends State<GuideSection> {
 
   List<Widget> buildButtonList() {
     List<Widget> buttonList = new List<Widget>();
+    widget.guides.sort(Guide.sortByOrder);
     for (var i = 0; i < widget.guides.length; i++) {
       buttonList.add(GuideButton(
-          key: Key(i.toString()),
-          index: i + 1,
+          key: Key(widget.guides[i].order.toString()),
+          index: widget.guides[i].order,
           title: widget.guides[i].title,
           numbered: widget.ordered,
           link: () {

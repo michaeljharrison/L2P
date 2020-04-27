@@ -89,7 +89,9 @@ class Game {
                 guideList.add(new Guide(
                   gameTitle: snapshot.data['title'],
                   title: guide["Name"],
-                  // order: guide.data["Order"]
+                  order: ((guide.data["Order"] != null)
+                      ? int.parse(guide.data["Order"])
+                      : 0),
                   // accent: Color.fromRGBO(snapshot.data['accent'][0],
                   //    snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
                   snapshot: guide,

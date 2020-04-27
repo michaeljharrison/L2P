@@ -15,6 +15,9 @@ class Guide extends StatefulWidget {
   /// Title for the guide, this is shared accross guide pages.
   final String title;
 
+  // Ordering of this guide within it's section.
+  final int order;
+
   /// Title of the game this guide belongs to.
   final String gameTitle;
 
@@ -31,10 +34,12 @@ class Guide extends StatefulWidget {
   Guide(
       {Key key,
       String title,
+      int order,
       DocumentSnapshot snapshot,
       String gameTitle,
       Color accent})
       : this.title = title,
+        this.order = order,
         this.snapshot = snapshot,
         this.accent = accent,
         this.gameTitle = gameTitle,
@@ -42,6 +47,14 @@ class Guide extends StatefulWidget {
 
   @override
   _GuideState createState() => _GuideState();
+
+  static int sortByOrder(Guide a, Guide b) {
+    if (a.order < b.order) return -1;
+    if (a.order == b.order)
+      return 0;
+    else
+      return 1;
+  }
 }
 
 /// State class for the Guide Object.
@@ -108,10 +121,12 @@ class _GuideState extends State<Guide> {
                         lineHeight: 20.0,
                         animationDuration: 1000,
                         animateFromLastPercent: true,
-                        percent: _currentPage / _pages.length,
+                        percent: ((_currentPage + 1) / _pages.length <= 1)
+                            ? (_currentPage + 1) / _pages.length
+                            : 0,
                         center: Text('${_currentPage + 1} / ${_pages.length}'),
                         linearStrokeCap: LinearStrokeCap.roundAll,
-                        progressColor: Colors.green,
+                        progressColor: Theme.of(context).buttonColor,
                       ),
                     ],
                   ),

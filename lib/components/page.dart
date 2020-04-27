@@ -80,8 +80,6 @@ class _PageState extends State<Page> {
                   child: widget.image,
                 ),
                 Text(widget.title, style: Theme.of(context).textTheme.subhead),
-                Text(widget.order.toString(),
-                    style: Theme.of(context).textTheme.subhead),
                 Text(widget.description,
                     style: Theme.of(context).textTheme.body2),
               ],
