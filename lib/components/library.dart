@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:L2P/models/constants.dart';
 import 'package:L2P/models/game.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/components/gameCard.dart';
 import 'package:L2P/screens/guideList.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Library extends StatefulWidget {
   final AsyncSnapshot snapshot;
@@ -80,10 +82,20 @@ class _LibraryState extends State<Library> {
   void buildLibrary(AsyncSnapshot snapshot) async {
     log('Building Library State...');
     snapshot.data.documents.forEach((document) async {
-      if (document.data["prod"] is bool && document.data["prod"] == true) {
+      // Check if debug flag is turned to true:
+      final prefs = await SharedPreferences.getInstance();
+      final debug = prefs.getBool(Settings.debugOn) ?? 0;
+      if (debug == true) {
         Game newGame = await Game.fromSnapshot(document);
         if (newGame != null) {
           _appendToGameList(newGame);
+        }
+      } else {
+        if (document.data["prod"] is bool && document.data["prod"] == true) {
+          Game newGame = await Game.fromSnapshot(document);
+          if (newGame != null) {
+            _appendToGameList(newGame);
+          }
         }
       }
     });
