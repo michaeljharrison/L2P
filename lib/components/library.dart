@@ -48,34 +48,37 @@ class _LibraryState extends State<Library> {
       log('game list is empty...');
       return new Text("Game list empty.");
     }
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverStaggeredGrid.countBuilder(
-          crossAxisCount: 4,
-          itemCount: _gameList.length,
-          itemBuilder: (BuildContext context, int index) {
-            Game game = _gameList[index];
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => GuideList(game: game)),
-                );
-              },
-              child: new GameCard(
-                  key: new Key('game_$index'),
-                  title: game.title,
-                  description: game.description,
-                  tags: game.tags,
-                  coverImage: game.coverImage),
-            );
-          },
-          staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
-        )
-      ],
+    return RefreshIndicator(
+      onRefresh: _handleRefresh,
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverStaggeredGrid.countBuilder(
+            crossAxisCount: 4,
+            itemCount: _gameList.length,
+            itemBuilder: (BuildContext context, int index) {
+              Game game = _gameList[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GuideList(game: game)),
+                  );
+                },
+                child: new GameCard(
+                    key: new Key('game_$index'),
+                    title: game.title,
+                    description: game.description,
+                    tags: game.tags,
+                    coverImage: game.coverImage),
+              );
+            },
+            staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
+            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 8.0,
+          )
+        ],
+      ),
     );
   }
 
@@ -99,5 +102,12 @@ class _LibraryState extends State<Library> {
         }
       }
     });
+  }
+
+  Future<Null> _handleRefresh() async {
+    await new Future.delayed(new Duration(seconds: 3));
+    await buildLibrary(widget.snapshot);
+
+    return null;
   }
 }
