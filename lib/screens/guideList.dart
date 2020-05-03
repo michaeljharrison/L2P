@@ -114,15 +114,29 @@ class _GuideListState extends State<GuideList> {
                                 ],
                               ),
                             ),
-                            Column(
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[Text("References.")],
-                                )
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: ListView(
+                                children: <Widget>[
+                                  Column(
+                                      children:
+                                          widget.game.guideSections != null
+                                              ? widget.game.referenceSections
+                                              : <Widget>[])
+                                ],
+                              ),
                             ),
-                            Column(
-                              children: <Widget>[Text("Scenarios")],
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: ListView(
+                                children: <Widget>[
+                                  Column(
+                                      children:
+                                          widget.game.guideSections != null
+                                              ? widget.game.scenarioSections
+                                              : <Widget>[])
+                                ],
+                              ),
                             )
                           ],
                         ),

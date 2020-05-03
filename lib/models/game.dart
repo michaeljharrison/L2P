@@ -1,5 +1,6 @@
 import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideSection.dart';
+import 'package:L2P/models/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,27 +15,29 @@ class Game {
   Color accent;
   List<String> tags;
   List<GuideSection> guideSections;
+  List<GuideSection> referenceSections;
+  List<GuideSection> scenarioSections;
   CollectionReference guidesRef;
 
-  Game({
-    String title,
-    String code,
-    String description,
-    Image coverImage,
-    Color accent,
-    List<String> tags,
-    List<GuideSection> guideSections,
-  })  : this.title = title,
+  Game(
+      {String title,
+      String code,
+      String description,
+      Image coverImage,
+      Color accent,
+      List<String> tags,
+      List<GuideSection> guideSections,
+      List<GuideSection> referenceSections,
+      List<GuideSection> scenarioSections})
+      : this.title = title,
         this.code = code,
         this.description = description,
         this.tags = tags,
         this.coverImage = coverImage,
         this.accent = accent,
-        this.guideSections = guideSections;
-
-  void setGuideSections(List<GuideSection> sections) {
-    this.guideSections = sections;
-  }
+        this.guideSections = guideSections,
+        this.referenceSections = referenceSections,
+        this.scenarioSections = scenarioSections;
 
   @override
   String toString() {
@@ -50,6 +53,8 @@ class Game {
     Game newGame;
     String titlePath = 'cover_images/${snapshot.data['code']}.png';
     List<GuideSection> guideSectionList = new List<GuideSection>();
+    List<GuideSection> scenarioSectionList = new List<GuideSection>();
+    List<GuideSection> referenceSectionList = new List<GuideSection>();
 
     // First, get the box image for the title:
     Image img;
@@ -81,6 +86,7 @@ class Game {
           CollectionReference guidesCollection =
               guideSection.reference.collection("guides");
           List<Guide> guideList = new List<Guide>();
+
           // Then get a list of GUIDES
           await guidesCollection.getDocuments().then((guides) async {
             if (guides.documents.length > 0) {
@@ -100,28 +106,42 @@ class Game {
             }
           });
 
-          guideSectionList.add(new GuideSection(
+          GuideSection gs = new GuideSection(
               title: guideSection['Label'],
-              description: (guideSection['description'] != null)
-                  ? guideSection['Section Description']
-                  : "No Description.",
+              description: (guideSection['Description'] != null)
+                  ? guideSection['Description']
+                  : "Description.",
               ordered: (guideSection['Order'] != null) ? true : false,
               order: int.parse(guideSection['Order']),
-              guides: guideList));
+              guides: guideList);
+
+          switch (guideSection["Section Type"]) {
+            case SectionTypes.Guide:
+              guideSectionList.add(gs);
+              break;
+            case SectionTypes.Reference:
+              referenceSectionList.add(gs);
+              break;
+            case SectionTypes.Scenario:
+              scenarioSectionList.add(gs);
+              break;
+            default:
+          }
         });
       }
 
       newGame = new Game(
-        title: snapshot.data['title'],
-        code: snapshot.data['code'],
-        description: snapshot.data['description'],
-        // accent: Color.fromRGBO(snapshot.data['accent'][0],
-        // snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
-        // tags: List<String>.from([snapshot.data['tags']]),
-        tags: List<String>.from([]),
-        coverImage: img,
-        guideSections: guideSectionList,
-      );
+          title: snapshot.data['title'],
+          code: snapshot.data['code'],
+          description: snapshot.data['description'],
+          // accent: Color.fromRGBO(snapshot.data['accent'][0],
+          // snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
+          // tags: List<String>.from([snapshot.data['tags']]),
+          tags: List<String>.from([]),
+          coverImage: img,
+          guideSections: guideSectionList,
+          referenceSections: referenceSectionList,
+          scenarioSections: scenarioSectionList);
     }).catchError((error) {
       log(error.toString());
       return null;

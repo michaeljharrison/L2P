@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<bool> setDebugOn(bool newValue) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      debugOn = newValue;
+    });
     return prefs.setBool(Settings.debugOn, newValue);
   }
 
@@ -35,6 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log(debugOn.toString());
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
@@ -48,18 +54,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
         body: Column(
           children: <Widget>[
             Text("Settings"),
-            Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text("Debug Mode"),
-                Switch(
-                    value: (debugOn == null) ? false : debugOn,
-                    onChanged: (bool newState) {
-                      setDebugOn(newState);
-                    })
-              ],
+            GestureDetector(
+              onTap: () {
+                log("Tapped.");
+                setDebugOn(debugOn ? false : true);
+              },
+              child: Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Debug Mode"),
+                  Switch(
+                      value: (debugOn == null) ? false : debugOn,
+                      onChanged: (bool newState) {
+                        setDebugOn(newState);
+                      })
+                ],
+              ),
             )
           ],
         ),
