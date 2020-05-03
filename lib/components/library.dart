@@ -53,7 +53,7 @@ class _LibraryState extends State<Library> {
       child: CustomScrollView(
         slivers: <Widget>[
           SliverStaggeredGrid.countBuilder(
-            crossAxisCount: 4,
+            crossAxisCount: 1,
             itemCount: _gameList.length,
             itemBuilder: (BuildContext context, int index) {
               Game game = _gameList[index];

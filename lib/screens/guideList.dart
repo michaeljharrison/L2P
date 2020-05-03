@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
@@ -17,8 +19,56 @@ class GuideList extends StatefulWidget {
 class _GuideListState extends State<GuideList> {
   @override
   Widget build(BuildContext context) {
-    if (widget.game.guideSections != null) {
+    List<Tab> tabsList = [];
+    List<Padding> guideSectionLists = [];
+
+    if (widget.game.guideSections.length > 0) {
+      log("Adding guide sections...");
       widget.game.guideSections.sort(GuideSection.sortByOrder);
+      tabsList.add(Tab(text: "Guides", icon: Icon(Icons.local_library)));
+      guideSectionLists.add(Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListView(
+          children: <Widget>[
+            Column(
+                children: widget.game.guideSections != null
+                    ? widget.game.guideSections
+                    : <Widget>[])
+          ],
+        ),
+      ));
+    }
+    if (widget.game.referenceSections.length > 0) {
+      log("Adding ref sections...");
+      widget.game.referenceSections.sort(GuideSection.sortByOrder);
+      tabsList.add(Tab(text: "References", icon: Icon(Icons.library_books)));
+      guideSectionLists.add(Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListView(
+          children: <Widget>[
+            Column(
+                children: widget.game.referenceSections != null
+                    ? widget.game.referenceSections
+                    : <Widget>[])
+          ],
+        ),
+      ));
+    }
+    if (widget.game.scenarioSections.length > 0) {
+      log("Adding scenario sections...");
+      widget.game.scenarioSections.sort(GuideSection.sortByOrder);
+      tabsList.add(Tab(text: "Scenarios", icon: Icon(Icons.local_movies)));
+      guideSectionLists.add(Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListView(
+          children: <Widget>[
+            Column(
+                children: widget.game.scenarioSections != null
+                    ? widget.game.scenarioSections
+                    : <Widget>[])
+          ],
+        ),
+      ));
     }
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -57,20 +107,12 @@ class _GuideListState extends State<GuideList> {
                     style: Theme.of(context).textTheme.body1),
               ),
               DefaultTabController(
-                length: 3,
+                length: tabsList.length,
                 child: Flexible(
                   child: Column(
                     children: <Widget>[
                       TabBar(
-                        tabs: [
-                          Tab(text: "Guides", icon: Icon(Icons.local_library)),
-                          Tab(
-                              text: "References",
-                              icon: Icon(Icons.library_books)),
-                          Tab(
-                              text: "Scenarios",
-                              icon: Icon(Icons.local_movies)),
-                        ],
+                        tabs: tabsList,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12, bottom: 12.0),
@@ -101,44 +143,7 @@ class _GuideListState extends State<GuideList> {
                       Container(
                         height: MediaQuery.of(context).size.height - 340,
                         child: TabBarView(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: ListView(
-                                children: <Widget>[
-                                  Column(
-                                      children:
-                                          widget.game.guideSections != null
-                                              ? widget.game.guideSections
-                                              : <Widget>[])
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: ListView(
-                                children: <Widget>[
-                                  Column(
-                                      children:
-                                          widget.game.guideSections != null
-                                              ? widget.game.referenceSections
-                                              : <Widget>[])
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: ListView(
-                                children: <Widget>[
-                                  Column(
-                                      children:
-                                          widget.game.guideSections != null
-                                              ? widget.game.scenarioSections
-                                              : <Widget>[])
-                                ],
-                              ),
-                            )
-                          ],
+                          children: guideSectionLists,
                         ),
                       ),
                     ],

@@ -110,7 +110,7 @@ class Game {
               title: guideSection['Label'],
               description: (guideSection['Description'] != null)
                   ? guideSection['Description']
-                  : "Description.",
+                  : "",
               ordered: (guideSection['Order'] != null) ? true : false,
               order: int.parse(guideSection['Order']),
               guides: guideList);
