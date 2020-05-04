@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,7 @@ class Page extends StatefulWidget {
         );
       }
     } catch (error) {
-      img = Image.asset("assets/images/covers/Catan.png");
+      img = null;
       print(error.toString());
     }
 
@@ -62,6 +64,26 @@ class Page extends StatefulWidget {
 class _PageState extends State<Page> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> pageContent = [];
+    MainAxisAlignment pageAlignment = MainAxisAlignment.start;
+    EdgeInsets pagePadding =
+        EdgeInsets.only(top: 40, bottom: 6.0, left: 40, right: 40);
+    EdgeInsets titlePadding = EdgeInsets.only(bottom: 20);
+
+    if (widget.image != null) {
+      log("Page has image");
+      pageContent.add(Expanded(child: widget.image));
+      pageAlignment = MainAxisAlignment.end;
+      pagePadding = EdgeInsets.all(6.0);
+      titlePadding = EdgeInsets.all(0);
+    }
+    pageContent.add(Padding(
+      padding: titlePadding,
+      child: Text(widget.title, style: Theme.of(context).textTheme.subhead),
+    ));
+    pageContent.add(
+        Text(widget.description, style: Theme.of(context).textTheme.body2));
+
     return Padding(
       padding:
           const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
@@ -71,18 +93,11 @@ class _PageState extends State<Page> {
             color: cardBG,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: pagePadding,
             child: Flex(
               direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                  child: widget.image,
-                ),
-                Text(widget.title, style: Theme.of(context).textTheme.subhead),
-                Text(widget.description,
-                    style: Theme.of(context).textTheme.body2),
-              ],
+              mainAxisAlignment: pageAlignment,
+              children: pageContent,
             ),
           )),
     );
