@@ -5,5 +5,5 @@ class Settings {
 class SectionTypes {
   static const String Guide = "Guide";
   static const String Scenario = "Scenario";
-  static const String Reference = "Reference";
+  static const String Reference = "References";
 }

@@ -71,7 +71,6 @@ class _PageState extends State<Page> {
     EdgeInsets titlePadding = EdgeInsets.only(bottom: 20);
 
     if (widget.image != null) {
-      log("Page has image");
       pageContent.add(Expanded(child: widget.image));
       pageAlignment = MainAxisAlignment.end;
       pagePadding = EdgeInsets.all(6.0);

@@ -23,7 +23,6 @@ class _GuideListState extends State<GuideList> {
     List<Padding> guideSectionLists = [];
 
     if (widget.game.guideSections.length > 0) {
-      log("Adding guide sections...");
       widget.game.guideSections.sort(GuideSection.sortByOrder);
       tabsList.add(Tab(text: "Guides", icon: Icon(Icons.local_library)));
       guideSectionLists.add(Padding(
@@ -39,7 +38,6 @@ class _GuideListState extends State<GuideList> {
       ));
     }
     if (widget.game.referenceSections.length > 0) {
-      log("Adding ref sections...");
       widget.game.referenceSections.sort(GuideSection.sortByOrder);
       tabsList.add(Tab(text: "References", icon: Icon(Icons.library_books)));
       guideSectionLists.add(Padding(
@@ -55,7 +53,6 @@ class _GuideListState extends State<GuideList> {
       ));
     }
     if (widget.game.scenarioSections.length > 0) {
-      log("Adding scenario sections...");
       widget.game.scenarioSections.sort(GuideSection.sortByOrder);
       tabsList.add(Tab(text: "Scenarios", icon: Icon(Icons.local_movies)));
       guideSectionLists.add(Padding(

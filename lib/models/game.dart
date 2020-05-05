@@ -45,6 +45,10 @@ class Game {
     return '{\nTitle - $title\nDescription - $shortDesc\nCoverLocation - ${coverImage.toString()}\nAccent - $accent\nTags - $tags\nGuideSections - $guideSections\n}';
   }
 
+  static int sortByOrder(Game a, Game b) {
+    return (a.title.compareTo(b.title));
+  }
+
   /// TODO: Replace this with individual models. E.G: Game, Guide, Page etc...
   static Future<Game> fromSnapshot(DocumentSnapshot snapshot) async {
     if (snapshot.data["title"] == null) {

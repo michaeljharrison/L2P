@@ -64,13 +64,11 @@ class _GuideState extends State<Guide> {
   int _currentPage = 0;
 
   void buildPageList() async {
-    log('Building Guide Page List...');
     widget.snapshot.reference
         .collection('pages')
         .getDocuments()
         .then((documents) {
       documents.documents.forEach((page) async {
-        log('Adding page ${page["Page Code"]}');
         Page newPage = await Page.fromSnapshot(page);
         setState(() {
           /// TODO: Create a function to build page from model instead of passing in fields.

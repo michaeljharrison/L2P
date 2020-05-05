@@ -40,7 +40,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log(debugOn.toString());
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
@@ -53,10 +52,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         body: Column(
           children: <Widget>[
-            Text("Settings"),
             GestureDetector(
               onTap: () {
-                log("Tapped.");
                 setDebugOn(debugOn ? false : true);
               },
               child: Flex(

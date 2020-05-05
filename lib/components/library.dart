@@ -22,15 +22,14 @@ class _LibraryState extends State<Library> {
 
   @override
   void initState() {
-    log('Init Library State...');
     buildLibrary(widget.snapshot);
     super.initState();
   }
 
   void _appendToGameList(Game newGame) {
-    log('Appending game to game list...');
     List<Game> newList = _gameList;
     newList.add(newGame);
+    newList.sort(Game.sortByOrder);
     setState(() {
       _gameList = newList;
     });
@@ -38,14 +37,11 @@ class _LibraryState extends State<Library> {
 
   @override
   Widget build(BuildContext context) {
-    log('Building Library widget...');
-    log(widget.snapshot.connectionState.toString());
     if (widget.snapshot.connectionState == ConnectionState.done &&
         (_gameList == null || _gameList.length == 0)) {
       return new Text("Failed to fetch any documents.");
     }
     if (_gameList == null || _gameList.length == 0) {
-      log('game list is empty...');
       return new Text("Game list empty.");
     }
     return RefreshIndicator(
@@ -83,7 +79,6 @@ class _LibraryState extends State<Library> {
   }
 
   void buildLibrary(AsyncSnapshot snapshot) async {
-    log('Building Library State...');
     snapshot.data.documents.forEach((document) async {
       // Check if debug flag is turned to true:
       final prefs = await SharedPreferences.getInstance();
