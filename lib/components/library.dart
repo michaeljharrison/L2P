@@ -100,7 +100,10 @@ class _LibraryState extends State<Library> {
   }
 
   Future<Null> _handleRefresh() async {
-    await new Future.delayed(new Duration(seconds: 3));
+    await new Future.delayed(new Duration(seconds: 1));
+    setState(() {
+      _gameList = [];
+    });
     await buildLibrary(widget.snapshot);
 
     return null;

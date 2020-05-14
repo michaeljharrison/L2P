@@ -7,6 +7,7 @@ final systemBG = new Color.fromRGBO(26, 34, 42, 1);
 final uiElement = new Color.fromRGBO(96, 142, 172, 1);
 final buttonPrimary = new Color.fromRGBO(0, 168, 221, 1);
 final buttonSecondary = new Color.fromRGBO(101, 212, 186, 1);
+final buttonTertiary = new Color.fromRGBO(180,135,201, 1);
 final progressIndicator = new Color.fromRGBO(02, 142, 172, 1);
 final colorTagTeal = new Color.fromRGBO(101, 212, 186, 1);
 final colorTabBar = new Color.fromRGBO(12, 17, 21, 1);

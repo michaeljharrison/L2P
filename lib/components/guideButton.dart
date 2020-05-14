@@ -1,3 +1,4 @@
+import 'package:L2P/models/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
 
@@ -6,13 +7,20 @@ class GuideButton extends StatelessWidget {
   final String title;
   final int index;
   final Function link;
+  final String type;
 
   const GuideButton(
-      {Key key, bool numbered, String title, int index, Function link})
+      {Key key,
+      bool numbered,
+      String title,
+      int index,
+      Function link,
+      String type})
       : this.numbered = numbered,
         this.title = title,
         this.index = index,
         this.link = link,
+        this.type = type,
         super(key: key);
 
   @override
@@ -28,7 +36,9 @@ class GuideButton extends StatelessWidget {
                 onPressed: link,
                 child: Text(this.index.toString(),
                     style: Theme.of(context).textTheme.button),
-                color: buttonPrimary,
+                color: type == SectionTypes.Reference
+                    ? buttonTertiary
+                    : buttonPrimary,
               ),
             ),
             Expanded(
@@ -36,7 +46,9 @@ class GuideButton extends StatelessWidget {
                 onPressed: link,
                 child:
                     Text(this.title, style: Theme.of(context).textTheme.button),
-                color: buttonPrimary,
+                color: type == SectionTypes.Reference
+                    ? buttonTertiary
+                    : buttonPrimary,
               ),
             ),
           ]));

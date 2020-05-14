@@ -1,6 +1,7 @@
 import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:L2P/models/constants.dart';
+import 'package:L2P/screens/scoringGuide.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -74,7 +75,7 @@ class Game {
         );
       }
     } catch (error) {
-      img = Image.asset("assets/images/covers/Catan.png");
+      img = Image.asset("icons/Logo.png");
       print(error.toString());
     }
 
@@ -89,23 +90,32 @@ class Game {
         await guideSections.documents.forEach((guideSection) async {
           CollectionReference guidesCollection =
               guideSection.reference.collection("guides");
-          List<Guide> guideList = new List<Guide>();
+          List<Widget> guideList = new List<Guide>();
 
           // Then get a list of GUIDES
+          List<ScoringGuide> sgs = new List<ScoringGuide>();
           await guidesCollection.getDocuments().then((guides) async {
             if (guides.documents.length > 0) {
               // FOR EACH GUIDE
               await guides.documents.forEach((guide) {
-                guideList.add(new Guide(
-                  gameTitle: snapshot.data['title'],
-                  title: guide["Name"],
-                  order: ((guide.data["Order"] != null)
-                      ? int.parse(guide.data["Order"])
-                      : 0),
-                  // accent: Color.fromRGBO(snapshot.data['accent'][0],
-                  //    snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
-                  snapshot: guide,
-                ));
+                if (guideSection["Section Type"] == SectionTypes.Scoring) {
+                  sgs.add(new ScoringGuide(
+                      title: guide["Name"], gameTitle: snapshot.data['title']));
+                } else {
+                  guideList.add(new Guide(
+                    gameTitle: snapshot.data['title'],
+                    title: guide["Name"],
+                    order: ((guide.data["Order"] != null)
+                        ? int.parse(guide.data["Order"])
+                        : 0),
+                    type: ((guideSection["Section Type"] != null)
+                        ? guideSection["Section Type"]
+                        : SectionTypes.Scoring),
+                    // accent: Color.fromRGBO(snapshot.data['accent'][0],
+                    //    snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
+                    snapshot: guide,
+                  ));
+                }
               });
             }
           });
@@ -117,7 +127,11 @@ class Game {
                   : "",
               ordered: (guideSection['Order'] != null) ? true : false,
               order: int.parse(guideSection['Order']),
-              guides: guideList);
+              type: ((guideSection["Section Type"] != null)
+                  ? guideSection["Section Type"]
+                  : SectionTypes.Scoring),
+              guides: guideList,
+              scoringGuides: sgs);
 
           switch (guideSection["Section Type"]) {
             case SectionTypes.Guide:
@@ -129,7 +143,12 @@ class Game {
             case SectionTypes.Scenario:
               scenarioSectionList.add(gs);
               break;
+            case SectionTypes.Scoring:
+              referenceSectionList.add(gs);
+              break;
             default:
+              guideSectionList.add(gs);
+              break;
           }
         });
       }

@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideButton.dart';
+import 'package:L2P/screens/scoringGuide.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import '../theme/theme.dart';
@@ -10,6 +13,8 @@ class GuideSection extends StatefulWidget {
   final bool ordered;
   final int order;
   final List<Guide> guides;
+  final List<ScoringGuide> scoringGuides;
+  final String type;
 
   GuideSection({
     Key key,
@@ -17,12 +22,16 @@ class GuideSection extends StatefulWidget {
     String description,
     List<Guide> guides,
     int order,
+    String type,
+    List<ScoringGuide> scoringGuides,
     bool ordered = false,
   })  : this.title = title,
         this.description = description,
         this.ordered = ordered,
         this.order = order,
         this.guides = guides,
+        this.scoringGuides = scoringGuides,
+        this.type = type,
         super(key: key);
 
   @override
@@ -78,19 +87,45 @@ class _GuideSectionState extends State<GuideSection> {
 
   List<Widget> buildButtonList() {
     List<Widget> buttonList = new List<Widget>();
+    if (widget.scoringGuides.length > 0) {
+      for (var i = 0; i < widget.scoringGuides.length; i++) {
+        buttonList.add(GuideButton(
+            key: Key(Random(0).toString()),
+            index: widget.scoringGuides[i].order,
+            title: widget.scoringGuides[i].title,
+            type: widget.type,
+            numbered: widget.ordered,
+            link: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => widget.scoringGuides[i]),
+              );
+            }));
+      }
+    }
     widget.guides.sort(Guide.sortByOrder);
-    for (var i = 0; i < widget.guides.length; i++) {
-      buttonList.add(GuideButton(
-          key: Key(widget.guides[i].order.toString()),
-          index: widget.guides[i].order,
-          title: widget.guides[i].title,
-          numbered: widget.ordered,
-          link: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => widget.guides[i]),
-            );
-          }));
+    if (widget.guides.length > 0) {
+      for (var i = 0; i < widget.guides.length; i++) {
+        buttonList.add(GuideButton(
+            key: Key(Random(0).toString() +
+                "_" +
+                widget.title.toString() +
+                "_" +
+                widget.guides[i].toString() +
+                '_' +
+                widget.guides[i].order.toString()),
+            index: widget.guides[i].order,
+            title: widget.guides[i].title,
+            type: widget.type,
+            numbered: widget.ordered,
+            link: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => widget.guides[i]),
+              );
+            }));
+      }
     }
     return buttonList;
   }

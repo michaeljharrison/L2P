@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:L2P/theme/theme.dart';
+import 'package:L2P/models/constants.dart';
 
 /// Guide Class
 ///
@@ -27,6 +28,9 @@ class Guide extends StatefulWidget {
   /// Accent color for the guide, for initial version this is inerited from the game data itself.
   final Color accent;
 
+  /// Type of guide: guide(default), reference or score.
+  final String type;
+
   /// Constructor for a Guide object.
   ///
   /// Only takes the title and the document snapshot, this
@@ -37,11 +41,13 @@ class Guide extends StatefulWidget {
       int order,
       DocumentSnapshot snapshot,
       String gameTitle,
+      String type,
       Color accent})
       : this.title = title,
         this.order = order,
         this.snapshot = snapshot,
         this.accent = accent,
+        this.type = type,
         this.gameTitle = gameTitle,
         super(key: key);
 
@@ -134,7 +140,7 @@ class _GuideState extends State<Guide> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
-            child: renderGuide(),
+            child: renderBody(),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -166,6 +172,37 @@ class _GuideState extends State<Guide> {
             ),
           )
         ]));
+  }
+
+  Widget renderBody() {
+    switch (widget.type) {
+      case SectionTypes.Guide:
+        return renderGuide();
+        break;
+      case SectionTypes.Reference:
+        return renderReference();
+        break;
+      default:
+        return renderReference();
+        break;
+    }
+  }
+
+  Widget renderReference() {
+    if (_pages.length < 1) {
+      buildPageList();
+    }
+    return PageView.builder(
+        controller: PageController(),
+        itemCount: _pages.length,
+        onPageChanged: (pageIndex) {
+          setState(() {
+            _currentPage = pageIndex;
+          });
+        },
+        itemBuilder: (BuildContext context, int itemIndex) {
+          return _pages[itemIndex];
+        });
   }
 
   Widget renderGuide() {
