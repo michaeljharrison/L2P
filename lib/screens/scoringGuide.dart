@@ -103,6 +103,55 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   Widget renderBody() {
-    return Text("Scoring");
+    const int numPlayers = 4;
+    List<Tab> tabBars = [];
+    List<Widget> tabViews = [];
+
+    for (var player = 0; player < numPlayers; player++) {
+      tabBars
+          .add(Tab(text: 'Player ${player}', icon: Icon(Icons.person_outline)));
+      tabViews.add(renderPlayerScoring());
+    }
+    return Flex(
+      mainAxisSize: MainAxisSize.min,
+      direction: Axis.vertical,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        DefaultTabController(
+            length: numPlayers,
+            child: Flexible(
+              child: Column(
+                children: <Widget>[
+                  TabBar(tabs: tabBars),
+                  Container(
+                      height: MediaQuery.of(context).size.height - 340,
+                      child: TabBarView(children: tabViews))
+                ],
+              ),
+            ))
+      ],
+    );
+  }
+
+  Widget renderPlayerScoring() {
+    const scoringCategoriesLength = 6;
+    List<Widget> categoryWidgets = [];
+    for (var cat = 0; cat < scoringCategoriesLength; cat++) {
+      categoryWidgets.add(renderScoringCategory());
+    }
+    return Column(children: categoryWidgets);
+  }
+
+  Widget renderScoringCategory() {
+    return Row(
+      children: <Widget>[
+        Column(children: <Widget>[
+          Row(children: <Widget>[Text("TITLE"), Icon(Icons.help_outline)]),
+          Text("Description Lorem Ipsum Blah Blah.")
+        ]),
+        Container(child: Text("9"))
+      ],
+    );
   }
 }
