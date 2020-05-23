@@ -5,13 +5,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
 
-class Page extends StatefulWidget {
+class GuidePage extends StatefulWidget {
   final String title;
   final String description;
   final Image image;
   final int order;
 
-  Page({Key key, String title, String description, Image image, int order})
+  GuidePage({Key key, String title, String description, Image image, int order})
       : this.title = title,
         this.description = description,
         this.image = image,
@@ -19,9 +19,9 @@ class Page extends StatefulWidget {
         super(key: key);
 
   @override
-  _PageState createState() => _PageState();
+  _GuidePageState createState() => _GuidePageState();
 
-  static int sortByOrder(Page a, Page b) {
+  static int sortByOrder(GuidePage a, GuidePage b) {
     if (a.order < b.order) return -1;
     if (a.order == b.order)
       return 0;
@@ -29,7 +29,7 @@ class Page extends StatefulWidget {
       return 1;
   }
 
-  static Future<Page> fromSnapshot(DocumentSnapshot snapshot) async {
+  static Future<GuidePage> fromSnapshot(DocumentSnapshot snapshot) async {
     // First, get the box image for the title:
     String imgPath = 'guides/${snapshot.data['Page Code']}.png';
     Image img;
@@ -47,7 +47,7 @@ class Page extends StatefulWidget {
       print(error.toString());
     }
 
-    return Page(
+    return GuidePage(
         title: (snapshot.data["Title"] != null)
             ? snapshot.data["Title"]
             : "No Title",
@@ -61,7 +61,7 @@ class Page extends StatefulWidget {
   }
 }
 
-class _PageState extends State<Page> {
+class _GuidePageState extends State<GuidePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pageContent = [];

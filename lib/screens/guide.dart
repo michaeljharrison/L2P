@@ -66,7 +66,7 @@ class Guide extends StatefulWidget {
 /// State class for the Guide Object.
 class _GuideState extends State<Guide> {
   /// List of pages in a guide.
-  List<Page> _pages = <Page>[];
+  List<GuidePage> _pages = <GuidePage>[];
   int _currentPage = 0;
 
   void buildPageList() async {
@@ -75,7 +75,7 @@ class _GuideState extends State<Guide> {
         .getDocuments()
         .then((documents) {
       documents.documents.forEach((page) async {
-        Page newPage = await Page.fromSnapshot(page);
+        GuidePage newPage = await GuidePage.fromSnapshot(page);
         setState(() {
           /// TODO: Create a function to build page from model instead of passing in fields.
           _pages.add(newPage);
@@ -87,7 +87,7 @@ class _GuideState extends State<Guide> {
   @override
   Widget build(BuildContext context) {
     if (_pages != null) {
-      _pages.sort(Page.sortByOrder);
+      _pages.sort(GuidePage.sortByOrder);
     }
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
