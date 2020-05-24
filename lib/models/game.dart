@@ -99,8 +99,15 @@ class Game {
               // FOR EACH GUIDE
               await guides.documents.forEach((guide) {
                 if (guideSection["Section Type"] == SectionTypes.Scoring) {
-                  sgs.add(new ScoringGuide(
-                      title: guide["Name"], gameTitle: snapshot.data['title']));
+                  sgs.add(
+                    new ScoringGuide(
+                        title: guide["Name"],
+                        gameTitle: snapshot.data['title'],
+                        numPlayers: ((guide.data["maxPlayers"] != null)
+                            ? int.parse(guide.data["maxPlayers"])
+                            : 2),
+                        snapshot: guide),
+                  );
                 } else {
                   guideList.add(new Guide(
                     gameTitle: snapshot.data['title'],
