@@ -223,7 +223,14 @@ class _ScoringGuideState extends State<ScoringGuide> {
     for (var cat = 0; cat < attributes.length; cat++) {
       categoryWidgets.add(renderScoringCategory(cat, attributes[cat], player));
     }
-    return Column(children: categoryWidgets);
+    categoryWidgets.add(renderTotalScore(player));
+    return ListView(children: categoryWidgets);
+  }
+
+  Widget renderTotalScore(player) {
+    return Container(
+        color: Theme.of(context).dividerColor,
+        child: Column(children: <Widget>[Text("Total Score"), Text("0")]));
   }
 
   Widget renderScoringCategory(
