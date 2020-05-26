@@ -29,6 +29,8 @@ dependencies:
   percent_indicator: "^2.1.1"
   search_widget: ^1.0.0
   expandable: ^4.0.2
+  flutter_picker:
+    git: git://github.com/yangyxd/flutter_picker.git
 
   # ? Possible needed for Firebase on Web.
   # firebase_core: ^0.4.3

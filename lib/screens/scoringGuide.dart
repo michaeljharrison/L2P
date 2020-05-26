@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:L2P/components/page.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -48,7 +49,6 @@ class ScoringGuide extends StatefulWidget {
   final int order;
   final int numPlayers;
   final DocumentSnapshot snapshot;
-  List<List<int>> playerScores;
 
   ScoringGuide(
       {Key key,
@@ -70,6 +70,7 @@ class ScoringGuide extends StatefulWidget {
 
 class _ScoringGuideState extends State<ScoringGuide> {
   List<ScoringAttribute> _attributes = [];
+  List<List<int>> _playerScores;
 
   @override
   void initState() {
@@ -93,6 +94,29 @@ class _ScoringGuideState extends State<ScoringGuide> {
     });
   }
 
+  showPickerNumber(BuildContext context, int player, int attribute) {
+    new Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(begin: 0, end: 99),
+        ]),
+        delimiter: [
+          PickerDelimiter(
+              child: Container(
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Icon(Icons.more_vert),
+          ))
+        ],
+        hideHeader: true,
+        title: new Text("Please Select"),
+        onConfirm: (Picker picker, List value) {
+          print('Setting value of ${player} ${attribute} to ${value[0]}');
+          setState(() {
+            _playerScores[player][attribute] = value[0];
+          });
+        }).showDialog(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build the list of attributes for scoring.
@@ -100,16 +124,16 @@ class _ScoringGuideState extends State<ScoringGuide> {
       buildAttributeList();
     }
 
-    if (widget.playerScores == null && _attributes.length > 0) {
+    if (_playerScores == null && _attributes.length > 0) {
       // Build the 2D array of scoring attributes for each player.
-      widget.playerScores = new List<List<int>>(widget.numPlayers);
+      _playerScores = new List<List<int>>(widget.numPlayers);
       // Initialise a normal array to store each players score.
-      for (var i = 0; i < widget.playerScores.length; i++) {
-        if (widget.playerScores[i] == null) {
-          widget.playerScores[i] = List<int>(_attributes.length);
-          for (var j = 0; j < widget.playerScores[i].length; j++) {
+      for (var i = 0; i < _playerScores.length; i++) {
+        if (_playerScores[i] == null) {
+          _playerScores[i] = List<int>(_attributes.length);
+          for (var j = 0; j < _playerScores[i].length; j++) {
             // Initialise all values to 0.
-            widget.playerScores[i][j] = 0;
+            _playerScores[i][j] = 0;
           }
         }
       }
@@ -150,7 +174,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
+            padding: const EdgeInsets.only(top: 95.0, bottom: 0),
             child: _attributes.length > 0
                 ? renderBody(_attributes)
                 : Text("Loading..."),
@@ -194,7 +218,18 @@ class _ScoringGuideState extends State<ScoringGuide> {
     for (var player = 0; player < widget.numPlayers; player++) {
       tabBars
           .add(Tab(text: 'Player ${player}', icon: Icon(Icons.person_outline)));
-      tabViews.add(renderPlayerScoring(attributes, player));
+      tabViews.add(Stack(fit: StackFit.expand, children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(bottom: 50),
+          child: renderPlayerScoring(attributes, player),
+        ),
+        Align(
+            widthFactor: 2,
+            alignment: Alignment.bottomCenter,
+            child: ConstrainedBox(
+                constraints: BoxConstraints.expand(height: 50),
+                child: renderTotalScore(player)))
+      ]));
     }
     return Flex(
       mainAxisSize: MainAxisSize.min,
@@ -209,7 +244,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 children: <Widget>[
                   TabBar(tabs: tabBars),
                   Container(
-                      height: MediaQuery.of(context).size.height - 340,
+                      height: MediaQuery.of(context).size.height - 310,
                       child: TabBarView(children: tabViews))
                 ],
               ),
@@ -223,14 +258,15 @@ class _ScoringGuideState extends State<ScoringGuide> {
     for (var cat = 0; cat < attributes.length; cat++) {
       categoryWidgets.add(renderScoringCategory(cat, attributes[cat], player));
     }
-    categoryWidgets.add(renderTotalScore(player));
     return ListView(children: categoryWidgets);
   }
 
   Widget renderTotalScore(player) {
+    int total = _playerScores[player].reduce((a, b) => a + b);
     return Container(
         color: Theme.of(context).dividerColor,
-        child: Column(children: <Widget>[Text("Total Score"), Text("0")]));
+        child: Column(
+            children: <Widget>[Text("Total Score"), Text(total.toString())]));
   }
 
   Widget renderScoringCategory(
@@ -258,18 +294,21 @@ class _ScoringGuideState extends State<ScoringGuide> {
             ]),
           ),
         ),
-        Container(
-            width: 38,
-            height: 38,
-            color: Theme.of(context).primaryColor,
-            child: Center(
-              child: Text(
-                widget.playerScores[player][order] != null
-                    ? widget.playerScores[player][order].toString()
-                    : "0",
-                textAlign: TextAlign.center,
-              ),
-            ))
+        GestureDetector(
+          onTap: () => {showPickerNumber(context, player, order)},
+          child: Container(
+              width: 38,
+              height: 38,
+              color: Theme.of(context).primaryColor,
+              child: Center(
+                child: Text(
+                  _playerScores[player][order] != null
+                      ? _playerScores[player][order].toString()
+                      : "0",
+                  textAlign: TextAlign.center,
+                ),
+              )),
+        )
       ],
     );
   }
