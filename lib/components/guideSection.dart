@@ -94,7 +94,7 @@ class _GuideSectionState extends State<GuideSection> {
             index: widget.scoringGuides[i].order,
             title: widget.scoringGuides[i].title,
             type: widget.type,
-            numbered: widget.ordered,
+            numbered: false,
             link: () {
               Navigator.push(
                 context,
