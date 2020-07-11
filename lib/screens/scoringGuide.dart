@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:L2P/components/page.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,17 @@ class _ScoringGuideState extends State<ScoringGuide> {
     super.initState();
   }
 
+  Future<void> setPlayerScore(
+      int player, ScoringAttribute attribute, int value) async {
+    setState(() {
+      print(player);
+      print(attribute.order);
+      print(value);
+      print(_playerScores[player]);
+      _playerScores[player][attribute.order] = value;
+    });
+  }
+
   void buildAttributeList() async {
     widget.snapshot.reference
         .collection('pages')
@@ -94,31 +106,9 @@ class _ScoringGuideState extends State<ScoringGuide> {
     });
   }
 
-  showPickerNumber(BuildContext context, int player, int attribute) {
-    new Picker(
-        adapter: NumberPickerAdapter(data: [
-          NumberPickerColumn(begin: 0, end: 99),
-        ]),
-        delimiter: [
-          PickerDelimiter(
-              child: Container(
-            width: 30.0,
-            alignment: Alignment.center,
-            child: Icon(Icons.more_vert),
-          ))
-        ],
-        hideHeader: true,
-        title: new Text("Please Select"),
-        onConfirm: (Picker picker, List value) {
-          print('Setting value of ${player} ${attribute} to ${value[0]}');
-          setState(() {
-            _playerScores[player][attribute] = value[0];
-          });
-        }).showDialog(context);
-  }
-
   @override
   Widget build(BuildContext context) {
+    print('Building!');
     // Build the list of attributes for scoring.
     if (_attributes.length < 1) {
       buildAttributeList();
@@ -294,21 +284,30 @@ class _ScoringGuideState extends State<ScoringGuide> {
             ]),
           ),
         ),
-        GestureDetector(
-          onTap: () => {showPickerNumber(context, player, order)},
-          child: Container(
-              width: 38,
-              height: 38,
-              color: Theme.of(context).primaryColor,
-              child: Center(
-                child: Text(
-                  _playerScores[player][order] != null
-                      ? _playerScores[player][order].toString()
-                      : "0",
-                  textAlign: TextAlign.center,
-                ),
-              )),
-        )
+        Container(
+            width: 38,
+            height: 38,
+            color: Theme.of(context).primaryColor,
+            child: Center(
+                child: new TextField(
+              maxLength: 3,
+              maxLengthEnforced: true,
+              decoration: InputDecoration(counterText: ''),
+              onChanged: (value) =>
+                  {setPlayerScore(player, attribute, int.parse(value))},
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                WhitelistingTextInputFormatter.digitsOnly
+              ], // Only numbers can be entered
+            )
+                /* Text(
+                _playerScores[player][order] != null
+                    ? _playerScores[player][order].toString()
+                    : "0",
+                textAlign: TextAlign.center,
+              ), */
+                ))
       ],
     );
   }
