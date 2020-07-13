@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
               centerTitle: true,
               title: Text(
                 'Library',
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.headline6,
                 textAlign: TextAlign.center,
               ),
             ),

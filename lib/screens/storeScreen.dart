@@ -17,7 +17,7 @@ class _StoreScreenState extends State<StoreScreen> {
           centerTitle: true,
           title: Text(
             'Store',
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
           ),
         ),

@@ -58,21 +58,21 @@ class _GuideSectionState extends State<GuideSection> {
               borderRadius: BorderRadius.all(Radius.circular(4))),
           child: ExpandablePanel(
             theme: expandableThemeDefault,
-            header:
-                Text(widget.title, style: Theme.of(context).textTheme.headline),
+            header: Text(widget.title,
+                style: Theme.of(context).textTheme.headline5),
             collapsed: Text(
               widget.description,
               softWrap: true,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.body1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             expanded: Column(
               children: <Widget>[
                 Text(
                   widget.description,
                   softWrap: true,
-                  style: Theme.of(context).textTheme.body1,
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Column(
                   children: buildButtonList(),

@@ -26,29 +26,29 @@ final ThemeData themeDefault = ThemeData(
 
     /// TODO: Make sure these match exactly with the figma design.
     textTheme: new TextTheme(
-        display1: TextStyle(
+        headline4: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
-        title: TextStyle(
+        headline6: TextStyle(
           color: buttonSecondary,
           fontWeight: FontWeight.w300,
           fontSize: 34,
         ),
-        subtitle: TextStyle(
+        subtitle2: TextStyle(
           color: buttonSecondary,
           fontWeight: FontWeight.w300,
           fontSize: 26,
         ),
-        headline: TextStyle(
+        headline5: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 18,
+          fontSize: 24,
         ),
-        subhead: TextStyle(
+        subtitle1: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
-        body1: TextStyle(
+        bodyText2: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.normal,
           fontSize: 12,

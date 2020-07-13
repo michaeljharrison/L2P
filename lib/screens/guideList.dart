@@ -73,7 +73,7 @@ class _GuideListState extends State<GuideList> {
         centerTitle: true,
         title: Text(
           'Learn to Play',
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline6,
           textAlign: TextAlign.center,
         ),
       ),
@@ -92,7 +92,7 @@ class _GuideListState extends State<GuideList> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(widget.game.title.replaceAll('_', ' '),
-                      style: Theme.of(context).textTheme.display1)
+                      style: Theme.of(context).textTheme.headline4)
                 ],
               ),
               Padding(
@@ -101,7 +101,7 @@ class _GuideListState extends State<GuideList> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Text(widget.game.description,
-                    style: Theme.of(context).textTheme.body1),
+                    style: Theme.of(context).textTheme.bodyText2),
               ),
               DefaultTabController(
                 length: tabsList.length,

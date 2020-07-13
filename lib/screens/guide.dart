@@ -95,7 +95,7 @@ class _GuideState extends State<Guide> {
           centerTitle: true,
           title: Text(
             'Learn to Play',
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
           ),
         ),
@@ -114,9 +114,9 @@ class _GuideState extends State<Guide> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(widget.gameTitle,
-                          style: Theme.of(context).textTheme.headline),
+                          style: Theme.of(context).textTheme.headline5),
                       Text(widget.title,
-                          style: Theme.of(context).textTheme.subhead),
+                          style: Theme.of(context).textTheme.subtitle2),
 
                       /// TODO: Replace with a real progress bar..
                       LinearPercentIndicator(

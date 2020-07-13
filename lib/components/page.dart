@@ -78,7 +78,7 @@ class _GuidePageState extends State<GuidePage> {
     }
     pageContent.add(Padding(
       padding: titlePadding,
-      child: Text(widget.title, style: Theme.of(context).textTheme.subhead),
+      child: Text(widget.title, style: Theme.of(context).textTheme.subtitle2),
     ));
     pageContent.add(
         Text(widget.description, style: Theme.of(context).textTheme.body2));

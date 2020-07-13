@@ -82,27 +82,28 @@ class _ScoringGuideState extends State<ScoringGuide> {
   Future<void> setPlayerScore(
       int player, ScoringAttribute attribute, int value) async {
     setState(() {
-      print(player);
-      print(attribute.order);
-      print(value);
-      print(_playerScores[player]);
-      _playerScores[player][attribute.order] = value;
+      print('Changed!');
+      print(value.toInt());
+      _playerScores[player][attribute.order - 1] = value;
     });
   }
 
   void buildAttributeList() async {
+    print('Building Attributes List...');
     widget.snapshot.reference
         .collection('pages')
         .getDocuments()
         .then((documents) {
-      documents.documents.forEach((page) async {
-        ScoringAttribute newAttribute =
-            await ScoringAttribute.fromSnapshot(page);
-        setState(() {
-          /// TODO: Create a function to build page from model instead of passing in fields.
-          _attributes.add(newAttribute);
+      if (_attributes.length == 0) {
+        documents.documents.forEach((page) async {
+          ScoringAttribute newAttribute =
+              await ScoringAttribute.fromSnapshot(page);
+          setState(() {
+            /// TODO: Create a function to build page from model instead of passing in fields.
+            _attributes.add(newAttribute);
+          });
         });
-      });
+      }
     });
   }
 
@@ -135,7 +136,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
           centerTitle: true,
           title: Text(
             'Learn to Play',
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
           ),
         ),
@@ -154,9 +155,9 @@ class _ScoringGuideState extends State<ScoringGuide> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(widget.gameTitle,
-                          style: Theme.of(context).textTheme.headline),
+                          style: Theme.of(context).textTheme.headline5),
                       Text(widget.title,
-                          style: Theme.of(context).textTheme.subhead),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

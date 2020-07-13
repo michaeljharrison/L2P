@@ -39,7 +39,7 @@ class GameCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
                 child: new Text(title,
-                    style: Theme.of(context).textTheme.headline),
+                    style: Theme.of(context).textTheme.headline5),
               ),
             ),
             Padding(
@@ -53,7 +53,7 @@ class GameCard extends StatelessWidget {
               // Game Description
               child: new Text(
                 description,
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
             Padding(

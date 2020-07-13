@@ -46,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           centerTitle: true,
           title: Text(
             'Settings',
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
           ),
         ),
