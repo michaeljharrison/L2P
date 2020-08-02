@@ -132,19 +132,29 @@ class _ScoringGuideState extends State<ScoringGuide> {
 
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40),
+          child: AppBar(
+            centerTitle: true,
+            elevation: 40,
+            title: new Image.asset(
+              'icons/Logo.png',
+              height: 20,
+              width: 60,
+              fit: BoxFit.contain,
+            ),
+            /* Text(
             'Learn to Play',
             style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
+          ), */
           ),
         ),
         body: Stack(fit: StackFit.expand, children: <Widget>[
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              height: 94,
+              height: 68,
               decoration: BoxDecoration(color: cardBG),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0, top: 10.0),
@@ -165,7 +175,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 95.0, bottom: 0),
+            padding: const EdgeInsets.only(top: 65.0, bottom: 0),
             child: _attributes.length > 0
                 ? renderBody(_attributes)
                 : Text("Loading..."),
@@ -177,7 +187,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 Navigator.pop(context);
               },
               child: Container(
-                height: 50,
+                height: 45,
                 color: cardBG,
                 child: Flex(
                     direction: Axis.vertical,
@@ -203,15 +213,17 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   Widget renderBody(List<ScoringAttribute> attributes) {
-    List<Tab> tabBars = [];
+    List<Widget> tabBars = [];
     List<Widget> tabViews = [];
 
     for (var player = 0; player < widget.numPlayers; player++) {
-      tabBars
-          .add(Tab(text: 'Player ${player}', icon: Icon(Icons.person_outline)));
+      tabBars.add(Container(
+          height: 60,
+          child:
+              Tab(text: 'Player ${player}', icon: Icon(Icons.person_outline))));
       tabViews.add(Stack(fit: StackFit.expand, children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(bottom: 50),
+          padding: const EdgeInsets.only(bottom: 50, top: 10),
           child: renderPlayerScoring(attributes, player),
         ),
         Align(
@@ -235,7 +247,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 children: <Widget>[
                   TabBar(tabs: tabBars),
                   Container(
-                      height: MediaQuery.of(context).size.height - 310,
+                      height: MediaQuery.of(context).size.height - 230,
                       child: TabBarView(children: tabViews))
                 ],
               ),
