@@ -101,12 +101,22 @@ class _GuideState extends State<Guide> {
     }
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40),
+          child: AppBar(
+            centerTitle: true,
+            elevation: 40,
+            title: new Image.asset(
+              'icons/Logo.png',
+              height: 20,
+              width: 60,
+              fit: BoxFit.contain,
+            ),
+            /* Text(
             'Learn to Play',
             style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
+          ), */
           ),
         ),
         body: Stack(fit: StackFit.expand, children: <Widget>[

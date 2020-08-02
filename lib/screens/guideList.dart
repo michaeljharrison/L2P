@@ -108,12 +108,22 @@ class _GuideListState extends State<GuideList> {
     }
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Learn to Play',
-          style: Theme.of(context).textTheme.headline6,
-          textAlign: TextAlign.center,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40),
+        child: AppBar(
+          centerTitle: true,
+          elevation: 40,
+          title: new Image.asset(
+            'icons/Logo.png',
+            height: 20,
+            width: 60,
+            fit: BoxFit.contain,
+          ),
+          /* Text(
+            'Learn to Play',
+            style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.center,
+          ), */
         ),
       ),
       bottomNavigationBar: BottomNav(),
@@ -138,7 +148,8 @@ class _GuideListState extends State<GuideList> {
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: widget.game.coverImage),
               Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
+                padding: const EdgeInsets.only(
+                    bottom: 12.0, left: 12.0, right: 12.0),
                 child: Text(widget.game.description,
                     style: Theme.of(context).textTheme.bodyText2),
               ),
@@ -147,15 +158,20 @@ class _GuideListState extends State<GuideList> {
                 child: Flexible(
                   child: Column(
                     children: <Widget>[
-                      TabBar(
-                        tabs: tabsList,
+                      Container(
+                        decoration: BoxDecoration(color: Colors.black45),
+                        child: TabBar(
+                          tabs: tabsList,
+                          labelColor: buttonSecondary,
+                          unselectedLabelColor: uiElement,
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12, bottom: 12.0),
+                        padding: const EdgeInsets.only(top: 12, bottom: 4),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Container(
-                              height: 38,
+                              height: 32,
                               decoration: BoxDecoration(
                                   color: Colors.black45,
                                   borderRadius:
@@ -166,16 +182,17 @@ class _GuideListState extends State<GuideList> {
                                 child: Flex(
                                   direction: Axis.horizontal,
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Expanded(
                                       child: TextField(
                                           controller: _filter,
                                           decoration: new InputDecoration(
-                                            hintText: 'Search...',
-                                            hintStyle: TextStyle(
-                                                color: buttonPrimary,
-                                                fontSize: 18),
+                                            hintText: 'Search',
+                                            border: InputBorder.none,
+                                            hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .caption,
                                           )),
                                     )
                                   ],

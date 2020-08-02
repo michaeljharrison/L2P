@@ -26,40 +26,42 @@ final ThemeData themeDefault = ThemeData(
 
     /// TODO: Make sure these match exactly with the figma design.
     textTheme: new TextTheme(
-        headline4: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
-        headline6: TextStyle(
-          color: buttonSecondary,
-          fontWeight: FontWeight.w300,
-          fontSize: 34,
-        ),
-        subtitle2: TextStyle(
-          color: buttonSecondary,
-          fontWeight: FontWeight.w300,
-          fontSize: 26,
-        ),
-        headline5: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 24,
-        ),
-        subtitle1: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-        bodyText2: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.normal,
-          fontSize: 12,
-          height: 1.5,
-        ),
-        //body2: ,
-        button: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w900,
-          fontSize: 14,
-        )),
+      headline4: TextStyle(
+          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+      headline6: TextStyle(
+        color: buttonSecondary,
+        fontWeight: FontWeight.w300,
+        fontSize: 34,
+      ),
+      subtitle2: TextStyle(
+        color: buttonSecondary,
+        fontWeight: FontWeight.w300,
+        fontSize: 26,
+      ),
+      headline5: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ),
+      subtitle1: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.normal,
+        fontSize: 12,
+        height: 1.5,
+      ),
+      //body2: ,
+      button: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.w900,
+        fontSize: 14,
+      ),
+      caption: TextStyle(color: buttonPrimary, fontSize: 14),
+    ),
     // Fonts
     fontFamily: 'Montserrat');
 
