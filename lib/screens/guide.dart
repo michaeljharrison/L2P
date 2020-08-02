@@ -61,6 +61,16 @@ class Guide extends StatefulWidget {
     else
       return 1;
   }
+
+  static Guide clone(Guide g) {
+    return new Guide(
+        title: g.title,
+        order: g.order,
+        snapshot: g.snapshot,
+        accent: g.accent,
+        type: g.type,
+        gameTitle: g.gameTitle);
+  }
 }
 
 /// State class for the Guide Object.

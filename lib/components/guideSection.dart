@@ -12,7 +12,7 @@ class GuideSection extends StatefulWidget {
   final String description;
   final bool ordered;
   final int order;
-  final List<Guide> guides;
+  List<Guide> guides;
   final List<ScoringGuide> scoringGuides;
   final String type;
 
@@ -43,6 +43,37 @@ class GuideSection extends StatefulWidget {
       return 0;
     else
       return 1;
+  }
+
+  static GuideSection clone(GuideSection gs) {
+    List<Guide> newGuides = List<Guide>();
+    gs.guides.forEach((element) {
+      newGuides.add(Guide.clone(element));
+    });
+    return new GuideSection(
+        description: gs.description,
+        title: gs.title,
+        ordered: gs.ordered,
+        order: gs.order,
+        guides: newGuides,
+        scoringGuides: gs.scoringGuides,
+        type: gs.type);
+  }
+
+  static List<GuideSection> searchFilter(
+      List<GuideSection> gsList, String filterText) {
+    List<GuideSection> newList = new List<GuideSection>();
+    gsList.forEach((gs) {
+      GuideSection newGS = GuideSection.clone(gs);
+      newGS.guides.retainWhere((element) {
+        return (element.title
+                .toLowerCase()
+                .contains(filterText.toLowerCase()) ||
+            gs.title.toLowerCase().contains(filterText.toLowerCase()));
+      });
+      newList.add(newGS);
+    });
+    return newList;
   }
 }
 

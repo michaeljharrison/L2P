@@ -17,8 +17,38 @@ class GuideList extends StatefulWidget {
 }
 
 class _GuideListState extends State<GuideList> {
+  final TextEditingController _filter = new TextEditingController();
+  String _searchText = "";
+  List<Padding> _filteredList = new List();
+
+  @override
+  void initState() {
+    super.initState();
+    _filter.addListener(() {
+      print("Second text field: ${_filter.text}");
+      if (_filter.text.isEmpty && _searchText != "") {
+        setState(() {
+          _searchText = "";
+        });
+      } else {
+        setState(() {
+          _searchText = _filter.text;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _filter.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('Building GuideList...');
     List<Tab> tabsList = [];
     List<Padding> guideSectionLists = [];
 
@@ -31,7 +61,10 @@ class _GuideListState extends State<GuideList> {
           children: <Widget>[
             Column(
                 children: widget.game.guideSections != null
-                    ? widget.game.guideSections
+                    ? (_searchText != ""
+                        ? GuideSection.searchFilter(
+                            widget.game.guideSections, _searchText)
+                        : widget.game.guideSections)
                     : <Widget>[])
           ],
         ),
@@ -46,7 +79,10 @@ class _GuideListState extends State<GuideList> {
           children: <Widget>[
             Column(
                 children: widget.game.referenceSections != null
-                    ? widget.game.referenceSections
+                    ? (_searchText != ""
+                        ? GuideSection.searchFilter(
+                            widget.game.referenceSections, _searchText)
+                        : widget.game.referenceSections)
                     : <Widget>[])
           ],
         ),
@@ -61,7 +97,10 @@ class _GuideListState extends State<GuideList> {
           children: <Widget>[
             Column(
                 children: widget.game.scenarioSections != null
-                    ? widget.game.scenarioSections
+                    ? (_searchText != ""
+                        ? GuideSection.searchFilter(
+                            widget.game.scenarioSections, _searchText)
+                        : widget.game.scenarioSections)
                     : <Widget>[])
           ],
         ),
@@ -113,29 +152,36 @@ class _GuideListState extends State<GuideList> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12, bottom: 12.0),
-                        child: Container(
-                            height: 38,
-                            decoration: BoxDecoration(
-                                color: Colors.black45,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(99))),
-                            child: Flex(
-                              direction: Axis.horizontal,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(left: 20),
-
-                                  /// TODO: Replace with a real search function.
-                                  child: Text(
-                                    "Search...",
-                                    style: TextStyle(
-                                        color: buttonPrimary, fontSize: 18),
-                                  ),
-                                )
-                              ],
-                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Container(
+                              height: 38,
+                              decoration: BoxDecoration(
+                                  color: Colors.black45,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(99))),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                child: Flex(
+                                  direction: Axis.horizontal,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: TextField(
+                                          controller: _filter,
+                                          decoration: new InputDecoration(
+                                            hintText: 'Search...',
+                                            hintStyle: TextStyle(
+                                                color: buttonPrimary,
+                                                fontSize: 18),
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              )),
+                        ),
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height - 340,
