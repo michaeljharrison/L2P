@@ -1,3 +1,5 @@
+// TODO: BUG - Entering data in one player, then a second player, will wipe the first players data but not total score.
+
 import 'dart:developer';
 
 import 'package:L2P/components/page.dart';
