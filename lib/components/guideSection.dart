@@ -78,6 +78,8 @@ class GuideSection extends StatefulWidget {
 }
 
 class _GuideSectionState extends State<GuideSection> {
+  ExpandableController _expandableController =
+      new ExpandableController(initialExpanded: true);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -88,6 +90,7 @@ class _GuideSectionState extends State<GuideSection> {
               color: cardBG,
               borderRadius: BorderRadius.all(Radius.circular(4))),
           child: ExpandablePanel(
+            controller: _expandableController,
             theme: expandableThemeDefault,
             header: Text(widget.title,
                 style: Theme.of(context).textTheme.headline5),
