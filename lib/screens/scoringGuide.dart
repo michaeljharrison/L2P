@@ -154,7 +154,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              height: 68,
+              height: 65,
               decoration: BoxDecoration(color: cardBG),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0, top: 10.0),
@@ -175,7 +175,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 65.0, bottom: 0),
+            padding: const EdgeInsets.only(top: 65.0),
             child: _attributes.length > 0
                 ? renderBody(_attributes)
                 : Text("Loading..."),
@@ -187,7 +187,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 Navigator.pop(context);
               },
               child: Container(
-                height: 45,
+                height: 30,
                 color: cardBG,
                 child: Flex(
                     direction: Axis.vertical,
@@ -196,7 +196,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                     children: <Widget>[
                       Text(
                         'Back to ${widget.gameTitle}',
-                        style: TextStyle(color: buttonPrimary, fontSize: 12),
+                        style: TextStyle(color: buttonPrimary, fontSize: 10),
                         textAlign: TextAlign.center,
                       ),
                       Icon(
@@ -218,19 +218,19 @@ class _ScoringGuideState extends State<ScoringGuide> {
 
     for (var player = 0; player < widget.numPlayers; player++) {
       tabBars.add(Container(
-          height: 60,
+          height: 65,
           child:
               Tab(text: 'Player ${player}', icon: Icon(Icons.person_outline))));
       tabViews.add(Stack(fit: StackFit.expand, children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(bottom: 50, top: 10),
+          padding: const EdgeInsets.only(bottom: 60, left: 11, right: 11),
           child: renderPlayerScoring(attributes, player),
         ),
         Align(
             widthFactor: 2,
             alignment: Alignment.bottomCenter,
             child: ConstrainedBox(
-                constraints: BoxConstraints.expand(height: 50),
+                constraints: BoxConstraints.expand(height: 63),
                 child: renderTotalScore(player)))
       ]));
     }
@@ -245,9 +245,11 @@ class _ScoringGuideState extends State<ScoringGuide> {
             child: Flexible(
               child: Column(
                 children: <Widget>[
-                  TabBar(tabs: tabBars),
                   Container(
-                      height: MediaQuery.of(context).size.height - 230,
+                      decoration: BoxDecoration(color: Colors.black45),
+                      child: TabBar(tabs: tabBars)),
+                  Container(
+                      height: MediaQuery.of(context).size.height - 222,
                       child: TabBarView(children: tabViews))
                 ],
               ),
@@ -268,8 +270,13 @@ class _ScoringGuideState extends State<ScoringGuide> {
     int total = _playerScores[player].reduce((a, b) => a + b);
     return Container(
         color: Theme.of(context).dividerColor,
-        child: Column(
-            children: <Widget>[Text("Total Score"), Text(total.toString())]));
+        child: Column(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text("TOTAL", style: Theme.of(context).textTheme.headline5),
+          ),
+          Text(total.toString(), style: Theme.of(context).textTheme.headline4)
+        ]));
   }
 
   Widget renderScoringCategory(
@@ -278,17 +285,16 @@ class _ScoringGuideState extends State<ScoringGuide> {
       children: <Widget>[
         Expanded(
           child: Container(
-            padding: EdgeInsets.only(left: 14),
+            padding: EdgeInsets.only(top: 6, bottom: 6, right: 10),
             child: Column(children: <Widget>[
               Row(children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(right: 8),
-                  child: Text(
-                    attribute.title,
-                    textAlign: TextAlign.start,
-                  ),
+                  padding: EdgeInsets.only(right: 6),
+                  child: Text(attribute.title.toUpperCase(),
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.headline5),
                 ),
-                Icon(Icons.help_outline)
+                Icon(Icons.help_outline, color: buttonPrimary, size: 18)
               ]),
               Text(
                 attribute.description,
