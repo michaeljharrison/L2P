@@ -84,7 +84,11 @@ class _ScoringGuideState extends State<ScoringGuide> {
   Future<void> setPlayerScore(
       int player, ScoringAttribute attribute, int value) async {
     setState(() {
-      print('Changed!');
+      print('Changed: ' +
+          player.toString() +
+          (attribute.order - 1).toString() +
+          ' to ' +
+          value.toString());
       print(value.toInt());
       _playerScores[player][attribute.order - 1] = value;
     });
@@ -116,6 +120,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
     if (_attributes.length < 1) {
       buildAttributeList();
     }
+    _attributes.sort(ScoringAttribute.sortByOrder);
 
     if (_playerScores == null && _attributes.length > 0) {
       // Build the 2D array of scoring attributes for each player.
@@ -215,14 +220,15 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   Widget renderBody(List<ScoringAttribute> attributes) {
+    print('RenderBody');
     List<Widget> tabBars = [];
     List<Widget> tabViews = [];
 
     for (var player = 0; player < widget.numPlayers; player++) {
       tabBars.add(Container(
           height: 65,
-          child:
-              Tab(text: 'Player ${player}', icon: Icon(Icons.person_outline))));
+          child: Tab(
+              text: 'Player ${player + 1}', icon: Icon(Icons.person_outline))));
       tabViews.add(Stack(fit: StackFit.expand, children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 60, left: 11, right: 11),
@@ -261,6 +267,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   Widget renderPlayerScoring(List<ScoringAttribute> attributes, int player) {
+    print('RenderPlayerScoring: ${player}');
     List<Widget> categoryWidgets = [];
     for (var cat = 0; cat < attributes.length; cat++) {
       categoryWidgets.add(renderScoringCategory(cat, attributes[cat], player));
@@ -313,6 +320,10 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 child: new TextField(
               maxLength: 3,
               maxLengthEnforced: true,
+              controller: new TextEditingController(
+                  text: _playerScores[player][order] != null
+                      ? _playerScores[player][order].toString()
+                      : "0"),
               decoration: InputDecoration(counterText: ''),
               onChanged: (value) =>
                   {setPlayerScore(player, attribute, int.parse(value))},
