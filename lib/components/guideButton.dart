@@ -31,14 +31,17 @@ class GuideButton extends StatelessWidget {
           children: List<Widget>.from([
             Padding(
               padding: const EdgeInsets.only(right: 12.0),
-              child: FlatButton(
-                padding: EdgeInsets.all(4),
-                onPressed: link,
-                child: Text(this.index.toString(),
-                    style: Theme.of(context).textTheme.button),
-                color: type == SectionTypes.Reference
-                    ? buttonTertiary
-                    : buttonPrimary,
+              child: Container(
+                width: 40,
+                child: FlatButton(
+                  padding: EdgeInsets.all(4),
+                  onPressed: link,
+                  child: Text(this.index.toString(),
+                      style: Theme.of(context).textTheme.button),
+                  color: type == SectionTypes.Reference
+                      ? buttonTertiary
+                      : buttonPrimary,
+                ),
               ),
             ),
             Expanded(
