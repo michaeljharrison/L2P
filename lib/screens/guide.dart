@@ -162,35 +162,6 @@ class _GuideState extends State<Guide> {
             padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
             child: renderBody(),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 50,
-                color: cardBG,
-                child: Flex(
-                    direction: Axis.vertical,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Back to ${widget.gameTitle}',
-                        style: TextStyle(color: buttonPrimary, fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: buttonPrimary,
-                        size: 14,
-                        semanticLabel: 'Back to ${widget.gameTitle}',
-                      )
-                    ]),
-              ),
-            ),
-          )
         ]));
   }
 

@@ -187,35 +187,6 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 ? renderBody(_attributes)
                 : Text("Loading..."),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 30,
-                color: cardBG,
-                child: Flex(
-                    direction: Axis.vertical,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Back to ${widget.gameTitle}',
-                        style: TextStyle(color: buttonPrimary, fontSize: 10),
-                        textAlign: TextAlign.center,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: buttonPrimary,
-                        size: 14,
-                        semanticLabel: 'Back to ${widget.gameTitle}',
-                      )
-                    ]),
-              ),
-            ),
-          )
         ]));
   }
 
@@ -257,7 +228,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                       decoration: BoxDecoration(color: Colors.black45),
                       child: TabBar(tabs: tabBars)),
                   Container(
-                      height: MediaQuery.of(context).size.height - 222,
+                      height: MediaQuery.of(context).size.height - 195,
                       child: TabBarView(children: tabViews))
                 ],
               ),
