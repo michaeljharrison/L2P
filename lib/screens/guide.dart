@@ -80,6 +80,7 @@ class _GuideState extends State<Guide> {
   int _currentPage = 0;
 
   void buildPageList() async {
+    _pages = <GuidePage>[];
     widget.snapshot.reference
         .collection('pages')
         .getDocuments()
@@ -123,7 +124,7 @@ class _GuideState extends State<Guide> {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              height: 94,
+              height: 104,
               decoration: BoxDecoration(color: cardBG),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0, top: 10.0),
@@ -134,23 +135,27 @@ class _GuideState extends State<Guide> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(widget.gameTitle,
-                          style: Theme.of(context).textTheme.headline5),
+                          style: Theme.of(context).textTheme.headline4),
                       Text(widget.title,
-                          style: Theme.of(context).textTheme.subtitle2),
+                          style: Theme.of(context).textTheme.headline5),
 
                       /// TODO: Replace with a real progress bar..
-                      LinearPercentIndicator(
-                        width: MediaQuery.of(context).size.width - 50,
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 1000,
-                        animateFromLastPercent: true,
-                        percent: ((_currentPage + 1) / _pages.length <= 1)
-                            ? (_currentPage + 1) / _pages.length
-                            : 0,
-                        center: Text('${_currentPage + 1} / ${_pages.length}'),
-                        linearStrokeCap: LinearStrokeCap.roundAll,
-                        progressColor: Theme.of(context).buttonColor,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 50,
+                          animation: true,
+                          lineHeight: 20.0,
+                          animationDuration: 1000,
+                          animateFromLastPercent: true,
+                          percent: ((_currentPage + 1) / _pages.length <= 1)
+                              ? (_currentPage + 1) / _pages.length
+                              : 0,
+                          center:
+                              Text('${(_currentPage / _pages.length) * 100}%'),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Theme.of(context).dividerColor,
+                        ),
                       ),
                     ],
                   ),

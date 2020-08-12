@@ -23,6 +23,7 @@ final ThemeData themeDefault = ThemeData(
     backgroundColor: systemBG,
     accentColor: buttonSecondary,
     dividerColor: uiElement,
+    disabledColor: uiElement,
 
     /// TODO: Make sure these match exactly with the figma design.
     textTheme: new TextTheme(
@@ -34,9 +35,9 @@ final ThemeData themeDefault = ThemeData(
         fontSize: 34,
       ),
       subtitle2: TextStyle(
-        color: buttonSecondary,
-        fontWeight: FontWeight.w300,
-        fontSize: 26,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
       ),
       headline5: TextStyle(
         color: Colors.white,
