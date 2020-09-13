@@ -22,10 +22,10 @@ class GameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(6),
+        padding: EdgeInsets.all(8),
         decoration: new BoxDecoration(
           color: cardBG,
-          borderRadius: new BorderRadius.all(Radius.circular(6)),
+          borderRadius: new BorderRadius.all(Radius.circular(12)),
         ),
         child: new Column(
           children: <Widget>[
@@ -39,6 +39,7 @@ class GameCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
                 child: new Text(title,
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline5),
               ),
             ),

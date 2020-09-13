@@ -37,7 +37,17 @@ class _GuideListState extends State<GuideList>
   @override
   void initState() {
     super.initState();
-
+    _filter.addListener(() {
+      if (_filter.text.isEmpty && _searchText != "") {
+        setState(() {
+          _searchText = "";
+        });
+      } else {
+        setState(() {
+          _searchText = _filter.text;
+        });
+      }
+    });
     if (widget.game.guideSections.length > 0) {
       widget.game.guideSections.sort(GuideSection.sortByOrder);
       _guideSection = Padding(
@@ -86,17 +96,6 @@ class _GuideListState extends State<GuideList>
 
     _tabController = TabController(vsync: this, length: _tabsList.length);
     _tabController.addListener(_onTabChange);
-    _filter.addListener(() {
-      if (_filter.text.isEmpty && _searchText != "") {
-        setState(() {
-          _searchText = "";
-        });
-      } else {
-        setState(() {
-          _searchText = _filter.text;
-        });
-      }
-    });
   }
 
   void _onTabChange() {
@@ -119,6 +118,51 @@ class _GuideListState extends State<GuideList>
 
   @override
   Widget build(BuildContext context) {
+    _tabs.clear();
+    print('REBUILD - BAD');
+    if (widget.game.guideSections.length > 0) {
+      widget.game.guideSections.sort(GuideSection.sortByOrder);
+      _guideSection = Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+            children: widget.game.guideSections != null
+                ? (_searchText != ""
+                    ? GuideSection.searchFilter(
+                        widget.game.guideSections, _searchText)
+                    : widget.game.guideSections)
+                : <Widget>[]),
+      );
+      _tabs.add(_guideSection);
+    }
+    if (widget.game.referenceSections.length > 0) {
+      widget.game.referenceSections.sort(GuideSection.sortByOrder);
+      _referenceSection = Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+            children: widget.game.referenceSections != null
+                ? (_searchText != ""
+                    ? GuideSection.searchFilter(
+                        widget.game.referenceSections, _searchText)
+                    : widget.game.referenceSections)
+                : <Widget>[]),
+      );
+      _tabs.add(_referenceSection);
+    }
+    if (widget.game.scenarioSections.length > 0) {
+      widget.game.scenarioSections.sort(GuideSection.sortByOrder);
+      _scenarioSection = Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+            children: widget.game.scenarioSections != null
+                ? (_searchText != ""
+                    ? GuideSection.searchFilter(
+                        widget.game.scenarioSections, _searchText)
+                    : widget.game.scenarioSections)
+                : <Widget>[]),
+      );
+      _tabs.add(_scenarioSection);
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PreferredSize(

@@ -22,7 +22,7 @@ final ThemeData themeDefault = ThemeData(
     primaryColor: cardBG,
     backgroundColor: systemBG,
     accentColor: buttonSecondary,
-    dividerColor: uiElement,
+    dividerColor: buttonSecondary,
     disabledColor: uiElement,
 
     /// TODO: Make sure these match exactly with the figma design.
@@ -42,7 +42,7 @@ final ThemeData themeDefault = ThemeData(
       headline5: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: 24,
+        fontSize: 22,
       ),
       subtitle1: TextStyle(
         color: Colors.white,
