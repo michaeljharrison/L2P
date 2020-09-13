@@ -143,18 +143,20 @@ class _GuideState extends State<Guide> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 50,
+                          width: MediaQuery.of(context).size.width - 18,
                           animation: true,
-                          lineHeight: 20.0,
+                          lineHeight: 14.0,
                           animationDuration: 1000,
                           animateFromLastPercent: true,
                           percent: ((_currentPage + 1) / _pages.length <= 1)
                               ? (_currentPage + 1) / _pages.length
                               : 0,
-                          center:
-                              Text('${(_currentPage / _pages.length) * 100}%'),
+                          center: Text(
+                            '${(_currentPage / _pages.length) * 100}%',
+                            style: TextStyle(fontSize: 10),
+                          ),
                           linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Theme.of(context).dividerColor,
+                          progressColor: uiElement,
                         ),
                       ),
                     ],
