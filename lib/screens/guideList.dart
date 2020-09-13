@@ -1,5 +1,6 @@
 // TODO: Feature - Remove existing search functionality and spin it out into a new page.
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/game.dart';
@@ -17,16 +18,75 @@ class GuideList extends StatefulWidget {
   _GuideListState createState() => _GuideListState();
 }
 
-class _GuideListState extends State<GuideList> {
+enum Enum_Tabs { guides, references, scenarios }
+
+class _GuideListState extends State<GuideList>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _filter = new TextEditingController();
+  TabController _tabController;
+  List<Tab> _tabsList = [];
+  Padding _guideSection;
+  Padding _referenceSection;
+  Padding _scenarioSection;
   String _searchText = "";
   List<Padding> _filteredList = new List();
+  Enum_Tabs _currentTab = Enum_Tabs.guides;
+  List<Padding> _tabs = new List<Padding>();
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
+
+    if (widget.game.guideSections.length > 0) {
+      widget.game.guideSections.sort(GuideSection.sortByOrder);
+      _guideSection = Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+            children: widget.game.guideSections != null
+                ? (_searchText != ""
+                    ? GuideSection.searchFilter(
+                        widget.game.guideSections, _searchText)
+                    : widget.game.guideSections)
+                : <Widget>[]),
+      );
+      _tabs.add(_guideSection);
+      _tabsList.add(Tab(text: "Guides", icon: Icon(Icons.local_library)));
+    }
+    if (widget.game.referenceSections.length > 0) {
+      widget.game.referenceSections.sort(GuideSection.sortByOrder);
+      _referenceSection = Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+            children: widget.game.referenceSections != null
+                ? (_searchText != ""
+                    ? GuideSection.searchFilter(
+                        widget.game.referenceSections, _searchText)
+                    : widget.game.referenceSections)
+                : <Widget>[]),
+      );
+      _tabsList.add(Tab(text: "References", icon: Icon(Icons.library_books)));
+      _tabs.add(_referenceSection);
+    }
+    if (widget.game.scenarioSections.length > 0) {
+      widget.game.scenarioSections.sort(GuideSection.sortByOrder);
+      _scenarioSection = Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+            children: widget.game.scenarioSections != null
+                ? (_searchText != ""
+                    ? GuideSection.searchFilter(
+                        widget.game.scenarioSections, _searchText)
+                    : widget.game.scenarioSections)
+                : <Widget>[]),
+      );
+      _tabsList.add(Tab(text: "Scenarios", icon: Icon(Icons.local_movies)));
+      _tabs.add(_scenarioSection);
+    }
+
+    _tabController = TabController(vsync: this, length: _tabsList.length);
+    _tabController.addListener(_onTabChange);
     _filter.addListener(() {
-      print("Second text field: ${_filter.text}");
       if (_filter.text.isEmpty && _searchText != "") {
         setState(() {
           _searchText = "";
@@ -39,6 +99,12 @@ class _GuideListState extends State<GuideList> {
     });
   }
 
+  void _onTabChange() {
+    setState(() {
+      _selectedIndex = _tabController.index;
+    });
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
@@ -47,66 +113,12 @@ class _GuideListState extends State<GuideList> {
     super.dispose();
   }
 
+  Widget renderSection() {
+    return _tabs[_selectedIndex];
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('Building GuideList...');
-    List<Tab> tabsList = [];
-    List<Padding> guideSectionLists = [];
-
-    if (widget.game.guideSections.length > 0) {
-      widget.game.guideSections.sort(GuideSection.sortByOrder);
-      tabsList.add(Tab(text: "Guides", icon: Icon(Icons.local_library)));
-      guideSectionLists.add(Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: ListView(
-          children: <Widget>[
-            Column(
-                children: widget.game.guideSections != null
-                    ? (_searchText != ""
-                        ? GuideSection.searchFilter(
-                            widget.game.guideSections, _searchText)
-                        : widget.game.guideSections)
-                    : <Widget>[])
-          ],
-        ),
-      ));
-    }
-    if (widget.game.referenceSections.length > 0) {
-      widget.game.referenceSections.sort(GuideSection.sortByOrder);
-      tabsList.add(Tab(text: "References", icon: Icon(Icons.library_books)));
-      guideSectionLists.add(Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: ListView(
-          children: <Widget>[
-            Column(
-                children: widget.game.referenceSections != null
-                    ? (_searchText != ""
-                        ? GuideSection.searchFilter(
-                            widget.game.referenceSections, _searchText)
-                        : widget.game.referenceSections)
-                    : <Widget>[])
-          ],
-        ),
-      ));
-    }
-    if (widget.game.scenarioSections.length > 0) {
-      widget.game.scenarioSections.sort(GuideSection.sortByOrder);
-      tabsList.add(Tab(text: "Scenarios", icon: Icon(Icons.local_movies)));
-      guideSectionLists.add(Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: ListView(
-          children: <Widget>[
-            Column(
-                children: widget.game.scenarioSections != null
-                    ? (_searchText != ""
-                        ? GuideSection.searchFilter(
-                            widget.game.scenarioSections, _searchText)
-                        : widget.game.scenarioSections)
-                    : <Widget>[])
-          ],
-        ),
-      ));
-    }
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PreferredSize(
@@ -131,87 +143,64 @@ class _GuideListState extends State<GuideList> {
       body: ListView(
         children: <Widget>[
           Flex(
-            mainAxisSize: MainAxisSize.min,
-            direction: Axis.vertical,
+            direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Flex(
-                direction: Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(widget.game.title.replaceAll('_', ' '),
-                      style: Theme.of(context).textTheme.headline4)
-                ],
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: widget.game.coverImage),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 12.0, left: 12.0, right: 12.0),
-                child: Text(widget.game.description,
-                    style: Theme.of(context).textTheme.bodyText2),
-              ),
-              DefaultTabController(
-                length: tabsList.length,
-                child: Flexible(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(color: Colors.black45),
-                        child: TabBar(
-                          tabs: tabsList,
-                          labelColor: buttonSecondary,
-                          unselectedLabelColor: uiElement,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12, bottom: 4),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: Container(
-                              height: 32,
-                              decoration: BoxDecoration(
-                                  color: Colors.black45,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(99))),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                child: Flex(
-                                  direction: Axis.horizontal,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: TextField(
-                                          controller: _filter,
-                                          decoration: new InputDecoration(
-                                            hintText: 'Search',
-                                            border: InputBorder.none,
-                                            hintStyle: Theme.of(context)
-                                                .textTheme
-                                                .caption,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              )),
-                        ),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height - 340,
-                        child: TabBarView(
-                          children: guideSectionLists,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              Text(widget.game.title.replaceAll('_', ' '),
+                  style: Theme.of(context).textTheme.headline4)
             ],
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: widget.game.coverImage),
+          Padding(
+            padding:
+                const EdgeInsets.only(bottom: 12.0, left: 12.0, right: 12.0),
+            child: Text(widget.game.description,
+                style: Theme.of(context).textTheme.bodyText2),
+          ),
+          Container(
+            decoration: BoxDecoration(color: Colors.black45),
+            child: TabBar(
+              tabs: _tabsList,
+              labelColor: buttonSecondary,
+              unselectedLabelColor: uiElement,
+              controller: _tabController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 4),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Container(
+                  height: 32,
+                  decoration: BoxDecoration(
+                      color: Colors.black45,
+                      borderRadius: BorderRadius.all(Radius.circular(99))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                              controller: _filter,
+                              decoration: new InputDecoration(
+                                hintText: 'Search',
+                                border: InputBorder.none,
+                                hintStyle: Theme.of(context).textTheme.caption,
+                              )),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+          ),
+          Container(
+            child: renderSection(),
           )
         ],
       ),
