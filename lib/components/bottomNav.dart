@@ -60,7 +60,7 @@ class _BottomNavState extends State<BottomNav> {
     }
 
     return SizedBox(
-      height: 55,
+      height: 85,
       child: BottomNavigationBar(
           elevation: 0,
           backgroundColor: colorTabBar,

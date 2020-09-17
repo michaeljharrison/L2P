@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:L2P/components/guideButton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,20 @@ class GuidePage extends StatefulWidget {
   final String description;
   final Image image;
   final int order;
+  final GuideButton action;
 
-  GuidePage({Key key, String title, String description, Image image, int order})
+  GuidePage(
+      {Key key,
+      String title,
+      String description,
+      Image image,
+      int order,
+      GuideButton action = null})
       : this.title = title,
         this.description = description,
         this.image = image,
         this.order = order,
+        this.action = action,
         super(key: key);
 
   @override
@@ -82,6 +91,10 @@ class _GuidePageState extends State<GuidePage> {
     ));
     pageContent.add(
         Text(widget.description, style: Theme.of(context).textTheme.bodyText1));
+
+    if (widget.action != null) {
+      pageContent.add(widget.action);
+    }
 
     return Padding(
       padding:

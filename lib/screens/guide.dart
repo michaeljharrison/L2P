@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:L2P/components/guideButton.dart';
 import 'package:L2P/components/page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +31,9 @@ class Guide extends StatefulWidget {
   /// Type of guide: guide(default), reference or score.
   final String type;
 
+  /// The next sequential guide to link to.
+  final Function getNextGuide;
+
   /// Constructor for a Guide object.
   ///
   /// Only takes the title and the document snapshot, this
@@ -42,13 +45,15 @@ class Guide extends StatefulWidget {
       DocumentSnapshot snapshot,
       String gameTitle,
       String type,
-      Color accent})
+      Color accent,
+      Function getNextGuide = null})
       : this.title = title,
         this.order = order,
         this.snapshot = snapshot,
         this.accent = accent,
         this.type = type,
         this.gameTitle = gameTitle,
+        this.getNextGuide = getNextGuide,
         super(key: key);
 
   @override
@@ -92,6 +97,26 @@ class _GuideState extends State<Guide> {
           _pages.add(newPage);
         });
       });
+      // Add the final page.
+      _pages.add(GuidePage(
+          image: Image.asset('icons/award.png',
+              height: 60, width: 120, fit: BoxFit.contain),
+          title: '${widget.title.toUpperCase()} COMPLETE!',
+          description:
+              'You’ve completed this guide! We recommend you hit the button below to continue.',
+          order: 9999,
+          action: GuideButton(
+              index: 0,
+              title: 'Next Guide: ',
+              type: SectionTypes.Guide,
+              numbered: false,
+              link: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            widget.getNextGuide(widget.order)));
+              })));
     });
   }
 
@@ -152,7 +177,7 @@ class _GuideState extends State<Guide> {
                               ? (_currentPage + 1) / _pages.length
                               : 0,
                           center: Text(
-                            '${(_currentPage / _pages.length) * 100}%',
+                            '${((_currentPage / _pages.length) * 100).toStringAsFixed(0)}%',
                             style: TextStyle(fontSize: 10),
                           ),
                           linearStrokeCap: LinearStrokeCap.roundAll,

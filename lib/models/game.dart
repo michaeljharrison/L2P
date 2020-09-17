@@ -118,6 +118,9 @@ class Game {
                     type: ((guideSection["Section Type"] != null)
                         ? guideSection["Section Type"]
                         : SectionTypes.Scoring),
+                    getNextGuide: (order) {
+                      return guideList[order - 1];
+                    },
                     // accent: Color.fromRGBO(snapshot.data['accent'][0],
                     //    snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
                     snapshot: guide,
