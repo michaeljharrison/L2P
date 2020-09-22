@@ -13,6 +13,10 @@ final colorTagTeal = new Color.fromRGBO(101, 212, 186, 1);
 final colorTabBar = new Color.fromRGBO(12, 17, 21, 1);
 final colorBottomNav = new Color.fromRGBO(12, 17, 21, 0.8);
 final colorTransparent = new Color.fromRGBO(0, 0, 0, 0);
+final backgroundBlueGradient = new LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color.fromRGBO(37, 90, 142, 1), Color.fromRGBO(16, 38, 61, 1)]);
 
 /// THEMES
 /// Default Theme for the application.
@@ -48,6 +52,12 @@ final ThemeData themeDefault = ThemeData(
         color: Colors.white,
         fontWeight: FontWeight.bold,
         fontSize: 16,
+      ),
+      bodyText1: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.normal,
+        fontSize: 16,
+        height: 1.5,
       ),
       bodyText2: TextStyle(
         color: Colors.white,

@@ -112,14 +112,32 @@ class Game {
                   guideList.add(new Guide(
                     gameTitle: snapshot.data['title'],
                     title: guide["Name"],
-                    order: ((guide.data["Order"] != null)
+                    order: ((guide.data["Order"] != null &&
+                            guide.data["Order"] is String &&
+                            guide.data["Order"] != '')
                         ? int.parse(guide.data["Order"])
                         : 0),
                     type: ((guideSection["Section Type"] != null)
                         ? guideSection["Section Type"]
                         : SectionTypes.Scoring),
                     getNextGuide: (order) {
-                      return guideList[order - 1];
+                      print(order);
+                      print(guideList.length);
+                      if (order >= guideList.length) {
+                        print('Last guide.');
+                        print(guideSectionList.length);
+                        print(guideSection['Order']);
+                        if (int.parse(guideSection['Order']) >=
+                            guideSectionList.length) {
+                          print('End of all guides, pop back to game.');
+                          return null;
+                        }
+                        return guideSectionList[
+                                int.parse(guideSection['Order'])]
+                            .guides[0];
+                      } else {
+                        return guideList[order];
+                      }
                     },
                     // accent: Color.fromRGBO(snapshot.data['accent'][0],
                     //    snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
@@ -169,8 +187,10 @@ class Game {
           description: snapshot.data['description'],
           // accent: Color.fromRGBO(snapshot.data['accent'][0],
           // snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
-          // tags: List<String>.from([snapshot.data['tags']]),
-          tags: List<String>.from([]),
+          tags: snapshot.data['tags'] == null
+              ? List<String>.from([])
+              : List<String>.from([snapshot.data['tags']]),
+          // tags: List<String>.from([]),
           coverImage: img,
           guideSections: guideSectionList,
           referenceSections: referenceSectionList,

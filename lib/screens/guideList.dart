@@ -38,6 +38,7 @@ class _GuideListState extends State<GuideList>
   void initState() {
     super.initState();
     _filter.addListener(() {
+      print('Update search');
       if (_filter.text.isEmpty && _searchText != "") {
         setState(() {
           _searchText = "";
@@ -99,6 +100,7 @@ class _GuideListState extends State<GuideList>
   }
 
   void _onTabChange() {
+    print('Tab Changed');
     setState(() {
       _selectedIndex = _tabController.index;
     });

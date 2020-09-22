@@ -36,23 +36,21 @@ class MyApp extends StatelessWidget {
             navigateAfterSeconds: new HomePage(),
 
             /// TODO: Replace with a text style from theme.
-            photoSize: 120,
+            photoSize: 40,
             image: new Image.asset(
               'icons/Logo.png',
-              height: 60,
-              width: 120,
-              fit: BoxFit.contain,
             ),
-            backgroundColor: systemBG,
+            //backgroundColor: systemBG,
+            gradientBackground: backgroundBlueGradient,
             // photoSize: 100.0,
             /// TODO: Replace with a text style from theme.
             loadingText: new Text('Unboxing...',
                 style: TextStyle(
-                  color: buttonPrimary,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 )),
-            loaderColor: buttonPrimary));
+            loaderColor: Colors.white));
   }
 }
 

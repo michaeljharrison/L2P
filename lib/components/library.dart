@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/models/constants.dart';
 import 'package:L2P/models/game.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,9 @@ class _LibraryState extends State<Library> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
+                        settings: RouteSettings(
+                            arguments: NavigationArguments(Enum_Screens.game),
+                            name: "currentGame"),
                         builder: (context) => GuideList(game: game)),
                   );
                 },

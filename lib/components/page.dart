@@ -12,6 +12,7 @@ class GuidePage extends StatefulWidget {
   final Image image;
   final int order;
   final GuideButton action;
+  final bool isFinal;
 
   GuidePage(
       {Key key,
@@ -19,12 +20,14 @@ class GuidePage extends StatefulWidget {
       String description,
       Image image,
       int order,
-      GuideButton action = null})
+      GuideButton action = null,
+      bool isFinal = false})
       : this.title = title,
         this.description = description,
         this.image = image,
         this.order = order,
         this.action = action,
+        this.isFinal = isFinal,
         super(key: key);
 
   @override
@@ -93,25 +96,49 @@ class _GuidePageState extends State<GuidePage> {
         Text(widget.description, style: Theme.of(context).textTheme.bodyText1));
 
     if (widget.action != null) {
-      pageContent.add(widget.action);
+      pageContent.add(Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+        child: widget.action,
+      ));
     }
 
-    return Padding(
-      padding:
-          const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
-      child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: cardBG,
-          ),
-          child: Padding(
-            padding: pagePadding,
-            child: Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: pageAlignment,
-              children: pageContent,
+    if (widget.isFinal) {
+      return Padding(
+        padding: const EdgeInsets.only(
+            left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              gradient: backgroundBlueGradient,
+              // color: cardBG,
             ),
-          )),
-    );
+            child: Padding(
+              padding: pagePadding,
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: pageAlignment,
+                children: pageContent,
+              ),
+            )),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(
+            left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: cardBG,
+            ),
+            child: Padding(
+              padding: pagePadding,
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: pageAlignment,
+                children: pageContent,
+              ),
+            )),
+      );
+    }
   }
 }

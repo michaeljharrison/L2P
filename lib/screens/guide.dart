@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/components/guideButton.dart';
+import 'package:L2P/components/library.dart';
 import 'package:L2P/components/page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -97,25 +99,45 @@ class _GuideState extends State<Guide> {
           _pages.add(newPage);
         });
       });
+      Guide nextGuide = widget.getNextGuide(widget.order);
       // Add the final page.
       _pages.add(GuidePage(
           image: Image.asset('icons/award.png',
-              height: 60, width: 120, fit: BoxFit.contain),
-          title: '${widget.title.toUpperCase()} COMPLETE!',
-          description:
-              'You’ve completed this guide! We recommend you hit the button below to continue.',
+              height: 90, width: 180, fit: BoxFit.contain),
+          title: nextGuide != null
+              ? '${widget.title.toUpperCase()} COMPLETE!'
+              : 'YOU\'RE READY TO PLAY!',
+          description: nextGuide != null
+              ? 'You’ve completed this guide! We recommend you hit the button below to continue.'
+              : 'You have completed all the guides for this game, time to go play!',
           order: 9999,
+          isFinal: true,
           action: GuideButton(
               index: 0,
-              title: 'Next Guide: ',
+              title: nextGuide != null ? 'Next Guide' : 'Back to Game',
               type: SectionTypes.Guide,
               numbered: false,
               link: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            widget.getNextGuide(widget.order)));
+                nextGuide != null
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                widget.getNextGuide(widget.order)))
+                    : Navigator.of(context).popUntil((route) {
+                        NavigationArguments args = route.settings.arguments;
+                        if (route.settings.name == "currentGame") {
+                          return true;
+                        }
+                        if (args == null) {
+                          return false;
+                        }
+                        if (args.screen == Enum_Screens.game) {
+                          return true;
+                        } else {
+                          return false;
+                        }
+                      });
               })));
     });
   }
@@ -177,7 +199,7 @@ class _GuideState extends State<Guide> {
                               ? (_currentPage + 1) / _pages.length
                               : 0,
                           center: Text(
-                            '${((_currentPage / _pages.length) * 100).toStringAsFixed(0)}%',
+                            '${((_currentPage + 1) / _pages.length <= 1) ? (((_currentPage + 1) / _pages.length) * 100).toStringAsFixed(0) : 0}%',
                             style: TextStyle(fontSize: 10),
                           ),
                           linearStrokeCap: LinearStrokeCap.roundAll,
@@ -194,6 +216,37 @@ class _GuideState extends State<Guide> {
             padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
             child: renderBody(),
           ),
+          /* Align(
+            alignment: Alignment.bottomCenter,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.of(context)
+                    .popUntil((route) => route.settings.name == "currentGame");
+              },
+              child: Container(
+                height: 50,
+                color: cardBG,
+                child: Flex(
+                    direction: Axis.vertical,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Back to ${widget.gameTitle}',
+                        style: TextStyle(color: buttonPrimary, fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: buttonPrimary,
+                        size: 14,
+                        semanticLabel: 'Back to ${widget.gameTitle}',
+                      )
+                    ]),
+              ),
+            ),
+          ) */
         ]));
   }
 

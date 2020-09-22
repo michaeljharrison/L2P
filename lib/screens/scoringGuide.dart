@@ -209,7 +209,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
             widthFactor: 2,
             alignment: Alignment.bottomCenter,
             child: ConstrainedBox(
-                constraints: BoxConstraints.expand(height: 63),
+                constraints: BoxConstraints.expand(height: 74),
                 child: renderTotalScore(player)))
       ]));
     }
@@ -228,7 +228,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
                       decoration: BoxDecoration(color: Colors.black45),
                       child: TabBar(tabs: tabBars)),
                   Container(
-                      height: MediaQuery.of(context).size.height - 195,
+                      height: MediaQuery.of(context).size.height - 220,
                       child: TabBarView(children: tabViews))
                 ],
               ),
@@ -272,7 +272,10 @@ class _ScoringGuideState extends State<ScoringGuide> {
                   padding: EdgeInsets.only(right: 6),
                   child: Text(attribute.title.toUpperCase(),
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .apply(fontSizeDelta: -5)),
                 ),
                 Icon(Icons.help_outline, color: buttonPrimary, size: 18)
               ]),
