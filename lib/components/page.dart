@@ -77,11 +77,10 @@ class _GuidePageState extends State<GuidePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pageContent = [];
-    MainAxisAlignment pageAlignment = MainAxisAlignment.start;
+    MainAxisAlignment pageAlignment = MainAxisAlignment.center;
     EdgeInsets pagePadding =
         EdgeInsets.only(top: 40, bottom: 6.0, left: 40, right: 40);
     EdgeInsets titlePadding = EdgeInsets.only(bottom: 20);
-
     if (widget.image != null) {
       pageContent.add(Expanded(child: widget.image));
       pageAlignment = MainAxisAlignment.end;

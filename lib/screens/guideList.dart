@@ -100,7 +100,6 @@ class _GuideListState extends State<GuideList>
   }
 
   void _onTabChange() {
-    print('Tab Changed');
     setState(() {
       _selectedIndex = _tabController.index;
     });
@@ -204,7 +203,7 @@ class _GuideListState extends State<GuideList>
             padding:
                 const EdgeInsets.only(bottom: 12.0, left: 12.0, right: 12.0),
             child: Text(widget.game.description,
-                style: Theme.of(context).textTheme.bodyText2),
+                style: Theme.of(context).textTheme.bodyText1),
           ),
           Container(
             decoration: BoxDecoration(color: Colors.black45),

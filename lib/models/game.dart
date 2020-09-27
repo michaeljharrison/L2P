@@ -121,15 +121,9 @@ class Game {
                         ? guideSection["Section Type"]
                         : SectionTypes.Scoring),
                     getNextGuide: (order) {
-                      print(order);
-                      print(guideList.length);
                       if (order >= guideList.length) {
-                        print('Last guide.');
-                        print(guideSectionList.length);
-                        print(guideSection['Order']);
                         if (int.parse(guideSection['Order']) >=
                             guideSectionList.length) {
-                          print('End of all guides, pop back to game.');
                           return null;
                         }
                         return guideSectionList[

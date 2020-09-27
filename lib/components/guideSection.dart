@@ -99,14 +99,14 @@ class _GuideSectionState extends State<GuideSection> {
               softWrap: true,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
             expanded: Column(
               children: <Widget>[
                 Text(
                   widget.description,
                   softWrap: true,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Column(
                   children: buildButtonList(),

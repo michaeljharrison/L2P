@@ -17,6 +17,10 @@ final backgroundBlueGradient = new LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [Color.fromRGBO(37, 90, 142, 1), Color.fromRGBO(16, 38, 61, 1)]);
+final backgroundCardGradient = new LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color.fromRGBO(63, 84, 102, 1), Color.fromRGBO(54, 73, 89, 1), Color.fromRGBO(33, 45, 55, 1) ]);
 
 /// THEMES
 /// Default Theme for the application.
@@ -60,16 +64,16 @@ final ThemeData themeDefault = ThemeData(
         height: 1.5,
       ),
       bodyText2: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.normal,
-        fontSize: 12,
-        height: 1.5,
-      ),
+          color: Colors.white,
+          fontWeight: FontWeight.normal,
+          fontSize: 12,
+          height: 1.5,
+          fontFamily: 'Montserrat'),
       //body2: ,
       button: TextStyle(
         color: Colors.white,
-        fontWeight: FontWeight.w900,
-        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
       ),
       caption: TextStyle(color: buttonPrimary, fontSize: 14),
     ),

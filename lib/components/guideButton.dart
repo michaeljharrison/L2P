@@ -30,14 +30,19 @@ class GuideButton extends StatelessWidget {
           direction: Axis.horizontal,
           children: List<Widget>.from([
             Padding(
-              padding: const EdgeInsets.only(right: 12.0),
+              padding: const EdgeInsets.only(right: 8.0),
               child: Container(
-                width: 40,
+                width: 35,
                 child: FlatButton(
-                  padding: EdgeInsets.all(4),
+                  padding: EdgeInsets.all(5),
                   onPressed: link,
-                  child: Text(this.index.toString(),
-                      style: Theme.of(context).textTheme.button),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  child: Text(
+                    this.index.toString(),
+                    style: Theme.of(context).textTheme.button,
+                    textAlign: TextAlign.left,
+                  ),
                   color: type == SectionTypes.Reference
                       ? buttonTertiary
                       : buttonPrimary,
@@ -47,8 +52,13 @@ class GuideButton extends StatelessWidget {
             Expanded(
               child: FlatButton(
                 onPressed: link,
-                child:
-                    Text(this.title, style: Theme.of(context).textTheme.button),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    this.title,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
                 color: type == SectionTypes.Reference
                     ? buttonTertiary
                     : buttonPrimary,
@@ -62,8 +72,11 @@ class GuideButton extends StatelessWidget {
           Expanded(
             child: FlatButton(
               onPressed: link,
-              child:
-                  Text(this.title, style: Theme.of(context).textTheme.button),
+              child: Text(
+                this.title,
+                style: Theme.of(context).textTheme.button,
+                textAlign: TextAlign.start,
+              ),
               color: buttonSecondary,
             ),
           )

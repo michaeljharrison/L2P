@@ -60,27 +60,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ), */
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                setDebugOn(debugOn ? false : true);
-              },
-              child: Flex(
-                direction: Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text("Debug Mode"),
-                  Switch(
-                      value: (debugOn == null) ? false : debugOn,
-                      onChanged: (bool newState) {
-                        setDebugOn(newState);
-                      })
-                ],
+        body: Padding(
+          padding: const EdgeInsets.only(left: 24.0, right: 24, top: 24),
+          child: Column(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  setDebugOn(debugOn ? false : true);
+                },
+                child: Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Debug Mode"),
+                    Switch(
+                        value: (debugOn == null) ? false : debugOn,
+                        onChanged: (bool newState) {
+                          setDebugOn(newState);
+                        })
+                  ],
+                ),
               ),
-            )
-          ],
+              Container(
+                child: Text(
+                  "Note: Please do not activate debug mode unless you’ve been asked to do so! Doing so will activate content and features that are not currently working, and may cause your app to behave strangely.",
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNav());
   }
