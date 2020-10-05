@@ -146,8 +146,8 @@ class _ScoringGuideState extends State<ScoringGuide> {
             elevation: 40,
             title: new Image.asset(
               'icons/Logo.png',
-              height: 20,
-              width: 60,
+              height: 30,
+              width: 70,
               fit: BoxFit.contain,
             ),
             /* Text(
@@ -249,7 +249,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
   Widget renderTotalScore(player) {
     int total = _playerScores[player].reduce((a, b) => a + b);
     return Container(
-        color: Theme.of(context).dividerColor,
+        color: Theme.of(context).accentColor,
         child: Column(children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 4.0),
@@ -266,24 +266,27 @@ class _ScoringGuideState extends State<ScoringGuide> {
         Expanded(
           child: Container(
             padding: EdgeInsets.only(top: 6, bottom: 6, right: 10),
-            child: Column(children: <Widget>[
-              Row(children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(right: 6),
-                  child: Text(attribute.title.toUpperCase(),
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .apply(fontSizeDelta: -5)),
-                ),
-                Icon(Icons.help_outline, color: buttonPrimary, size: 18)
-              ]),
-              Text(
-                attribute.description,
-                textAlign: TextAlign.start,
-              )
-            ]),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(right: 6),
+                      child: Text(attribute.title.toUpperCase(),
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5
+                              .apply(fontSizeDelta: -5)),
+                    ),
+                    Icon(Icons.help_outline, color: buttonPrimary, size: 18)
+                  ]),
+                  Text(
+                    attribute.description,
+                    textAlign: TextAlign.start,
+                  )
+                ]),
           ),
         ),
         Container(

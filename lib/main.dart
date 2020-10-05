@@ -5,8 +5,9 @@
 import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/screens/settingsScreen.dart';
 import 'package:L2P/screens/storeScreen.dart';
+import 'package:L2P/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:splashscreen/splashscreen.dart';
+
 // import 'package:firebase/firebase.dart' as Firebase;
 import 'theme/theme.dart';
 import 'screens/libraryScreen.dart';
@@ -31,12 +32,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'L2P',
         theme: themeDefault,
-        home: new SplashScreen(
+        home:
+            SplashScreen() /* new SplashScreen(
             seconds: 3,
             navigateAfterSeconds: new HomePage(),
 
             /// TODO: Replace with a text style from theme.
-            photoSize: 40,
+            photoSize: 50,
             image: new Image.asset(
               'icons/Logo.png',
             ),
@@ -50,7 +52,8 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 )),
-            loaderColor: Colors.white));
+            loaderColor: Colors.white) */
+        );
   }
 }
 
@@ -64,15 +67,15 @@ class HomePage extends StatelessWidget {
       routes: {
         '/': (context) => Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
-            appBar: PreferredSize(
+/*             appBar: PreferredSize(
               preferredSize: Size.fromHeight(40),
               child: AppBar(
                 centerTitle: true,
                 elevation: 40,
                 title: new Image.asset(
                   'icons/Logo.png',
-                  height: 20,
-                  width: 60,
+                  height: 30,
+                  width: 70,
                   fit: BoxFit.contain,
                 ),
                 /* Text(
@@ -81,7 +84,7 @@ class HomePage extends StatelessWidget {
             textAlign: TextAlign.center,
           ), */
               ),
-            ),
+            ), */
             body: new LibraryScreen(),
             bottomNavigationBar: BottomNav()),
         '/settings': (context) => SettingsScreen(),

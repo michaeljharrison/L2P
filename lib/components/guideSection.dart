@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:L2P/components/tagList.dart';
 import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideButton.dart';
 import 'package:L2P/screens/scoringGuide.dart';
@@ -92,8 +93,23 @@ class _GuideSectionState extends State<GuideSection> {
           child: ExpandablePanel(
             controller: _expandableController,
             theme: expandableThemeDefault,
-            header: Text(widget.title,
-                style: Theme.of(context).textTheme.headline5),
+            header: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                widget.order == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 12.0, bottom: 12),
+                        child: Tag(
+                            glow: true,
+                            value: "START HERE",
+                            color: Theme.of(context).accentColor),
+                      )
+                    : Container(),
+                Text(widget.title,
+                    style: Theme.of(context).textTheme.headline5),
+              ],
+            ),
             collapsed: Text(
               widget.description,
               softWrap: true,

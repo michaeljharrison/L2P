@@ -17,15 +17,12 @@ class LibraryScreenState extends State<LibraryScreen> {
         }
         if (snapshot.connectionState == ConnectionState.active) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
+            padding: const EdgeInsets.only(bottom: 0),
             child: Stack(
               children: [
-                new Padding(
-                    padding: const EdgeInsets.only(
-                        top: 11.0, left: 11.0, right: 11.0, bottom: 0.0),
-                    child: Library(
-                      snapshot: snapshot,
-                    )),
+                Library(
+                  snapshot: snapshot,
+                ),
               ],
             ),
           );

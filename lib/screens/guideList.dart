@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:L2P/components/bottomNav.dart';
+import 'package:L2P/components/tagList.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
@@ -173,8 +174,8 @@ class _GuideListState extends State<GuideList>
           elevation: 40,
           title: new Image.asset(
             'icons/Logo.png',
-            height: 20,
-            width: 60,
+            height: 30,
+            width: 70,
             fit: BoxFit.contain,
           ),
           /* Text(
@@ -192,9 +193,21 @@ class _GuideListState extends State<GuideList>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(widget.game.title.replaceAll('_', ' '),
-                  style: Theme.of(context).textTheme.headline4)
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text(widget.game.title.replaceAll('_', ' '),
+                    style: Theme.of(context).textTheme.headline4),
+              )
             ],
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: TagList(
+                tags: widget.game.tags,
+                align: WrapAlignment.center,
+              ),
+            ),
           ),
           Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 20),

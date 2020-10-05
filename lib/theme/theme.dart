@@ -9,7 +9,6 @@ final buttonPrimary = new Color.fromRGBO(0, 168, 221, 1);
 final buttonSecondary = new Color.fromRGBO(101, 212, 186, 1);
 final buttonTertiary = new Color.fromRGBO(180, 135, 201, 1);
 final progressIndicator = new Color.fromRGBO(02, 142, 172, 1);
-final colorTagTeal = new Color.fromRGBO(101, 212, 186, 1);
 final colorTabBar = new Color.fromRGBO(12, 17, 21, 1);
 final colorBottomNav = new Color.fromRGBO(12, 17, 21, 0.8);
 final colorTransparent = new Color.fromRGBO(0, 0, 0, 0);
@@ -20,7 +19,11 @@ final backgroundBlueGradient = new LinearGradient(
 final backgroundCardGradient = new LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color.fromRGBO(63, 84, 102, 1), Color.fromRGBO(54, 73, 89, 1), Color.fromRGBO(33, 45, 55, 1) ]);
+    colors: [
+      Color.fromRGBO(63, 84, 102, 1),
+      Color.fromRGBO(54, 73, 89, 1),
+      Color.fromRGBO(33, 45, 55, 1)
+    ]);
 
 /// THEMES
 /// Default Theme for the application.
@@ -30,7 +33,7 @@ final ThemeData themeDefault = ThemeData(
     primaryColor: cardBG,
     backgroundColor: systemBG,
     accentColor: buttonSecondary,
-    dividerColor: buttonSecondary,
+    dividerColor: Colors.white,
     disabledColor: uiElement,
 
     /// TODO: Make sure these match exactly with the figma design.

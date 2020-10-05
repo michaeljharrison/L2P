@@ -8,6 +8,7 @@ import 'package:L2P/components/gameCard.dart';
 import 'package:L2P/screens/guideList.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Library extends StatefulWidget {
   final AsyncSnapshot snapshot;
@@ -43,12 +44,39 @@ class _LibraryState extends State<Library> {
       return new Text("Failed to fetch any documents.");
     }
     if (_gameList == null || _gameList.length == 0) {
-      return new Text("Game list empty.");
+      return new SpinKitFoldingCube(
+          color: Theme.of(context).disabledColor, size: 75);
     }
     return RefreshIndicator(
       onRefresh: _handleRefresh,
       child: CustomScrollView(
         slivers: <Widget>[
+          SliverAppBar(
+            centerTitle: true,
+            elevation: 40,
+            title: new Image.asset(
+              'icons/Logo.png',
+              height: 30,
+              width: 70,
+              fit: BoxFit.contain,
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 24, top: 24, left: 10, right: 10),
+                  child: Container(
+                    child: Text(
+                        "Tap on any of the guides below to get started!",
+                        style: Theme.of(context).textTheme.bodyText1),
+                    alignment: Alignment.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
           SliverStaggeredGrid.countBuilder(
             crossAxisCount: 1,
             itemCount: _gameList.length,
@@ -65,12 +93,16 @@ class _LibraryState extends State<Library> {
                         builder: (context) => GuideList(game: game)),
                   );
                 },
-                child: new GameCard(
-                    key: new Key('game_$index'),
-                    title: game.title,
-                    description: game.description,
-                    tags: game.tags,
-                    coverImage: game.coverImage),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 11.0, left: 11.0, right: 11.0),
+                  child: new GameCard(
+                      key: new Key('game_$index'),
+                      title: game.title,
+                      description: game.description,
+                      tags: game.tags,
+                      coverImage: game.coverImage),
+                ),
               );
             },
             staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),

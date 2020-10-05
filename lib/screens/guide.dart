@@ -156,8 +156,8 @@ class _GuideState extends State<Guide> {
             elevation: 40,
             title: new Image.asset(
               'icons/Logo.png',
-              height: 20,
-              width: 60,
+              height: 30,
+              width: 70,
               fit: BoxFit.contain,
             ),
             /* Text(

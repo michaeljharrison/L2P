@@ -22,7 +22,7 @@ class GameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(12),
         decoration: new BoxDecoration(
           gradient: backgroundCardGradient,
           borderRadius: new BorderRadius.all(Radius.circular(12)),
@@ -54,11 +54,11 @@ class GameCard extends StatelessWidget {
               // Game Description
               child: new Text(
                 description,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 6.0),
+              padding: const EdgeInsets.only(top: 16.0),
               child: TagList(tags: tags),
             )
           ],

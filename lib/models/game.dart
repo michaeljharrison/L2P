@@ -175,16 +175,20 @@ class Game {
         });
       }
 
+      List<String> tagList = List<String>.from([]);
+      if (snapshot.data['playersLabel'] != null) {
+        tagList.add('${snapshot.data['playersLabel']} Players');
+      }
+      if (snapshot.data['genre'] != null) {
+        tagList.add(snapshot.data['genre']);
+      }
       newGame = new Game(
           title: snapshot.data['title'],
           code: snapshot.data['code'],
           description: snapshot.data['description'],
           // accent: Color.fromRGBO(snapshot.data['accent'][0],
           // snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
-          tags: snapshot.data['tags'] == null
-              ? List<String>.from([])
-              : List<String>.from([snapshot.data['tags']]),
-          // tags: List<String>.from([]),
+          tags: tagList,
           coverImage: img,
           guideSections: guideSectionList,
           referenceSections: referenceSectionList,
