@@ -147,107 +147,109 @@ class _GuideState extends State<Guide> {
     if (_pages != null) {
       _pages.sort(GuidePage.sortByOrder);
     }
-    return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40),
-          child: AppBar(
-            centerTitle: true,
-            elevation: 40,
-            title: new Image.asset(
-              'icons/Logo.png',
-              height: 30,
-              width: 70,
-              fit: BoxFit.contain,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context)
+            .popUntil((route) => route.settings.name == "currentGame");
+        return false;
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).backgroundColor,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(40),
+            child: AppBar(
+              centerTitle: true,
+              elevation: 40,
+              title: new Image.asset(
+                'icons/Logo.png',
+                height: 30,
+                width: 70,
+                fit: BoxFit.contain,
+              ),
             ),
-            /* Text(
-            'Learn to Play',
-            style: Theme.of(context).textTheme.headline6,
-            textAlign: TextAlign.center,
-          ), */
           ),
-        ),
-        body: Stack(fit: StackFit.expand, children: <Widget>[
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              height: 104,
-              decoration: BoxDecoration(color: cardBG),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 10.0),
-                child: Container(
-                  child: Flex(
-                    direction: Axis.vertical,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(widget.gameTitle,
-                          style: Theme.of(context).textTheme.headline4),
-                      Text(widget.title,
-                          style: Theme.of(context).textTheme.headline5),
+          body: Stack(fit: StackFit.expand, children: <Widget>[
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                height: 104,
+                decoration: BoxDecoration(color: cardBG),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12.0, top: 10.0),
+                  child: Container(
+                    child: Flex(
+                      direction: Axis.vertical,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(widget.gameTitle,
+                            style: Theme.of(context).textTheme.headline4),
+                        Text(widget.title,
+                            style: Theme.of(context).textTheme.headline5),
 
-                      /// TODO: Replace with a real progress bar..
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 18,
-                          animation: true,
-                          lineHeight: 14.0,
-                          animationDuration: 1000,
-                          animateFromLastPercent: true,
-                          percent: ((_currentPage + 1) / _pages.length <= 1)
-                              ? (_currentPage + 1) / _pages.length
-                              : 0,
-                          center: Text(
-                            '${((_currentPage + 1) / _pages.length <= 1) ? (((_currentPage + 1) / _pages.length) * 100).toStringAsFixed(0) : 0}%',
-                            style: TextStyle(fontSize: 10),
+                        /// TODO: Replace with a real progress bar..
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: LinearPercentIndicator(
+                            width: MediaQuery.of(context).size.width - 18,
+                            animation: true,
+                            lineHeight: 14.0,
+                            animationDuration: 1000,
+                            animateFromLastPercent: true,
+                            percent: ((_currentPage + 1) / _pages.length <= 1)
+                                ? (_currentPage + 1) / _pages.length
+                                : 0,
+                            center: Text(
+                              '${((_currentPage + 1) / _pages.length <= 1) ? (((_currentPage + 1) / _pages.length) * 100).toStringAsFixed(0) : 0}%',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            linearStrokeCap: LinearStrokeCap.roundAll,
+                            progressColor: uiElement,
                           ),
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: uiElement,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
-            child: renderBody(),
-          ),
-          /* Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                Navigator.of(context)
-                    .popUntil((route) => route.settings.name == "currentGame");
-              },
-              child: Container(
-                height: 50,
-                color: cardBG,
-                child: Flex(
-                    direction: Axis.vertical,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Back to ${widget.gameTitle}',
-                        style: TextStyle(color: buttonPrimary, fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: buttonPrimary,
-                        size: 14,
-                        semanticLabel: 'Back to ${widget.gameTitle}',
-                      )
-                    ]),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
+              child: renderBody(),
             ),
-          ) */
-        ]));
+            /* Align(
+              alignment: Alignment.bottomCenter,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  Navigator.of(context)
+                      .popUntil((route) => route.settings.name == "currentGame");
+                },
+                child: Container(
+                  height: 50,
+                  color: cardBG,
+                  child: Flex(
+                      direction: Axis.vertical,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Back to ${widget.gameTitle}',
+                          style: TextStyle(color: buttonPrimary, fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: buttonPrimary,
+                          size: 14,
+                          semanticLabel: 'Back to ${widget.gameTitle}',
+                        )
+                      ]),
+                ),
+              ),
+            ) */
+          ])),
+    );
   }
 
   Widget renderBody() {
