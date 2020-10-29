@@ -79,20 +79,30 @@ class _GuidePageState extends State<GuidePage> {
     List<Widget> pageContent = [];
     MainAxisAlignment pageAlignment = MainAxisAlignment.center;
     EdgeInsets pagePadding =
-        EdgeInsets.only(top: 40, bottom: 6.0, left: 40, right: 40);
-    EdgeInsets titlePadding = EdgeInsets.only(bottom: 20);
+        EdgeInsets.only(top: 40, bottom: .0, left: 40, right: 40);
+    EdgeInsets titlePadding = EdgeInsets.only(bottom: 20, left: 0, right: 0);
     if (widget.image != null) {
       pageContent.add(Expanded(child: widget.image));
       pageAlignment = MainAxisAlignment.end;
-      pagePadding = EdgeInsets.all(6.0);
+      pagePadding = EdgeInsets.all(0.0);
       titlePadding = EdgeInsets.all(0);
     }
     pageContent.add(Padding(
       padding: titlePadding,
-      child: Text(widget.title, style: Theme.of(context).textTheme.subtitle2),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.subtitle2,
+          textAlign: TextAlign.start,
+        ),
+      ),
     ));
-    pageContent.add(
-        Text(widget.description, style: Theme.of(context).textTheme.bodyText1));
+    pageContent.add(Padding(
+      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+      child: Text(widget.description,
+          style: Theme.of(context).textTheme.bodyText1),
+    ));
 
     if (widget.action != null) {
       pageContent.add(Padding(
@@ -112,7 +122,7 @@ class _GuidePageState extends State<GuidePage> {
               // color: cardBG,
             ),
             child: Padding(
-              padding: pagePadding,
+              padding: EdgeInsets.all(10),
               child: Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: pageAlignment,
@@ -131,10 +141,14 @@ class _GuidePageState extends State<GuidePage> {
             ),
             child: Padding(
               padding: pagePadding,
-              child: Flex(
-                direction: Axis.vertical,
-                mainAxisAlignment: pageAlignment,
-                children: pageContent,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: pageAlignment,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: pageContent,
+                ),
               ),
             )),
       );

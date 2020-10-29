@@ -121,7 +121,7 @@ class Game {
                         ? guideSection["Section Type"]
                         : SectionTypes.Scoring),
                     getNextGuide: (order) {
-                      if (order >= guideList.length) {
+                      if (order - 1 >= guideList.length) {
                         if (int.parse(guideSection['Order']) >=
                             guideSectionList.length) {
                           return null;
@@ -130,7 +130,14 @@ class Game {
                                 int.parse(guideSection['Order'])]
                             .guides[0];
                       } else {
-                        return guideList[order];
+                        Guide match;
+                        guideList.forEach((element) {
+                          Guide g = element as Guide;
+                          if (g.order == order + 1) {
+                            match = g;
+                          }
+                        });
+                        return match;
                       }
                     },
                     // accent: Color.fromRGBO(snapshot.data['accent'][0],

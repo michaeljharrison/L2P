@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'L2P',
+        title: 'Learn2Play',
         theme: themeDefault,
         home:
             SplashScreen() /* new SplashScreen(

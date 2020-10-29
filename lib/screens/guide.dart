@@ -100,6 +100,7 @@ class _GuideState extends State<Guide> {
         });
       });
       Guide nextGuide = widget.getNextGuide(widget.order);
+
       // Add the final page.
       _pages.add(GuidePage(
           image: Image.asset('icons/award.png',
@@ -119,11 +120,8 @@ class _GuideState extends State<Guide> {
               numbered: false,
               link: () {
                 nextGuide != null
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                widget.getNextGuide(widget.order)))
+                    ? Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => nextGuide))
                     : Navigator.of(context).popUntil((route) {
                         NavigationArguments args = route.settings.arguments;
                         if (route.settings.name == "currentGame") {
@@ -200,10 +198,11 @@ class _GuideState extends State<Guide> {
                                 ? (_currentPage + 1) / _pages.length
                                 : 0,
                             center: Text(
-                              '${((_currentPage + 1) / _pages.length <= 1) ? (((_currentPage + 1) / _pages.length) * 100).toStringAsFixed(0) : 0}%',
+                              '${((_currentPage + 1) / _pages.length <= 1) ? (_currentPage + 1).toStringAsFixed(0) : 0}/${((_currentPage + 1) / _pages.length <= 1) ? (_pages.length).toStringAsFixed(0) : 0}',
                               style: TextStyle(fontSize: 10),
                             ),
                             linearStrokeCap: LinearStrokeCap.roundAll,
+                            backgroundColor: Colors.black,
                             progressColor: uiElement,
                           ),
                         ),
@@ -214,7 +213,7 @@ class _GuideState extends State<Guide> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 102.0, bottom: 60.0),
+              padding: const EdgeInsets.only(top: 102.0, bottom: 20.0),
               child: renderBody(),
             ),
             /* Align(
