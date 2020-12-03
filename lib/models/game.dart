@@ -52,11 +52,11 @@ class Game {
 
   /// TODO: Replace this with individual models. E.G: Game, Guide, Page etc...
   static Future<Game> fromSnapshot(DocumentSnapshot snapshot) async {
-    if (snapshot.data["title"] == null) {
+    if (snapshot.data()["title"] == null) {
       return null;
     }
     Game newGame;
-    String titlePath = 'cover_images/${snapshot.data['code']}.png';
+    String titlePath = 'cover_images/${snapshot.data()['code']}.png';
     List<GuideSection> guideSectionList = new List<GuideSection>();
     List<GuideSection> scenarioSectionList = new List<GuideSection>();
     List<GuideSection> referenceSectionList = new List<GuideSection>();
@@ -102,20 +102,20 @@ class Game {
                   sgs.add(
                     new ScoringGuide(
                         title: guide["Name"],
-                        gameTitle: snapshot.data['title'],
-                        numPlayers: ((guide.data["maxPlayers"] != null)
-                            ? int.parse(guide.data["maxPlayers"])
+                        gameTitle: snapshot.data()['title'],
+                        numPlayers: ((guide.data()["maxPlayers"] != null)
+                            ? int.parse(guide.data()["maxPlayers"])
                             : 2),
                         snapshot: guide),
                   );
                 } else {
                   guideList.add(new Guide(
-                    gameTitle: snapshot.data['title'],
+                    gameTitle: snapshot.data()['title'],
                     title: guide["Name"],
-                    order: ((guide.data["Order"] != null &&
-                            guide.data["Order"] is String &&
-                            guide.data["Order"] != '')
-                        ? int.parse(guide.data["Order"])
+                    order: ((guide.data()["Order"] != null &&
+                            guide.data()["Order"] is String &&
+                            guide.data()["Order"] != '')
+                        ? int.parse(guide.data()["Order"])
                         : 0),
                     type: ((guideSection["Section Type"] != null)
                         ? guideSection["Section Type"]
@@ -183,16 +183,16 @@ class Game {
       }
 
       List<String> tagList = List<String>.from([]);
-      if (snapshot.data['playersLabel'] != null) {
-        tagList.add('${snapshot.data['playersLabel']} Players');
+      if (snapshot.data()['playersLabel'] != null) {
+        tagList.add('${snapshot.data()['playersLabel']} Players');
       }
-      if (snapshot.data['genre'] != null) {
-        tagList.add(snapshot.data['genre']);
+      if (snapshot.data()['genre'] != null) {
+        tagList.add(snapshot.data()['genre']);
       }
       newGame = new Game(
-          title: snapshot.data['title'],
-          code: snapshot.data['code'],
-          description: snapshot.data['description'],
+          title: snapshot.data()['title'],
+          code: snapshot.data()['code'],
+          description: snapshot.data()['description'],
           // accent: Color.fromRGBO(snapshot.data['accent'][0],
           // snapshot.data['accent'][1], snapshot.data['accent'][2], 1),
           tags: tagList,

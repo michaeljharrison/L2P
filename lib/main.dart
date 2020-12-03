@@ -7,23 +7,17 @@ import 'package:L2P/screens/settingsScreen.dart';
 import 'package:L2P/screens/storeScreen.dart';
 import 'package:L2P/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
-// import 'package:firebase/firebase.dart' as Firebase;
+// Import the firebase_core plugin
+import 'package:firebase_core/firebase_core.dart';
 import 'theme/theme.dart';
 import 'screens/libraryScreen.dart';
 
-void main() {
-/*   if (Firebase.apps.isEmpty) {
-    Firebase.initializeApp(
-      apiKey: 'AIzaSyBJbFtUL95rKri_xd-_EZtKEf7xlNc0-Jk',
-      authDomain: 'learn2play.firebaseapp.com',
-      databaseURL: 'https://learn2play.firebaseio.com',
-      projectId: 'learn2play',
-      storageBucket: 'learn2play.appspot.com',
-      appId: '1:223295580147:web:9c92f61ac05e2acf471486',
-    );
-  } */
-  return runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -1,4 +1,4 @@
-class Settings {
+class L2PSettings {
   static final String debugOn = "settings_debugOn";
 }
 

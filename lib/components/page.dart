@@ -43,7 +43,7 @@ class GuidePage extends StatefulWidget {
 
   static Future<GuidePage> fromSnapshot(DocumentSnapshot snapshot) async {
     // First, get the box image for the title:
-    String imgPath = 'guides/${snapshot.data['Page Code']}.png';
+    String imgPath = 'guides/${snapshot.data()['Page Code']}.png';
     Image img;
     try {
       var downloadURL =
@@ -60,15 +60,15 @@ class GuidePage extends StatefulWidget {
     }
 
     return GuidePage(
-        title: (snapshot.data["Title"] != null)
-            ? snapshot.data["Title"]
+        title: (snapshot.data()["Title"] != null)
+            ? snapshot.data()["Title"]
             : "No Title",
-        description: (snapshot.data["Instructions"] != null)
-            ? snapshot.data["Instructions"]
+        description: (snapshot.data()["Instructions"] != null)
+            ? snapshot.data()["Instructions"]
             : "No Instructions.",
         image: img,
-        order: (snapshot.data["Order"] != null)
-            ? int.parse(snapshot.data["Order"])
+        order: (snapshot.data()["Order"] != null)
+            ? int.parse(snapshot.data()["Order"])
             : 0);
   }
 }

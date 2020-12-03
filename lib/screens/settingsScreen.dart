@@ -17,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<bool> getDebugOn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool debugOnPref = prefs.getBool(Settings.debugOn);
+    bool debugOnPref = prefs.getBool(L2PSettings.debugOn);
     setState(() {
       debugOn = debugOnPref;
     });
@@ -29,7 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       debugOn = newValue;
     });
-    return prefs.setBool(Settings.debugOn, newValue);
+    return prefs.setBool(L2PSettings.debugOn, newValue);
   }
 
   @override

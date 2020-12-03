@@ -9,7 +9,7 @@ class LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection('games').snapshots(),
+      stream: FirebaseFirestore.instance.collection('games').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active &&
             !snapshot.hasData) {

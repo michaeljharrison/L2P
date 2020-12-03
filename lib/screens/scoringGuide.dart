@@ -27,14 +27,16 @@ class ScoringAttribute {
   static Future<ScoringAttribute> fromSnapshot(
       DocumentSnapshot snapshot) async {
     return ScoringAttribute(
-        title: (snapshot.data["Label"] != null) ? snapshot.data["Label"] : "",
-        description: (snapshot.data["Instructions"] != null)
-            ? snapshot.data["Instructions"]
+        title:
+            (snapshot.data()["Label"] != null) ? snapshot.data()["Label"] : "",
+        description: (snapshot.data()["Instructions"] != null)
+            ? snapshot.data()["Instructions"]
             : "No Instructions.",
-        order: (snapshot.data["AutoOrder"] != null)
-            ? int.parse(snapshot.data["AutoOrder"])
+        order: (snapshot.data()["AutoOrder"] != null)
+            ? int.parse(snapshot.data()["AutoOrder"])
             : 0,
-        pageCode: (snapshot.data["Link"] != null) ? snapshot.data["Link"] : "");
+        pageCode:
+            (snapshot.data()["Link"] != null) ? snapshot.data()["Link"] : "");
   }
 
   static int sortByOrder(ScoringAttribute a, ScoringAttribute b) {
