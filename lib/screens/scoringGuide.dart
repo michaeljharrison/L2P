@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:L2P/components/page.dart';
+import 'package:L2P/helpers/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -86,18 +87,11 @@ class _ScoringGuideState extends State<ScoringGuide> {
   Future<void> setPlayerScore(
       int player, ScoringAttribute attribute, int value) async {
     setState(() {
-      print('Changed: ' +
-          player.toString() +
-          (attribute.order - 1).toString() +
-          ' to ' +
-          value.toString());
-      print(value.toInt());
       _playerScores[player][attribute.order - 1] = value;
     });
   }
 
   void buildAttributeList() async {
-    print('Building Attributes List...');
     widget.snapshot.reference
         .collection('pages')
         .getDocuments()
@@ -117,7 +111,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
 
   @override
   Widget build(BuildContext context) {
-    print('Building!');
+    SharedLogger().noStack.d('Building ScoringGuide!');
     // Build the list of attributes for scoring.
     if (_attributes.length < 1) {
       buildAttributeList();
@@ -193,7 +187,6 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   Widget renderBody(List<ScoringAttribute> attributes) {
-    print('RenderBody');
     List<Widget> tabBars = [];
     List<Widget> tabViews = [];
 
@@ -240,7 +233,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   Widget renderPlayerScoring(List<ScoringAttribute> attributes, int player) {
-    print('RenderPlayerScoring: ${player}');
+    SharedLogger().noStack.d('RenderPlayerScoring: ${player}');
     List<Widget> categoryWidgets = [];
     for (var cat = 0; cat < attributes.length; cat++) {
       categoryWidgets.add(renderScoringCategory(cat, attributes[cat], player));

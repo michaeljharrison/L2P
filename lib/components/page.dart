@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:L2P/components/guideButton.dart';
+import 'package:L2P/helpers/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class GuidePage extends StatefulWidget {
       }
     } catch (error) {
       img = null;
-      print(error.toString());
+      SharedLogger().log.e(error.toString());
     }
 
     return GuidePage(

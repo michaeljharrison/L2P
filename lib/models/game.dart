@@ -1,3 +1,4 @@
+import 'package:L2P/helpers/logger.dart';
 import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:L2P/models/constants.dart';
@@ -81,7 +82,7 @@ class Game {
         image: 'icons/Logo.png',
         fit: BoxFit.scaleDown,
       );
-      print(error.toString());
+      SharedLogger().log.e(error.toString());
     }
 
     // Then get the game information for the title:

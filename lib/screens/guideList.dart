@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/components/tagList.dart';
+import 'package:L2P/helpers/logger.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _GuideListState extends State<GuideList>
   void initState() {
     super.initState();
     _filter.addListener(() {
-      print('Update search');
+      SharedLogger().noStack.d('Updating Search Text...');
       if (_filter.text.isEmpty && _searchText != "") {
         setState(() {
           _searchText = "";
@@ -121,7 +122,7 @@ class _GuideListState extends State<GuideList>
   @override
   Widget build(BuildContext context) {
     _tabs.clear();
-    print('REBUILD - BAD');
+    SharedLogger().noStack.w('Rebuilding guide list widget (avoid this)...');
     if (widget.game.guideSections.length > 0) {
       widget.game.guideSections.sort(GuideSection.sortByOrder);
       _guideSection = Padding(
