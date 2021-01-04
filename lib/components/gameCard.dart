@@ -4,7 +4,7 @@ import '../theme/theme.dart';
 
 class GameCard extends StatelessWidget {
   final String title;
-  final Image coverImage;
+  final FadeInImage coverImage;
   final String description;
   final List<String> tags;
 
@@ -13,7 +13,7 @@ class GameCard extends StatelessWidget {
       String title,
       String description,
       List<String> tags,
-      Image coverImage})
+      FadeInImage coverImage})
       : this.title = title,
         this.description = description,
         this.coverImage = coverImage,

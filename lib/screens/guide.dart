@@ -103,8 +103,12 @@ class _GuideState extends State<Guide> {
 
       // Add the final page.
       _pages.add(GuidePage(
-          image: Image.asset('icons/award.png',
-              height: 90, width: 180, fit: BoxFit.contain),
+          image: FadeInImage.assetNetwork(
+              placeholder: 'icons/award.png',
+              image: 'icons/award.png',
+              height: 90,
+              width: 180,
+              fit: BoxFit.contain),
           title: nextGuide != null
               ? '${widget.title.toUpperCase()} COMPLETE!'
               : 'YOU\'RE READY TO PLAY!',

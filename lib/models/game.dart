@@ -12,7 +12,7 @@ class Game {
   String title;
   String code;
   String description;
-  Image coverImage;
+  FadeInImage coverImage;
   Color accent;
   List<String> tags;
   List<GuideSection> guideSections;
@@ -24,7 +24,7 @@ class Game {
       {String title,
       String code,
       String description,
-      Image coverImage,
+      FadeInImage coverImage,
       Color accent,
       List<String> tags,
       List<GuideSection> guideSections,
@@ -62,20 +62,25 @@ class Game {
     List<GuideSection> referenceSectionList = new List<GuideSection>();
 
     // First, get the box image for the title:
-    Image img;
+    FadeInImage img;
     try {
       var downloadURL = await FirebaseStorage.instance
           .ref()
           .child(titlePath)
           .getDownloadURL();
       if (downloadURL != null) {
-        img = Image.network(
-          downloadURL.toString(),
+        img = FadeInImage.assetNetwork(
+          placeholder: 'icons/L2P_Icon.png',
+          image: downloadURL.toString(),
           fit: BoxFit.scaleDown,
         );
       }
     } catch (error) {
-      img = Image.asset("icons/Logo.png");
+      img = FadeInImage.assetNetwork(
+        placeholder: 'icons/L2P_Icon.png',
+        image: 'icons/Logo.png',
+        fit: BoxFit.scaleDown,
+      );
       print(error.toString());
     }
 

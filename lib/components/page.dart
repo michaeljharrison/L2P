@@ -9,7 +9,7 @@ import 'package:L2P/theme/theme.dart';
 class GuidePage extends StatefulWidget {
   final String title;
   final String description;
-  final Image image;
+  final FadeInImage image;
   final int order;
   final GuideButton action;
   final bool isFinal;
@@ -18,7 +18,7 @@ class GuidePage extends StatefulWidget {
       {Key key,
       String title,
       String description,
-      Image image,
+      FadeInImage image,
       int order,
       GuideButton action = null,
       bool isFinal = false})
@@ -44,13 +44,14 @@ class GuidePage extends StatefulWidget {
   static Future<GuidePage> fromSnapshot(DocumentSnapshot snapshot) async {
     // First, get the box image for the title:
     String imgPath = 'guides/${snapshot.data()['Page Code']}.png';
-    Image img;
+    FadeInImage img;
     try {
       var downloadURL =
           await FirebaseStorage.instance.ref().child(imgPath).getDownloadURL();
       if (downloadURL != null) {
-        img = Image.network(
-          downloadURL.toString(),
+        img = FadeInImage.assetNetwork(
+          placeholder: 'icons/L2P_Icon.png',
+          image: downloadURL.toString(),
           fit: BoxFit.scaleDown,
         );
       }
