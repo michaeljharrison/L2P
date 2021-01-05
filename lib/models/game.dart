@@ -71,14 +71,14 @@ class Game {
           .getDownloadURL();
       if (downloadURL != null) {
         img = FadeInImage.assetNetwork(
-          placeholder: 'icons/L2P_Icon.png',
+          placeholder: 'icons/Logo.png',
           image: downloadURL.toString(),
           fit: BoxFit.scaleDown,
         );
       }
     } catch (error) {
       img = FadeInImage.assetNetwork(
-        placeholder: 'icons/L2P_Icon.png',
+        placeholder: 'icons/Logo.png',
         image: 'icons/Logo.png',
         fit: BoxFit.scaleDown,
       );

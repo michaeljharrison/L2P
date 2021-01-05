@@ -24,6 +24,7 @@ class GameCard extends StatelessWidget {
     return Container(
         padding: EdgeInsets.all(12),
         decoration: new BoxDecoration(
+          border: Border.all(color: Theme.of(context).disabledColor, width: 1),
           gradient: backgroundCardGradient,
           borderRadius: new BorderRadius.all(Radius.circular(12)),
         ),

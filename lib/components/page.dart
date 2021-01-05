@@ -140,6 +140,8 @@ class _GuidePageState extends State<GuidePage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               color: cardBG,
+              border:
+                  Border.all(color: Theme.of(context).disabledColor, width: 1),
             ),
             child: Padding(
               padding: pagePadding,

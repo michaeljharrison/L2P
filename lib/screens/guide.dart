@@ -108,7 +108,7 @@ class _GuideState extends State<Guide> {
               image: 'icons/award.png',
               height: 90,
               width: 180,
-              fit: BoxFit.contain),
+              fit: BoxFit.cover),
           title: nextGuide != null
               ? '${widget.title.toUpperCase()} COMPLETE!'
               : 'YOU\'RE READY TO PLAY!',
