@@ -1,16 +1,10 @@
 // TODO: BUG - Entering data in one player, then a second player, will wipe the first players data but not total score.
-
-import 'dart:developer';
-
-import 'package:L2P/components/page.dart';
 import 'package:L2P/helpers/logger.dart';
+import 'package:flutter_spinbox/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:L2P/theme/theme.dart';
-import 'package:L2P/models/constants.dart';
 
 class ScoringAttribute {
   final String title;
@@ -259,6 +253,7 @@ class _ScoringGuideState extends State<ScoringGuide> {
     return Row(
       children: <Widget>[
         Expanded(
+          flex: 9,
           child: Container(
             padding: EdgeInsets.only(top: 6, bottom: 6, right: 10),
             child: Column(
@@ -284,34 +279,38 @@ class _ScoringGuideState extends State<ScoringGuide> {
                 ]),
           ),
         ),
-        Container(
-            width: 38,
-            height: 38,
-            color: Theme.of(context).primaryColor,
-            child: Center(
-                child: new TextField(
-              maxLength: 3,
-              maxLengthEnforced: true,
-              controller: new TextEditingController(
-                  text: _playerScores[player][order] != null
-                      ? _playerScores[player][order].toString()
-                      : "0"),
-              decoration: InputDecoration(counterText: ''),
+/*         NumberPicker.integer(
+          listViewWidth: 38,
+          itemExtent: 20,
+          textStyle: new TextStyle(
+              foreground: Paint()..shader = linearTransparentGradient),
+          selectedTextStyle: Theme.of(context).textTheme.button.apply(),
+          initialValue: 0,
+          minValue: 0,
+          maxValue: 100,
+          step: 1,
+          onChanged: (value) => {setPlayerScore(player, attribute, value)},
+        ), */
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(0),
+            child: SpinBox(
+              enableInteractiveSelection: false,
+              showCursor: false,
+              min: 0,
+              max: 99,
+              value: 0,
+              spacing: 0,
+              direction: Axis.vertical,
+              incrementIcon: Icon(Icons.add, size: 18),
+              decrementIcon: Icon(Icons.remove, size: 18),
+              textStyle: TextStyle(fontSize: 22),
+              decoration: InputDecoration(isCollapsed: true, isDense: true),
               onChanged: (value) =>
-                  {setPlayerScore(player, attribute, int.parse(value))},
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                WhitelistingTextInputFormatter.digitsOnly
-              ], // Only numbers can be entered
-            )
-                /* Text(
-                _playerScores[player][order] != null
-                    ? _playerScores[player][order].toString()
-                    : "0",
-                textAlign: TextAlign.center,
-              ), */
-                ))
+                  {setPlayerScore(player, attribute, value.toInt())},
+            ),
+          ),
+        ),
       ],
     );
   }

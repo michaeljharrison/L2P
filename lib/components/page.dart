@@ -51,7 +51,7 @@ class GuidePage extends StatefulWidget {
           await FirebaseStorage.instance.ref().child(imgPath).getDownloadURL();
       if (downloadURL != null) {
         img = FadeInImage.assetNetwork(
-          placeholder: 'icons/L2P_Icon.png',
+          placeholder: 'icons/Loading.png',
           image: downloadURL.toString(),
           fit: BoxFit.scaleDown,
         );
@@ -116,7 +116,7 @@ class _GuidePageState extends State<GuidePage> {
     if (widget.isFinal) {
       return Padding(
         padding: const EdgeInsets.only(
-            left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
+            left: 18.0, right: 18.0, top: 10.0, bottom: 10.0),
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
@@ -135,7 +135,7 @@ class _GuidePageState extends State<GuidePage> {
     } else {
       return Padding(
         padding: const EdgeInsets.only(
-            left: 12.0, right: 12.0, top: 6.0, bottom: 6.0),
+            left: 18.0, right: 18.0, top: 10.0, bottom: 10.0),
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),

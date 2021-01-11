@@ -12,6 +12,13 @@ final progressIndicator = new Color.fromRGBO(02, 142, 172, 1);
 final colorTabBar = new Color.fromRGBO(12, 17, 21, 1);
 final colorBottomNav = new Color.fromRGBO(12, 17, 21, 0.8);
 final colorTransparent = new Color.fromRGBO(0, 0, 0, 0);
+final Shader linearTransparentGradient = LinearGradient(
+  colors: <Color>[Colors.white, Color.fromRGBO(255, 255, 255, 0)],
+  begin: Alignment.center,
+).createShader(Rect.fromCircle(
+  center: Offset(20, -200),
+  radius: 20 / 3,
+));
 final backgroundBlueGradient = new LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
