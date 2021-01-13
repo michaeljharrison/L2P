@@ -179,7 +179,8 @@ class Game {
               scenarioSectionList.add(gs);
               break;
             case SectionTypes.Scoring:
-              referenceSectionList.add(gs);
+              // TODO: Uncomment this to re-enable scoring.
+              // referenceSectionList.add(gs);
               break;
             default:
               guideSectionList.add(gs);
