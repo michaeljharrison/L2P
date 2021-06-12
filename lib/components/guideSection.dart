@@ -129,8 +129,6 @@ class _GuideSectionState extends State<GuideSection> {
                 )
               ],
             ),
-            tapHeaderToExpand: true,
-            hasIcon: true,
           )),
     );
   }

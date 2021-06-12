@@ -14,20 +14,35 @@ import 'package:firebase_core/firebase_core.dart';
 import 'theme/theme.dart';
 import 'screens/libraryScreen.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatefulWidget {
+  // Create the initialization Future outside of `build`:
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  /// The future is part of the state of our widget. We should not call `initializeApp`
+  /// directly inside [build].
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Learn2Play',
-        theme: themeDefault,
-        home:
-            SplashScreen() /* new SplashScreen(
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return MaterialApp(
+              title: 'Learn2Play',
+              theme: themeDefault,
+              home:
+                  SplashScreen() /* new SplashScreen(
             seconds: 3,
             navigateAfterSeconds: new HomePage(),
 
@@ -47,7 +62,69 @@ class MyApp extends StatelessWidget {
                   fontSize: 30,
                 )),
             loaderColor: Colors.white) */
-        );
+              );
+          ;
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+              title: 'Learn2Play',
+              theme: themeDefault,
+              home:
+                  SplashScreen() /* new SplashScreen(
+            seconds: 3,
+            navigateAfterSeconds: new HomePage(),
+
+            /// TODO: Replace with a text style from theme.
+            photoSize: 50,
+            image: new Image.asset(
+              'icons/Logo.png',
+            ),
+            //backgroundColor: systemBG,
+            gradientBackground: backgroundBlueGradient,
+            // photoSize: 100.0,
+            /// TODO: Replace with a text style from theme.
+            loadingText: new Text('Unboxing...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                )),
+            loaderColor: Colors.white) */
+              );
+          ;
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return MaterialApp(
+            title: 'Learn2Play',
+            theme: themeDefault,
+            home:
+                SplashScreen() /* new SplashScreen(
+            seconds: 3,
+            navigateAfterSeconds: new HomePage(),
+
+            /// TODO: Replace with a text style from theme.
+            photoSize: 50,
+            image: new Image.asset(
+              'icons/Logo.png',
+            ),
+            //backgroundColor: systemBG,
+            gradientBackground: backgroundBlueGradient,
+            // photoSize: 100.0,
+            /// TODO: Replace with a text style from theme.
+            loadingText: new Text('Unboxing...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                )),
+            loaderColor: Colors.white) */
+            );
+        ;
+      },
+    );
   }
 }
 

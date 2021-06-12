@@ -8,3 +8,7 @@ class SectionTypes {
   static const String Reference = "Reference";
   static const String Scoring = "Scoring";
 }
+
+class Breakpoints {
+  static const int maxPhoneWidth = 600;
+}

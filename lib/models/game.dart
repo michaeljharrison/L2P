@@ -52,7 +52,8 @@ class Game {
   }
 
   /// TODO: Replace this with individual models. E.G: Game, Guide, Page etc...
-  static Future<Game> fromSnapshot(DocumentSnapshot snapshot) async {
+  static Future<Game> fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) async {
     if (snapshot.data()["title"] == null) {
       return null;
     }
@@ -87,23 +88,24 @@ class Game {
 
     // Then get the game information for the title:
     // First get a list of SECTIONS
+
     await snapshot.reference
         .collection("sections")
-        .getDocuments()
+        .get()
         .then((guideSections) async {
-      if (guideSections.documents.length > 0) {
+      if (guideSections.docs.length > 0) {
         // FOR EACH SECTION
-        await guideSections.documents.forEach((guideSection) async {
-          CollectionReference guidesCollection =
+        await guideSections.docs.forEach((guideSection) async {
+          CollectionReference<Map<String, dynamic>> guidesCollection =
               guideSection.reference.collection("guides");
           List<Widget> guideList = new List<Guide>();
 
           // Then get a list of GUIDES
           List<ScoringGuide> sgs = new List<ScoringGuide>();
-          await guidesCollection.getDocuments().then((guides) async {
-            if (guides.documents.length > 0) {
+          await guidesCollection.get().then((guides) async {
+            if (guides.docs.length > 0) {
               // FOR EACH GUIDE
-              await guides.documents.forEach((guide) {
+              await guides.docs.forEach((guide) {
                 if (guideSection["Section Type"] == SectionTypes.Scoring) {
                   sgs.add(
                     new ScoringGuide(

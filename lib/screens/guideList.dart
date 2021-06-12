@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/components/tagList.dart';
 import 'package:L2P/helpers/logger.dart';
+import 'package:L2P/models/constants.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +120,84 @@ class _GuideListState extends State<GuideList>
     return _tabs[_selectedIndex];
   }
 
+  Widget buildGuideList() {
+    return ListView(
+      children: <Widget>[
+        Flex(
+          direction: Axis.horizontal,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Text(widget.game.title.replaceAll('_', ' '),
+                  style: Theme.of(context).textTheme.headline4),
+            )
+          ],
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: TagList(
+              tags: widget.game.tags,
+              align: WrapAlignment.center,
+            ),
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            child: widget.game.coverImage),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12.0, left: 12.0, right: 12.0),
+          child: Text(widget.game.description,
+              style: Theme.of(context).textTheme.bodyText1),
+        ),
+        Container(
+          decoration: BoxDecoration(color: Colors.black45),
+          child: TabBar(
+            tabs: _tabsList,
+            labelColor: buttonSecondary,
+            unselectedLabelColor: uiElement,
+            controller: _tabController,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 12, bottom: 4),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Container(
+                height: 32,
+                decoration: BoxDecoration(
+                    color: Colors.black45,
+                    borderRadius: BorderRadius.all(Radius.circular(99))),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                            controller: _filter,
+                            decoration: new InputDecoration(
+                              hintText: 'Search',
+                              border: InputBorder.none,
+                              hintStyle: Theme.of(context).textTheme.caption,
+                            )),
+                      )
+                    ],
+                  ),
+                )),
+          ),
+        ),
+        Container(
+          child: renderSection(),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _tabs.clear();
@@ -187,82 +266,25 @@ class _GuideListState extends State<GuideList>
         ),
       ),
       bottomNavigationBar: BottomNav(),
-      body: ListView(
-        children: <Widget>[
-          Flex(
-            direction: Axis.horizontal,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 12.0),
-                child: Text(widget.game.title.replaceAll('_', ' '),
-                    style: Theme.of(context).textTheme.headline4),
-              )
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
+          // Build tablet layout.
+          SharedLogger().noStack.d('Widescreen layout for guide list ');
+          return Row(
+            children: [
+              SizedBox(
+                  width: constraints.maxWidth / 3, child: buildGuideList()),
+              SizedBox(
+                  width: constraints.maxWidth - (constraints.maxWidth / 3),
+                  child: widget.game.guideSections.first.guides.first)
             ],
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: TagList(
-                tags: widget.game.tags,
-                align: WrapAlignment.center,
-              ),
-            ),
-          ),
-          Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: widget.game.coverImage),
-          Padding(
-            padding:
-                const EdgeInsets.only(bottom: 12.0, left: 12.0, right: 12.0),
-            child: Text(widget.game.description,
-                style: Theme.of(context).textTheme.bodyText1),
-          ),
-          Container(
-            decoration: BoxDecoration(color: Colors.black45),
-            child: TabBar(
-              tabs: _tabsList,
-              labelColor: buttonSecondary,
-              unselectedLabelColor: uiElement,
-              controller: _tabController,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, bottom: 4),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Container(
-                  height: 32,
-                  decoration: BoxDecoration(
-                      color: Colors.black45,
-                      borderRadius: BorderRadius.all(Radius.circular(99))),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: TextField(
-                              controller: _filter,
-                              decoration: new InputDecoration(
-                                hintText: 'Search',
-                                border: InputBorder.none,
-                                hintStyle: Theme.of(context).textTheme.caption,
-                              )),
-                        )
-                      ],
-                    ),
-                  )),
-            ),
-          ),
-          Container(
-            child: renderSection(),
-          )
-        ],
-      ),
+          );
+        } else {
+          // Build mobile layout.
+          return buildGuideList();
+        }
+      }),
     );
   }
 }

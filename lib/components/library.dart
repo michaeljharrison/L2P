@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:L2P/components/bottomNav.dart';
+import 'package:L2P/helpers/logger.dart';
 import 'package:L2P/models/constants.dart';
 import 'package:L2P/models/game.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -49,77 +50,86 @@ class _LibraryState extends State<Library> {
       return new SpinKitFoldingCube(
           color: Theme.of(context).disabledColor, size: 75);
     }
-    return RefreshIndicator(
-      onRefresh: _handleRefresh,
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            centerTitle: true,
-            elevation: 40,
-            title: new Image.asset(
-              'icons/Logo.png',
-              height: 30,
-              width: 70,
-              fit: BoxFit.contain,
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      int layoutCrossAxis = 1;
+      if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
+        layoutCrossAxis = 2;
+        SharedLogger().noStack.d('Widescreen layout.');
+      }
+      return RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              centerTitle: true,
+              elevation: 40,
+              title: new Image.asset(
+                'icons/Logo.png',
+                height: 30,
+                width: 70,
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 24, top: 24, left: 10, right: 10),
-                  child: Container(
-                    child: Text(
-                        "Tap on any of the guides below to get started!",
-                        style: Theme.of(context).textTheme.bodyText1),
-                    alignment: Alignment.center,
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 24, top: 24, left: 10, right: 10),
+                    child: Container(
+                      child: Text(
+                          "Tap on any of the guides below to get started!",
+                          style: Theme.of(context).textTheme.bodyText1),
+                      alignment: Alignment.center,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SliverStaggeredGrid.countBuilder(
-            crossAxisCount: 1,
-            itemCount: _gameList.length,
-            itemBuilder: (BuildContext context, int index) {
-              Game game = _gameList[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        settings: RouteSettings(
-                            arguments: NavigationArguments(Enum_Screens.game),
-                            name: "currentGame"),
-                        builder: (context) => GuideList(game: game)),
-                  );
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 11.0, left: 11.0, right: 11.0),
-                  child: new GameCard(
-                      key: new Key('game_$index'),
-                      title: game.title,
-                      description: game.description,
-                      tags: game.tags,
-                      coverImage: game.coverImage),
-                ),
-              );
-            },
-            staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
-          )
-        ],
-      ),
-    );
+            SliverStaggeredGrid.countBuilder(
+              crossAxisCount: layoutCrossAxis,
+              itemCount: _gameList.length,
+              itemBuilder: (BuildContext context, int index) {
+                Game game = _gameList[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          settings: RouteSettings(
+                              arguments: NavigationArguments(Enum_Screens.game),
+                              name: "currentGame"),
+                          builder: (context) => GuideList(game: game)),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 11.0, left: 11.0, right: 11.0),
+                    child: new GameCard(
+                        key: new Key('game_$index'),
+                        title: game.title,
+                        description: game.description,
+                        tags: game.tags,
+                        coverImage: game.coverImage),
+                  ),
+                );
+              },
+              staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+            )
+          ],
+        ),
+      );
+    });
   }
 
-  void buildLibrary(AsyncSnapshot snapshot) async {
+  void buildLibrary(
+      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) async {
     final logger = Logger();
-    snapshot.data.documents.forEach((document) async {
-      final doc = document as QueryDocumentSnapshot;
+    snapshot.data.docs.forEach((document) async {
+      final doc = document as QueryDocumentSnapshot<Map<String, dynamic>>;
       // Check if debug flag is turned to true:
       final prefs = await SharedPreferences.getInstance();
       final debug = prefs.getBool(L2PSettings.debugOn) ?? 0;

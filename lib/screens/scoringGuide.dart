@@ -20,7 +20,7 @@ class ScoringAttribute {
         this.order = order;
 
   static Future<ScoringAttribute> fromSnapshot(
-      DocumentSnapshot snapshot) async {
+      DocumentSnapshot<Map<String, dynamic>> snapshot) async {
     return ScoringAttribute(
         title:
             (snapshot.data()["Label"] != null) ? snapshot.data()["Label"] : "",
@@ -48,7 +48,7 @@ class ScoringGuide extends StatefulWidget {
   final String gameTitle;
   final int order;
   final int numPlayers;
-  final DocumentSnapshot snapshot;
+  final DocumentSnapshot<Map<String, dynamic>> snapshot;
 
   ScoringGuide(
       {Key key,
@@ -56,7 +56,7 @@ class ScoringGuide extends StatefulWidget {
       String gameTitle,
       int numPlayers,
       int order,
-      DocumentSnapshot snapshot})
+      DocumentSnapshot<Map<String, dynamic>> snapshot})
       : this.title = title,
         this.gameTitle = gameTitle,
         this.order = order,
@@ -86,12 +86,9 @@ class _ScoringGuideState extends State<ScoringGuide> {
   }
 
   void buildAttributeList() async {
-    widget.snapshot.reference
-        .collection('pages')
-        .getDocuments()
-        .then((documents) {
+    widget.snapshot.reference.collection('pages').get().then((documents) {
       if (_attributes.length == 0) {
-        documents.documents.forEach((page) async {
+        documents.docs.forEach((page) async {
           ScoringAttribute newAttribute =
               await ScoringAttribute.fromSnapshot(page);
           setState(() {

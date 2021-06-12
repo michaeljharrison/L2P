@@ -42,7 +42,8 @@ class GuidePage extends StatefulWidget {
       return 1;
   }
 
-  static Future<GuidePage> fromSnapshot(DocumentSnapshot snapshot) async {
+  static Future<GuidePage> fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) async {
     // First, get the box image for the title:
     String imgPath = 'guides/${snapshot.data()['Page Code']}.png';
     FadeInImage img;

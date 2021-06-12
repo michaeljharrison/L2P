@@ -25,7 +25,7 @@ class Guide extends StatefulWidget {
   final String gameTitle;
 
   /// Document Snapshot, used to fetch the pages of a guide on demand.
-  final DocumentSnapshot snapshot;
+  final DocumentSnapshot<Map<String, dynamic>> snapshot;
 
   /// Accent color for the guide, for initial version this is inerited from the game data itself.
   final Color accent;
@@ -44,7 +44,7 @@ class Guide extends StatefulWidget {
       {Key key,
       String title,
       int order,
-      DocumentSnapshot snapshot,
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
       String gameTitle,
       String type,
       Color accent,
@@ -88,11 +88,8 @@ class _GuideState extends State<Guide> {
 
   void buildPageList() async {
     _pages = <GuidePage>[];
-    widget.snapshot.reference
-        .collection('pages')
-        .getDocuments()
-        .then((documents) {
-      documents.documents.forEach((page) async {
+    widget.snapshot.reference.collection('pages').get().then((documents) {
+      documents.docs.forEach((page) async {
         GuidePage newPage = await GuidePage.fromSnapshot(page);
         setState(() {
           /// TODO: Create a function to build page from model instead of passing in fields.
