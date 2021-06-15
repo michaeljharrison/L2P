@@ -8,6 +8,7 @@ import 'package:L2P/models/state.dart/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:L2P/theme/theme.dart';
 import 'package:L2P/models/constants.dart';
@@ -90,9 +91,13 @@ class _GuideState extends State<Guide> {
   List<GuidePage> _pages = <GuidePage>[];
   int _currentPage = 0;
   String _oldGuide = '';
+  PageController _pageController = PageController();
 
   void createPageList() async {
     SharedLogger().noStack.w('Create Page List${widget.snapshot}');
+    if (_pageController.hasClients) {
+      _pageController.jumpToPage(1);
+    }
     final store = Provider.of<Navigation>(context);
     _oldGuide = widget.title;
     _pages = <GuidePage>[];
@@ -156,17 +161,13 @@ class _GuideState extends State<Guide> {
                 }
               })));
     });
+    if (_pageController.hasClients) {
+      _pageController.jumpToPage(1);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    SharedLogger()
-        .noStack
-        .w('Rebuilding guide widget (should only happen in tablet mode)');
-    SharedLogger().noStack.w('Old Guide: ${_oldGuide}');
-    SharedLogger().noStack.w('Guide: ${widget.title}');
-    SharedLogger().noStack.w('Pages: ${_pages.length}');
-
     if (_pages != null) {
       _pages.sort(GuidePage.sortByOrder);
     }
@@ -234,11 +235,18 @@ class _GuideState extends State<Guide> {
                             lineHeight: 14.0,
                             animationDuration: 1000,
                             animateFromLastPercent: true,
-                            percent: ((_currentPage + 1) / _pages.length <= 1)
-                                ? (_currentPage + 1) / _pages.length
+                            percent: ((_pageController.hasClients
+                                            ? _pageController.page + 1
+                                            : 1) /
+                                        _pages.length <=
+                                    1)
+                                ? (_pageController.hasClients
+                                        ? _pageController.page + 1
+                                        : 1) /
+                                    _pages.length
                                 : 0,
                             center: Text(
-                              '${((_currentPage + 1) / _pages.length <= 1) ? (_currentPage + 1).toStringAsFixed(0) : 0}/${((_currentPage + 1) / _pages.length <= 1) ? (_pages.length).toStringAsFixed(0) : 0}',
+                              '${((_pageController.hasClients ? _pageController.page + 1 : 1) / _pages.length <= 1) ? (_pageController.hasClients ? _pageController.page + 1 : 1).toStringAsFixed(0) : 0}/${((_pageController.hasClients ? _pageController.page + 1 : 1) / _pages.length <= 1) ? (_pages.length).toStringAsFixed(0) : 0}',
                               style: TextStyle(fontSize: 10),
                             ),
                             linearStrokeCap: LinearStrokeCap.roundAll,
@@ -298,11 +306,18 @@ class _GuideState extends State<Guide> {
                           lineHeight: 14.0,
                           animationDuration: 1000,
                           animateFromLastPercent: true,
-                          percent: ((_currentPage + 1) / _pages.length <= 1)
-                              ? (_currentPage + 1) / _pages.length
+                          percent: ((_pageController.hasClients
+                                          ? _pageController.page + 1
+                                          : 1) /
+                                      _pages.length <=
+                                  1)
+                              ? (_pageController.hasClients
+                                      ? _pageController.page + 1
+                                      : 1) /
+                                  _pages.length
                               : 0,
                           center: Text(
-                            '${((_currentPage + 1) / _pages.length <= 1) ? (_currentPage + 1).toStringAsFixed(0) : 0}/${((_currentPage + 1) / _pages.length <= 1) ? (_pages.length).toStringAsFixed(0) : 0}',
+                            '${((_pageController.hasClients ? _pageController.page + 1 : 1) / _pages.length <= 1) ? (_pageController.hasClients ? _pageController.page + 1 : 1).toStringAsFixed(0) : 0}/${((_pageController.hasClients ? _pageController.page + 1 : 1) / _pages.length <= 1) ? (_pages.length).toStringAsFixed(0) : 0}',
                             style: TextStyle(fontSize: 10),
                           ),
                           linearStrokeCap: LinearStrokeCap.roundAll,
@@ -320,6 +335,33 @@ class _GuideState extends State<Guide> {
             padding: const EdgeInsets.only(top: 102.0, bottom: 20.0),
             child: renderBody(true),
           ),
+          Flex(
+            direction: Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    if (_pageController.hasClients &&
+                        _pageController.page >= 1) {
+                      _pageController.previousPage(
+                          duration: Duration(milliseconds: 1000),
+                          curve: Curves.fastLinearToSlowEaseIn);
+                    }
+                  },
+                  child: Text('<')),
+              TextButton(
+                  onPressed: () {
+                    if (_pageController.hasClients &&
+                        _pageController.page < _pages.length - 1) {
+                      _pageController.nextPage(
+                          duration: Duration(milliseconds: 1000),
+                          curve: Curves.fastLinearToSlowEaseIn);
+                    }
+                  },
+                  child: Text('>'))
+            ],
+          )
         ]));
   }
 
@@ -342,7 +384,7 @@ class _GuideState extends State<Guide> {
       createPageList();
     }
     return PageView.builder(
-        controller: PageController(),
+        controller: _pageController,
         itemCount: _pages.length,
         onPageChanged: (pageIndex) {
           setState(() {
@@ -355,14 +397,13 @@ class _GuideState extends State<Guide> {
   }
 
   Widget renderGuide(bool isTablet) {
-    // TODO In Tablet mode we need to rebuild if the mobx state has changed :'(
-
+    // TODO In Tablet mode we need to rebuild if the mobx state has changed :'(\
     // If the pages don't yet exist OR if we have swapped guides (tablet only);
     if (_pages.length < 1 || _oldGuide != widget.title) {
       createPageList();
     }
     return PageView.builder(
-        controller: PageController(),
+        controller: _pageController,
         itemCount: _pages.length,
         onPageChanged: (pageIndex) {
           setState(() {
