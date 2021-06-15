@@ -3,11 +3,15 @@ import 'package:L2P/components/bottomNav.dart';
 import 'package:L2P/components/guideButton.dart';
 import 'package:L2P/components/library.dart';
 import 'package:L2P/components/page.dart';
+import 'package:L2P/helpers/logger.dart';
+import 'package:L2P/models/state.dart/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:L2P/theme/theme.dart';
 import 'package:L2P/models/constants.dart';
+import 'package:provider/provider.dart';
 
 /// Guide Class
 ///
@@ -85,8 +89,12 @@ class _GuideState extends State<Guide> {
   /// List of pages in a guide.
   List<GuidePage> _pages = <GuidePage>[];
   int _currentPage = 0;
+  String _oldGuide = '';
 
-  void buildPageList() async {
+  void createPageList() async {
+    SharedLogger().noStack.w('Create Page List${widget.snapshot}');
+    final store = Provider.of<Navigation>(context);
+    _oldGuide = widget.title;
     _pages = <GuidePage>[];
     widget.snapshot.reference.collection('pages').get().then((documents) {
       documents.docs.forEach((page) async {
@@ -120,32 +128,59 @@ class _GuideState extends State<Guide> {
               type: SectionTypes.Guide,
               numbered: false,
               link: () {
-                nextGuide != null
-                    ? Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => nextGuide))
-                    : Navigator.of(context).popUntil((route) {
-                        NavigationArguments args = route.settings.arguments;
-                        if (route.settings.name == "currentGame") {
-                          return true;
-                        }
-                        if (args == null) {
-                          return false;
-                        }
-                        if (args.screen == Enum_Screens.game) {
-                          return true;
-                        } else {
-                          return false;
-                        }
-                      });
+                if (MediaQuery.of(context).size.width >=
+                    Breakpoints.maxPhoneWidth) {
+                  // Tablet
+                  nextGuide != null
+                      ? store.setGuide(nextGuide)
+                      : store.setGuide(null);
+                } else {
+                  // Mobile
+                  nextGuide != null
+                      ? Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => nextGuide))
+                      : Navigator.of(context).popUntil((route) {
+                          NavigationArguments args = route.settings.arguments;
+                          if (route.settings.name == "currentGame") {
+                            return true;
+                          }
+                          if (args == null) {
+                            return false;
+                          }
+                          if (args.screen == Enum_Screens.game) {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        });
+                }
               })));
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    SharedLogger()
+        .noStack
+        .w('Rebuilding guide widget (should only happen in tablet mode)');
+    SharedLogger().noStack.w('Old Guide: ${_oldGuide}');
+    SharedLogger().noStack.w('Guide: ${widget.title}');
+    SharedLogger().noStack.w('Pages: ${_pages.length}');
+
     if (_pages != null) {
       _pages.sort(GuidePage.sortByOrder);
     }
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
+        return buildTablet();
+      } else {
+        return buildMobile();
+      }
+    });
+  }
+
+  Widget buildMobile() {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context)
@@ -190,7 +225,11 @@ class _GuideState extends State<Guide> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: LinearPercentIndicator(
-                            width: MediaQuery.of(context).size.width - 18,
+                            width: (MediaQuery.of(context).size.width >=
+                                    Breakpoints.maxPhoneWidth
+                                ? ((MediaQuery.of(context).size.width * 0.7)) -
+                                    44
+                                : MediaQuery.of(context).size.width - 18),
                             animation: true,
                             lineHeight: 14.0,
                             animationDuration: 1000,
@@ -215,60 +254,92 @@ class _GuideState extends State<Guide> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 102.0, bottom: 20.0),
-              child: renderBody(),
+              child: renderBody(false),
             ),
-            /* Align(
-              alignment: Alignment.bottomCenter,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  Navigator.of(context)
-                      .popUntil((route) => route.settings.name == "currentGame");
-                },
-                child: Container(
-                  height: 50,
-                  color: cardBG,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Back to ${widget.gameTitle}',
-                          style: TextStyle(color: buttonPrimary, fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: buttonPrimary,
-                          size: 14,
-                          semanticLabel: 'Back to ${widget.gameTitle}',
-                        )
-                      ]),
-                ),
-              ),
-            ) */
           ])),
     );
   }
 
-  Widget renderBody() {
+  Widget buildTablet() {
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.of(context)
+              .popUntil((route) => route.settings.name == "currentGame");
+          return false;
+        },
+        child: Stack(fit: StackFit.expand, children: <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              height: 104,
+              decoration: BoxDecoration(color: cardBG),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 10.0),
+                child: Container(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(widget.gameTitle,
+                          style: Theme.of(context).textTheme.headline4),
+                      Text(widget.title,
+                          style: Theme.of(context).textTheme.headline5),
+
+                      /// TODO: Replace with a real progress bar..
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: LinearPercentIndicator(
+                          width: (MediaQuery.of(context).size.width >=
+                                  Breakpoints.maxPhoneWidth
+                              ? ((MediaQuery.of(context).size.width * 0.7)) - 44
+                              : MediaQuery.of(context).size.width - 18),
+                          animation: true,
+                          lineHeight: 14.0,
+                          animationDuration: 1000,
+                          animateFromLastPercent: true,
+                          percent: ((_currentPage + 1) / _pages.length <= 1)
+                              ? (_currentPage + 1) / _pages.length
+                              : 0,
+                          center: Text(
+                            '${((_currentPage + 1) / _pages.length <= 1) ? (_currentPage + 1).toStringAsFixed(0) : 0}/${((_currentPage + 1) / _pages.length <= 1) ? (_pages.length).toStringAsFixed(0) : 0}',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          backgroundColor: Colors.black,
+                          progressColor: uiElement,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 102.0, bottom: 20.0),
+            child: renderBody(true),
+          ),
+        ]));
+  }
+
+  Widget renderBody(bool isTablet) {
     switch (widget.type) {
       case SectionTypes.Guide:
-        return renderGuide();
+        return renderGuide(isTablet);
         break;
       case SectionTypes.Reference:
-        return renderReference();
+        return renderReference(isTablet);
         break;
       default:
-        return renderReference();
+        return renderReference(isTablet);
         break;
     }
   }
 
-  Widget renderReference() {
+  Widget renderReference(bool isTablet) {
     if (_pages.length < 1) {
-      buildPageList();
+      createPageList();
     }
     return PageView.builder(
         controller: PageController(),
@@ -283,9 +354,12 @@ class _GuideState extends State<Guide> {
         });
   }
 
-  Widget renderGuide() {
-    if (_pages.length < 1) {
-      buildPageList();
+  Widget renderGuide(bool isTablet) {
+    // TODO In Tablet mode we need to rebuild if the mobx state has changed :'(
+
+    // If the pages don't yet exist OR if we have swapped guides (tablet only);
+    if (_pages.length < 1 || _oldGuide != widget.title) {
+      createPageList();
     }
     return PageView.builder(
         controller: PageController(),

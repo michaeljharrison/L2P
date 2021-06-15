@@ -8,8 +8,12 @@ import 'package:L2P/helpers/logger.dart';
 import 'package:L2P/models/constants.dart';
 import 'package:L2P/models/game.dart';
 import 'package:L2P/components/guideSection.dart';
+import 'package:L2P/models/state.dart/navigation.dart';
+import 'package:L2P/screens/guide.dart';
 import 'package:flutter/material.dart';
 import 'package:L2P/theme/theme.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class GuideList extends StatefulWidget {
   final Game game;
@@ -40,6 +44,7 @@ class _GuideListState extends State<GuideList>
   @override
   void initState() {
     super.initState();
+
     _filter.addListener(() {
       SharedLogger().noStack.d('Updating Search Text...');
       if (_filter.text.isEmpty && _searchText != "") {
@@ -271,13 +276,29 @@ class _GuideListState extends State<GuideList>
         if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
           // Build tablet layout.
           SharedLogger().noStack.d('Widescreen layout for guide list ');
+          final store = Provider.of<Navigation>(context);
           return Row(
             children: [
               SizedBox(
-                  width: constraints.maxWidth / 3, child: buildGuideList()),
+                  width: ((constraints.maxWidth * 0.3)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: buildGuideList(),
+                  )),
               SizedBox(
-                  width: constraints.maxWidth - (constraints.maxWidth / 3),
-                  child: widget.game.guideSections.first.guides.first)
+                  width: (constraints.maxWidth * 0.7),
+                  child: Observer(builder: (_) {
+                    return (store.selectedGuide != null
+                        ? Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Observer(builder: (_) {
+                              return store.selectedGuide;
+                            }))
+                        : Placeholder(
+                            fallbackHeight: 100,
+                            fallbackWidth: 100,
+                          ));
+                  }))
             ],
           );
         } else {

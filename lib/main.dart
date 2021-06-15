@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:L2P/components/bottomNav.dart';
+import 'package:L2P/helpers/logger.dart';
+import 'package:L2P/models/state.dart/navigation.dart';
 import 'package:L2P/screens/settingsScreen.dart';
 import 'package:L2P/screens/storeScreen.dart';
 import 'package:L2P/screens/splashScreen.dart';
@@ -11,12 +13,25 @@ import 'package:logger/logger.dart';
 
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 import 'theme/theme.dart';
 import 'screens/libraryScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(App());
+  mainContext.spy((evt) {
+    SharedLogger().noStack.d(evt);
+  });
+
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<Navigation>(create: (_) => Navigation()),
+      ],
+      child: App(),
+    ),
+  );
 }
 
 class App extends StatefulWidget {

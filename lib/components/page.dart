@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:L2P/components/guideButton.dart';
 import 'package:L2P/helpers/logger.dart';
+import 'package:L2P/models/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -116,8 +117,10 @@ class _GuidePageState extends State<GuidePage> {
 
     if (widget.isFinal) {
       return Padding(
-        padding: const EdgeInsets.only(
-            left: 18.0, right: 18.0, top: 10.0, bottom: 10.0),
+        padding: (MediaQuery.of(context).size.width >= Breakpoints.maxPhoneWidth
+            ? EdgeInsets.only(left: 0, right: 0, top: 10.0, bottom: 0)
+            : EdgeInsets.only(
+                left: 18.0, right: 18.0, top: 10.0, bottom: 10.0)),
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
@@ -135,8 +138,10 @@ class _GuidePageState extends State<GuidePage> {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.only(
-            left: 18.0, right: 18.0, top: 10.0, bottom: 10.0),
+        padding: (MediaQuery.of(context).size.width >= Breakpoints.maxPhoneWidth
+            ? EdgeInsets.only(left: 0, right: 0, top: 10.0, bottom: 0)
+            : EdgeInsets.only(
+                left: 18.0, right: 18.0, top: 10.0, bottom: 10.0)),
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),

@@ -1,11 +1,15 @@
 import 'dart:math';
 
 import 'package:L2P/components/tagList.dart';
+import 'package:L2P/helpers/logger.dart';
+import 'package:L2P/models/constants.dart';
+import 'package:L2P/models/state.dart/navigation.dart';
 import 'package:L2P/screens/guide.dart';
 import 'package:L2P/components/guideButton.dart';
 import 'package:L2P/screens/scoringGuide.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/theme.dart';
 
 class GuideSection extends StatefulWidget {
@@ -134,7 +138,9 @@ class _GuideSectionState extends State<GuideSection> {
   }
 
   List<Widget> buildButtonList() {
+    Navigation navigation = context.watch<Navigation>();
     List<Widget> buttonList = new List<Widget>();
+    double screenWidth = MediaQuery.of(context).size.width;
     if (widget.scoringGuides.length > 0) {
       for (var i = 0; i < widget.scoringGuides.length; i++) {
         buttonList.add(GuideButton(
@@ -144,6 +150,7 @@ class _GuideSectionState extends State<GuideSection> {
             type: widget.type,
             numbered: false,
             link: () {
+              // Needs to not be a navigation route in widescreen mode!
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -168,10 +175,14 @@ class _GuideSectionState extends State<GuideSection> {
             type: widget.type,
             numbered: widget.ordered,
             link: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => widget.guides[i]),
-              );
+              if (screenWidth >= Breakpoints.maxPhoneWidth) {
+                navigation.setGuide(widget.guides[i]);
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => widget.guides[i]),
+                );
+              }
             }));
       }
     }

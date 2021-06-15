@@ -26,45 +26,48 @@ class GuideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (this.numbered) {
-      return Flex(
-          direction: Axis.horizontal,
-          children: List<Widget>.from([
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Container(
-                width: 35,
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Flex(
+            direction: Axis.horizontal,
+            children: List<Widget>.from([
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Container(
+                  width: 35,
+                  child: FlatButton(
+                    padding: EdgeInsets.all(5),
+                    onPressed: link,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    child: Text(
+                      this.index.toString(),
+                      style: Theme.of(context).textTheme.button,
+                      textAlign: TextAlign.left,
+                    ),
+                    color: type == SectionTypes.Reference
+                        ? buttonTertiary
+                        : buttonPrimary,
+                  ),
+                ),
+              ),
+              Expanded(
                 child: FlatButton(
-                  padding: EdgeInsets.all(5),
                   onPressed: link,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  child: Text(
-                    this.index.toString(),
-                    style: Theme.of(context).textTheme.button,
-                    textAlign: TextAlign.left,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      this.title,
+                      style: Theme.of(context).textTheme.button,
+                    ),
                   ),
                   color: type == SectionTypes.Reference
                       ? buttonTertiary
                       : buttonPrimary,
                 ),
               ),
-            ),
-            Expanded(
-              child: FlatButton(
-                onPressed: link,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    this.title,
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                ),
-                color: type == SectionTypes.Reference
-                    ? buttonTertiary
-                    : buttonPrimary,
-              ),
-            ),
-          ]));
+            ])),
+      );
     } else {
       return Flex(
         direction: Axis.horizontal,

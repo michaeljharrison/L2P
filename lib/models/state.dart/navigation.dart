@@ -1,3 +1,4 @@
+import 'package:L2P/screens/guide.dart';
 import 'package:mobx/mobx.dart';
 
 // Include generated file
@@ -11,8 +12,16 @@ abstract class _Navigation with Store {
   @observable
   String selectedGame;
 
+  @observable
+  Guide selectedGuide;
+
   @action
   void setGame(String newGame) {
     selectedGame = newGame;
+  }
+
+  @action
+  void setGuide(Guide newGuide) {
+    selectedGuide = newGuide;
   }
 }
