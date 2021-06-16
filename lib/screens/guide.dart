@@ -171,14 +171,11 @@ class _GuideState extends State<Guide> {
     if (_pages != null) {
       _pages.sort(GuidePage.sortByOrder);
     }
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
-        return buildTablet();
-      } else {
-        return buildMobile();
-      }
-    });
+    if (MediaQuery.of(context).size.width >= Breakpoints.maxPhoneWidth) {
+      return buildTablet();
+    } else {
+      return buildMobile();
+    }
   }
 
   Widget buildMobile() {

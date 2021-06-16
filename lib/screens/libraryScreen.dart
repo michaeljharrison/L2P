@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:developer';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 class LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,8 @@ class LibraryScreenState extends State<LibraryScreen> {
           );
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('Loading');
+          return SpinKitFoldingCube(
+              color: Theme.of(context).disabledColor, size: 75);
         }
       },
     );

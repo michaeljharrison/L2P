@@ -61,14 +61,18 @@ class _LibraryState extends State<Library> {
         onRefresh: _handleRefresh,
         child: CustomScrollView(
           slivers: <Widget>[
-            SliverAppBar(
-              centerTitle: true,
-              elevation: 40,
-              title: new Image.asset(
-                'icons/Logo.png',
-                height: 30,
-                width: 70,
-                fit: BoxFit.contain,
+            PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: SliverAppBar(
+                floating: true,
+                centerTitle: true,
+                elevation: 40,
+                title: new Image.asset(
+                  'icons/Logo.png',
+                  height: 30,
+                  width: 70,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             SliverList(

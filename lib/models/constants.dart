@@ -10,5 +10,5 @@ class SectionTypes {
 }
 
 class Breakpoints {
-  static const int maxPhoneWidth = 600;
+  static const int maxPhoneWidth = 1000;
 }

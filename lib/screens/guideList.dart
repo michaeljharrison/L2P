@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:L2P/components/bottomNav.dart';
+import 'package:L2P/components/drawerNav.dart';
 import 'package:L2P/components/tagList.dart';
 import 'package:L2P/helpers/logger.dart';
 import 'package:L2P/models/constants.dart';
@@ -44,7 +45,6 @@ class _GuideListState extends State<GuideList>
   @override
   void initState() {
     super.initState();
-
     _filter.addListener(() {
       SharedLogger().noStack.d('Updating Search Text...');
       if (_filter.text.isEmpty && _searchText != "") {
@@ -250,62 +250,130 @@ class _GuideListState extends State<GuideList>
       _tabs.add(_scenarioSection);
     }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40),
-        child: AppBar(
-          centerTitle: true,
-          elevation: 40,
-          title: new Image.asset(
-            'icons/Logo.png',
-            height: 30,
-            width: 70,
-            fit: BoxFit.contain,
-          ),
-          /* Text(
+    if (MediaQuery.of(context).size.width >= Breakpoints.maxPhoneWidth) {
+      // Tablet
+      return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        drawer: DrawerNav(key: Key("guideListNav")),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40),
+          child: AppBar(
+            centerTitle: true,
+            elevation: 40,
+            title: new Image.asset(
+              'icons/Logo.png',
+              height: 30,
+              width: 70,
+              fit: BoxFit.contain,
+            ),
+            /* Text(
             'Learn to Play',
             style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
           ), */
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNav(),
-      body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
-          // Build tablet layout.
-          SharedLogger().noStack.d('Widescreen layout for guide list ');
-          final store = Provider.of<Navigation>(context);
-          return Row(
-            children: [
-              SizedBox(
-                  width: ((constraints.maxWidth * 0.3)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: buildGuideList(),
-                  )),
-              SizedBox(
-                  width: (constraints.maxWidth * 0.7),
-                  child: Observer(builder: (_) {
-                    return (store.selectedGuide != null
-                        ? Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Observer(builder: (_) {
-                              return store.selectedGuide;
-                            }))
-                        : Placeholder(
-                            fallbackHeight: 100,
-                            fallbackWidth: 100,
-                          ));
-                  }))
-            ],
-          );
-        } else {
-          // Build mobile layout.
-          return buildGuideList();
-        }
-      }),
-    );
+        // bottomNavigationBar: BottomNav(),
+        body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
+            // Build tablet layout.
+            SharedLogger().noStack.d('Widescreen layout for guide list ');
+            final store = Provider.of<Navigation>(context);
+            return Row(
+              children: [
+                SizedBox(
+                    width: ((constraints.maxWidth * 0.3)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: buildGuideList(),
+                    )),
+                SizedBox(
+                    width: (constraints.maxWidth * 0.7),
+                    child: Observer(builder: (_) {
+                      return (store.selectedGuide != null
+                          ? Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Observer(builder: (_) {
+                                return store.selectedGuide;
+                              }))
+                          : Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Observer(builder: (_) {
+                                return widget
+                                    .game.guideSections.first.guides.first;
+                              })));
+                    }))
+              ],
+            );
+          } else {
+            // Build mobile layout.
+            return buildGuideList();
+          }
+        }),
+      );
+    } else {
+      // Mobile
+      return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        // TODO Replace this drawer with a generic drawer navigation panel to replace bottom nav.
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40),
+          child: AppBar(
+            centerTitle: true,
+            elevation: 40,
+            title: new Image.asset(
+              'icons/Logo.png',
+              height: 30,
+              width: 70,
+              fit: BoxFit.contain,
+            ),
+            /* Text(
+            'Learn to Play',
+            style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.center,
+          ), */
+          ),
+        ),
+        bottomNavigationBar: BottomNav(),
+        body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth >= Breakpoints.maxPhoneWidth) {
+            // Build tablet layout.
+            SharedLogger().noStack.d('Widescreen layout for guide list ');
+            final store = Provider.of<Navigation>(context);
+            return Row(
+              children: [
+                SizedBox(
+                    width: ((constraints.maxWidth * 0.3)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: buildGuideList(),
+                    )),
+                SizedBox(
+                    width: (constraints.maxWidth * 0.7),
+                    child: Observer(builder: (_) {
+                      return (store.selectedGuide != null
+                          ? Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Observer(builder: (_) {
+                                return store.selectedGuide;
+                              }))
+                          : Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Observer(builder: (_) {
+                                return widget
+                                    .game.guideSections.first.guides.first;
+                              })));
+                    }))
+              ],
+            );
+          } else {
+            // Build mobile layout.
+            return buildGuideList();
+          }
+        }),
+      );
+    }
   }
 }
